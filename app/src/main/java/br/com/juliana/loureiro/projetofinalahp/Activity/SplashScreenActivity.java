@@ -1,4 +1,4 @@
-package br.com.juliana.loureiro.projetofinalahp;
+package br.com.juliana.loureiro.projetofinalahp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+
+import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private ImageView imgsplash;

@@ -1,15 +1,21 @@
-package br.com.juliana.loureiro.projetofinalahp;
+package br.com.juliana.loureiro.projetofinalahp.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class TelaPrincipal extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private RelativeLayout rltPrincipal;
+    private ListView listObjetivos;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -39,6 +45,15 @@ public class TelaPrincipal extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        declaraObjetos();
     }
+
+    private void declaraObjetos() {
+        rltPrincipal = findViewById(R.id.rltPrincipal);
+        listObjetivos = findViewById(R.id.listObjetivos);
+
+    }
+
 
 }
