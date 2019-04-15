@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lnrtab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/objetivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:padding="7dp"
+            android:text="PASSO 1"
+            android:textAlignment="center"
+            android:textColor="@color/branco"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/criterio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:text="PASSO 2"
+            android:textAlignment="center"
+            android:textColor="@color/branco"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/alternativa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:text="PASSO 3"
+            android:textColor="@color/branco"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/preferencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:text="PASSO 4"
+            android:textColor="@color/branco"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rltobjetivo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btncontinuar"
+        android:layout_below="@+id/lnrtab"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/objetivotitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OBJETIVO"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/objetivotitulo"
+            android:layout_marginTop="20dp"
+            android:text="Título"
+            android:textColor="@color/preto"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edttitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titulo"
+            android:hint="Título" />
+
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edttitulo"
+            android:layout_marginTop="10dp"
+            android:text="Descrição"
+            android:textColor="@color/preto"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edtdescricao"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_below="@+id/descricao"
+            android:gravity="top"
+            android:hint="Descrição"
+            android:inputType="textMultiLine" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rltcriterio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btncontinuar"
+        android:layout_below="@+id/lnrtab"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/criteriotitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRITÉRIOS"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/lnrcriterio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/criteriotitulo"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtcriterio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:hint="Critério" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnaddcriterio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listCriterios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnrcriterio"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rltalternativa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btncontinuar"
+        android:layout_below="@+id/lnrtab"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/alternativatitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ALTERNATIVAS"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/lnralternativa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alternativatitulo"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtalternativa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:hint="Alternativqa" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnaddalternativa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listAlternativas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnralternativa"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btncontinuar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:text="Continuar"
+        android:textColor="@color/branco"
+        android:textSize="18sp" />
+
+</RelativeLayout>

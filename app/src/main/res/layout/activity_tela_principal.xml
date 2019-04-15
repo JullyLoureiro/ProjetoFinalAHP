@@ -20,10 +20,11 @@
             android:layout_height="wrap_content" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:onClick="iniciarAHP"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:src="@drawable/add" />

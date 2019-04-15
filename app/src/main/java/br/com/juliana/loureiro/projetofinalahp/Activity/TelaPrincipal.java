@@ -1,10 +1,13 @@
 package br.com.juliana.loureiro.projetofinalahp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,8 +45,8 @@ public class TelaPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_principal);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         declaraObjetos();
@@ -53,6 +56,11 @@ public class TelaPrincipal extends AppCompatActivity {
         rltPrincipal = findViewById(R.id.rltPrincipal);
         listObjetivos = findViewById(R.id.listObjetivos);
 
+    }
+
+    public void iniciarAHP(View view) {
+        Intent intent = new Intent(this, TelaAHP.class);
+        startActivity(intent);
     }
 
 
