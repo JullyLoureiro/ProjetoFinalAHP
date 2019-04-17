@@ -8,7 +8,9 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:elevation="20dp"
         app:cardBackgroundColor="@color/branco">
 
