@@ -18,7 +18,7 @@ public class ConfigDB extends SQLiteOpenHelper {
         String CREATE_OBJETIVO = "CREATE TABLE OBJETIVOS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TITULO TEXT, " +
-                "DESCRICA0 TEXT " +
+                "DESCRICAO TEXT " +
                 " )";
 
         db.execSQL(CREATE_OBJETIVO);
@@ -26,10 +26,14 @@ public class ConfigDB extends SQLiteOpenHelper {
         String CREATE_OBJETIVO_TEMP = "CREATE TABLE OBJETIVOS_TEMP ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TITULO TEXT, " +
-                "DESCRICA0 TEXT " +
+                "DESCRICAO TEXT " +
                 " )";
 
         db.execSQL(CREATE_OBJETIVO_TEMP);
+
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
     }
 
     @Override

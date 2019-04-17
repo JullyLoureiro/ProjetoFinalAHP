@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/obj"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="OBJETIVO" />
+
+    <item
+        android:id="@+id/crit"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="CRITÉRIOS" />
+
+    <item
+        android:id="@+id/alt"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="ALTERNATIVAS" />
+
+    <item
+        android:id="@+id/pref"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="PREFERÊNCIAS" />
+</menu>
