@@ -2,20 +2,29 @@ package br.com.juliana.loureiro.projetofinalahp.Activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
+import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.ListAdapter.CriteriosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class TelaFuncaoAHP extends AppCompatActivity {
 
     private RelativeLayout rltobjetivo, rltcriterio, rltalternativa, rltpreferencia;
     private BottomNavigationView navigation;
+    public static ListView listCriterios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +74,8 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         }
     };
 
+    // MÉTODOS NATIVOS
+
     @Override
     public void onBackPressed() {
         finish();
@@ -82,6 +93,25 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         rltcriterio = findViewById(R.id.rltcriterio);
         rltalternativa = findViewById(R.id.rltalternativa);
         rltpreferencia = findViewById(R.id.rltpreferencia);
+        listCriterios = findViewById(R.id.listCriterios);
+
+    }
+
+    //CLICKS
+
+    public void addCriterio(View view) {
+        EditText edtcriterio = findViewById(R.id.edtcriterio);
+        if(edtcriterio.getText().length()>0) {
+            CriterioBean criterioBean = new CriterioBean();
+            criterioBean.setDescricao(edtcriterio.getText().toString());
+            new CriterioDao(this).insereCriterio(criterioBean);
+            List<CriterioBean> lista = new CriterioDao(this).carregaCriterios();
+            listCriterios.setAdapter(new CriteriosList(lista,this));
+            edtcriterio.setText("");
+        } else {
+            edtcriterio.setError("Informe a descrição!");
+            edtcriterio.requestFocus();
+        }
     }
 
     public void continuar(View v) {

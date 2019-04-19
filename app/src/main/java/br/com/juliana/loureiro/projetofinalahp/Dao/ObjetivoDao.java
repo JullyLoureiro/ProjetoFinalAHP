@@ -25,7 +25,7 @@ public class ObjetivoDao {
         db = banco.getReadableDatabase();
     }
 
-    public boolean insereObjetivo(ObjetivoBean objetivoBean){
+    public boolean insereObjetivo(ObjetivoBean objetivoBean) {
         try {
             ContentValues valores;
 
@@ -36,7 +36,7 @@ public class ObjetivoDao {
 
             db.insert(ObjetivoBean.TABELA, null, valores);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             db.close();
@@ -45,11 +45,11 @@ public class ObjetivoDao {
 
     }
 
-    public boolean deletaObjetivo(int id){
+    public boolean deletaObjetivo(int id) {
         try {
-            db.execSQL("DELETE FROM OBJETIVOS WHERE ID = " + id);
+            db.execSQL("DELETE FROM  \" + ObjetivoBean.TABELA + \"WHERE ID = " + id);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             db.close();
@@ -58,21 +58,22 @@ public class ObjetivoDao {
 
     }
 
-    public List<ObjetivoBean> carregaObjetivos(){
+    public List<ObjetivoBean> carregaObjetivos() {
         List<ObjetivoBean> lista = new ArrayList<>();
-        try{
-            cursor = db.rawQuery("SELECT * FROM OBJETIVOS", null);
-            if(cursor.getCount()>0) {
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA, null);
+            if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                do{
+                do {
                     ObjetivoBean objetivoBean = new ObjetivoBean();
+                    objetivoBean.setId(cursor.getInt(cursor.getColumnIndex(ObjetivoBean.ID)));
                     objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
                     objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
 
                     lista.add(objetivoBean);
-                }while (cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return lista;
