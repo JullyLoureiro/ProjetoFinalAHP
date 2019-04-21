@@ -2,7 +2,6 @@ package br.com.juliana.loureiro.projetofinalahp.ListAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import java.util.List;
 

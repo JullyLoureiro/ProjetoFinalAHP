@@ -1,46 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.TelaPrincipal">
 
-    <RelativeLayout
-        android:id="@+id/rltPrincipal"
+
+    <ListView
+        android:id="@+id/listObjetivos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:fabAlignmentMode="center"
+        android:layout_gravity="bottom"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="20dp"
+        app:fabCradleVerticalOffset="5dp"
+        app:backgroundTint="@color/colorPrimary">
+</com.google.android.material.bottomappbar.BottomAppBar>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/navigation"
-        android:layout_marginBottom="10dp">
-
-        <ListView
-            android:id="@+id/listObjetivos"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:divider="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
+        android:weightSum="5">
+        <ImageButton
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:onClick="iniciarAHP"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/add" />
-    </RelativeLayout>
+            android:layout_weight="1"
+            app:srcCompat="@drawable/delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/colorPrimary"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/delete"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/delete"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/delete"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+    </LinearLayout>
 
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:onClick="iniciarAHP"
+        android:src="@drawable/add"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
+        app:layout_anchor="@id/bar"/>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

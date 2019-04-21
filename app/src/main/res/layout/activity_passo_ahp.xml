@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                 android:layout_weight="1"
                 android:hint="Critério" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnaddcriterio"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -165,7 +165,7 @@
                 android:layout_weight="1"
                 android:hint="Alternativa" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnaddalternativa"
                 android:layout_width="match_parent"
                 app:fabSize="mini"

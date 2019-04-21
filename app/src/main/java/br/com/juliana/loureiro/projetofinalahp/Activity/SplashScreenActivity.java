@@ -3,11 +3,12 @@ package br.com.juliana.loureiro.projetofinalahp.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.juliana.loureiro.projetofinalahp.R;
 

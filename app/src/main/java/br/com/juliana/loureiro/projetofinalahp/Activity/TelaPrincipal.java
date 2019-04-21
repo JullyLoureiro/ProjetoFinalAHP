@@ -2,16 +2,19 @@ package br.com.juliana.loureiro.projetofinalahp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.List;
+import java.util.zip.Inflater;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
@@ -20,7 +23,7 @@ import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class TelaPrincipal extends AppCompatActivity {
 
-    private RelativeLayout rltPrincipal;
+    //private RelativeLayout rltPrincipal;
     private ListView listObjetivos;
 
     @Override
@@ -30,17 +33,16 @@ public class TelaPrincipal extends AppCompatActivity {
 
         declaraObjetos();
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        /*BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+  /*  private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        public boolean onNavigationItemSelected( MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
@@ -56,10 +58,10 @@ public class TelaPrincipal extends AppCompatActivity {
             }
             return false;
         }
-    };
+    };*/
 
     private void declaraObjetos() {
-        rltPrincipal = findViewById(R.id.rltPrincipal);
+        //rltPrincipal = findViewById(R.id.rltPrincipal);
         listObjetivos = findViewById(R.id.listObjetivos);
 
         List<ObjetivoBean> listaObjetivos = new ObjetivoDao(this).carregaObjetivos();
@@ -71,5 +73,15 @@ public class TelaPrincipal extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }
