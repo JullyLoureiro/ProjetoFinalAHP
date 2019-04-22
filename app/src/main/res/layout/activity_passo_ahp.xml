@@ -8,7 +8,7 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/colorSecond"
         app:menu="@menu/passo_ahp" />
 
     <RelativeLayout
@@ -359,7 +359,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
+       android:layout_margin="20dp"
         android:background="@drawable/shape_button"
         android:onClick="continuar"
         android:text="Continuar"

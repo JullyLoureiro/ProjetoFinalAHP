@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/lt_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TelaPrincipal">
-
+    android:background="@drawable/shape_gradient"
+    android:fitsSystemWindows="false">
 
     <ListView
         android:id="@+id/listObjetivos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false" />
+        android:divider="@color/colorPrimary"
+        android:headerDividersEnabled="false"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_alignParentStart="true" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bar"
@@ -24,47 +26,10 @@
         app:fabAlignmentMode="center"
         android:layout_gravity="bottom"
         app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="20dp"
-        app:fabCradleVerticalOffset="5dp"
-        app:backgroundTint="@color/colorPrimary">
-</com.google.android.material.bottomappbar.BottomAppBar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="5">
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/delete"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/colorPrimary"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/delete"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/delete"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/delete"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-    </LinearLayout>
-
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp"
+        app:backgroundTint="@color/branco">
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,5 +39,17 @@
         android:src="@drawable/add"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bar"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        android:layout_gravity="bottom"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
+        app:menu="@menu/navigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

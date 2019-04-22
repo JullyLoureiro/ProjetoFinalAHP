@@ -8,11 +8,11 @@
         />
 
     <solid
-        android:color="@color/colorAccent"
+        android:color="@color/colorSecond"
         />
 
     <stroke
         android:width="2dp"
-        android:color="@color/colorAccent"
+        android:color="@color/colorSecond"
         />
 </shape>

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorSecond">#0BA8A8</color>
+    <!--<color name="colorSecond2">#7A1745</color>-->
+    <color name="colorTerc">#FC7704</color>
+    <color name="colorPrimary">#FFA400</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
     <color name="preto">#000000</color>
     <color name="branco">#ffffff</color>
     <color name="cinza">#aca9aa</color>
-    <color name="rosa">#ce94b8</color>
+    <color name="transparent">#00CE94B8</color>
+
 </resources>

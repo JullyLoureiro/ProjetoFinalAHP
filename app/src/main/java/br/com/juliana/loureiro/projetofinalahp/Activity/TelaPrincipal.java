@@ -25,6 +25,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
     //private RelativeLayout rltPrincipal;
     private ListView listObjetivos;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,14 @@ public class TelaPrincipal extends AppCompatActivity {
 
         declaraObjetos();
 
-        /*BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
+        navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        navigation.setSelectedItemId(R.id.navigation_home);
 
     }
 
-  /*  private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -47,18 +50,16 @@ public class TelaPrincipal extends AppCompatActivity {
                 case R.id.navigation_home:
 
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_ahp:
+                    navigation.setSelectedItemId(R.id.navigation_home);
                     Intent intent = new Intent(TelaPrincipal.this, SobreAHP.class);
                     startActivity(intent);
                     finish();
                     return true;
-                case R.id.navigation_notifications:
-
-                    return true;
             }
             return false;
         }
-    };*/
+    };
 
     private void declaraObjetos() {
         //rltPrincipal = findViewById(R.id.rltPrincipal);
@@ -75,7 +76,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation, menu);
+        getMenuInflater().inflate(R.menu.optionsmenu, menu);
         return true;
         //return super.onCreateOptionsMenu(menu);
     }
