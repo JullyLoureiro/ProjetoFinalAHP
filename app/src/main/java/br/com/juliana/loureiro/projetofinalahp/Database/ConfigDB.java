@@ -33,6 +33,7 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         String CREATE_CRITERIO = "CREATE TABLE CRITERIOS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
                 "DESCRICAO TEXT " +
                 " )";
 
@@ -40,10 +41,46 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         String CREATE_CRITERIO_TEMP = "CREATE TABLE CRITERIOS_TEMP ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
                 "DESCRICAO TEXT " +
                 " )";
 
         db.execSQL(CREATE_CRITERIO_TEMP);
+
+        String CREATE_ALTERNATIVAS = "CREATE TABLE ALTERNATIVAS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
+                "DESCRICAO TEXT " +
+                " )";
+
+        db.execSQL(CREATE_ALTERNATIVAS);
+
+        String CREATE_ALTERNATIVAS_TEMP = "CREATE TABLE ALTERNATIVAS_TEMP ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
+                "DESCRICAO TEXT " +
+                " )";
+
+        db.execSQL(CREATE_ALTERNATIVAS_TEMP);
+
+        String CREATE_COMPARACRITERIO = "CREATE TABLE COMPARA_CRITERIOS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRIT1 INTEGER, " +
+                "IDCRIT2 INTEGER, " +
+                "IMPORTANCIA INTEGER " +
+                " )";
+
+        db.execSQL(CREATE_COMPARACRITERIO);
+
+        String CREATE_COMPARACRITERIO_TEMP = "CREATE TABLE COMPARA_CRITERIOS_TEMP ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRIT1 INTEGER, " +
+                "IDCRIT2 INTEGER, " +
+                "IMPORTANCIA INTEGER " +
+                " )";
+
+        db.execSQL(CREATE_COMPARACRITERIO_TEMP);
+
 
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");

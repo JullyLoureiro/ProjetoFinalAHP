@@ -34,7 +34,7 @@ public class ObjetivoDao {
             valores.put(ObjetivoBean.TITULO, objetivoBean.getTitulo());
             valores.put(ObjetivoBean.DESCRICAO, objetivoBean.getDescricao());
 
-            db.insert(ObjetivoBean.TABELA, null, valores);
+            db.insert(ObjetivoBean.TABELA_TEMP, null, valores);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class ObjetivoDao {
 
     public boolean deletaObjetivo(int id) {
         try {
-            db.execSQL("DELETE FROM  \" + ObjetivoBean.TABELA + \"WHERE ID = " + id);
+            db.execSQL("DELETE FROM  " + ObjetivoBean.TABELA + "WHERE ID = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

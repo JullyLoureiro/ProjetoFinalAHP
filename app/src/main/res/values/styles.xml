@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorSecond</item>
+        <item name="android:fontFamily">@font/didactgothic</item>
     </style>
 
     <style name="AppCompat.TelaCheia" parent="Theme.AppCompat.NoActionBar">

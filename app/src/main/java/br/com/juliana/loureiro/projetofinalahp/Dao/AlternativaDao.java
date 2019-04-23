@@ -8,29 +8,30 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
-public class CriterioDao {
+public class AlternativaDao {
     private Context context;
     private Cursor cursor;
     private SQLiteDatabase db;
     private ConfigDB banco;
 
-    public CriterioDao(Context context) {
+    public AlternativaDao(Context context) {
         this.context = context;
         banco = new ConfigDB(context);
         db = banco.getReadableDatabase();
     }
 
-    public boolean insereCriterio(CriterioBean criterioBean) {
+    public boolean insereAlternativa(AlternativaBean alternativaBean) {
         try {
             ContentValues valores;
 
             db = banco.getWritableDatabase();
             valores = new ContentValues();
-            valores.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
-            db.insert(CriterioBean.TABELA_temp, null, valores);
+            valores.put(AlternativaBean.DESCRICAO, alternativaBean.getDescricao());
+            db.insert(AlternativaBean.TABELA_temp, null, valores);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,9 +42,9 @@ public class CriterioDao {
 
     }
 
-    public boolean deletaCriterio(int id) {
+    public boolean deletaAlternativa(int id) {
         try {
-            db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp + " WHERE ID = " + id);
+            db.execSQL("DELETE FROM " + AlternativaBean.TABELA_temp + " WHERE ID = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,18 +55,18 @@ public class CriterioDao {
 
     }
 
-    public List<CriterioBean> carregaCriterios() {
-        List<CriterioBean> lista = new ArrayList<>();
+    public List<AlternativaBean> carregaAlternativas() {
+        List<AlternativaBean> lista = new ArrayList<>();
         try {
-            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+            cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA_temp, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
-                    CriterioBean criterioBean= new CriterioBean();
-                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
-                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
+                    AlternativaBean alternativaBean= new AlternativaBean();
+                    alternativaBean.setDescricao(cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO)));
+                    alternativaBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
 
-                    lista.add(criterioBean);
+                    lista.add(alternativaBean);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {

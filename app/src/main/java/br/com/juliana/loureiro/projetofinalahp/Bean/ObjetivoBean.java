@@ -5,6 +5,7 @@ public class ObjetivoBean {
     public static String TITULO = "TITULO";
     public static String DESCRICAO= "DESCRICAO";
     public static String TABELA = "OBJETIVOS";
+    public static String TABELA_TEMP = "OBJETIVOS_TEMP";
 
     private int id;
     private String titulo;

@@ -8,11 +8,11 @@
         />
 
     <solid
-        android:color="@color/colorSecond"
+        android:color="@color/branco"
         />
 
     <stroke
         android:width="2dp"
-        android:color="@color/colorSecond"
+        android:color="@color/branco"
         />
 </shape>

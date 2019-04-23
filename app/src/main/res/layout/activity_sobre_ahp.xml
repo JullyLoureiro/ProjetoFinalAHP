@@ -3,7 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/shape_gradient"
     android:layout_height="match_parent"
     tools:context=".Activity.SobreAHP">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_branco"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -16,8 +16,4 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="ALTERNATIVAS" />
 
-    <item
-        android:id="@+id/pref"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="PREFERÊNCIAS" />
 </menu>

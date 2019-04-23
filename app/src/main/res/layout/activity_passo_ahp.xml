@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/shape_gradient"
     android:layout_height="match_parent">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -12,12 +13,14 @@
         app:menu="@menu/passo_ahp" />
 
     <RelativeLayout
+        android:background="@drawable/shape_branco"
         android:id="@+id/rltobjetivo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btncontinuar"
         android:layout_below="@+id/navigation"
         android:layout_marginEnd="10dp"
+        android:padding="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:visibility="visible">
@@ -78,6 +81,8 @@
         android:layout_below="@+id/navigation"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
+        android:background="@drawable/shape_branco"
+        android:padding="10dp"
         android:layout_marginTop="10dp"
         android:visibility="gone">
 
@@ -129,6 +134,8 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:background="@drawable/shape_branco"
+        android:padding="10dp"
         android:id="@+id/rltalternativa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -169,6 +176,7 @@
                 android:id="@+id/btnaddalternativa"
                 android:layout_width="match_parent"
                 app:fabSize="mini"
+                android:onClick="addAlternativa"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:src="@drawable/add" />
@@ -185,181 +193,12 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rltpreferencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btncontinuar"
-        android:layout_below="@+id/navigation"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/txvpergunta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Exemplo?"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-
-
-        <ImageView
-            android:id="@+id/left"
-            android:src="@drawable/left_arrow"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-
-        <ImageView
-            android:id="@+id/right"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/rigth_arrow"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-
-        <LinearLayout
-            android:id="@+id/lnrprefcriterio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txvpergunta"
-            android:layout_marginTop="50dp"
-
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CRITÉRIO 1"
-                android:textAlignment="textStart"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="CRITÉRIO 2"
-                android:textAlignment="textEnd"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnrescala"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrprefcriterio"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="9"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="7"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="7"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="9"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lnrescala"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="26dp"
-            android:max="8"
-            android:progress="4" />
-
-        <!--
-        android:progressDrawable="@drawable/delete"
-              android:background="@color/colorPrimary"
-            android:thumb="@drawable/ic_dashboard_black_24dp"
-            android:progressTint="@color/colorPrimary"
-            android:secondaryProgressTint="@color/colorPrimary"
-        -->
-
-
-    </RelativeLayout>
-
     <Button
         android:id="@+id/btncontinuar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-       android:layout_margin="20dp"
+       android:layout_margin="10dp"
         android:background="@drawable/shape_button"
         android:onClick="continuar"
         android:text="Continuar"
