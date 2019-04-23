@@ -7,7 +7,8 @@
     <color name="colorPrimaryDark">#EC407A</color>
     <color name="preto">#000000</color>
     <color name="branco">#ffffff</color>
-    <color name="cinza">#aca9aa</color>
+    <color name="cinza">#D5D3D3</color>
+    <color name="cinzaescuro">#818181</color>
     <color name="transparent">#00CE94B8</color>
 
 </resources>

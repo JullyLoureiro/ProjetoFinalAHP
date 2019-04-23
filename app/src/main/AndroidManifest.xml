@@ -23,7 +23,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.TelaFuncaoAHP" />
-        <activity android:name=".Activity.SobreAHP"></activity>
+        <activity android:name=".Activity.SobreAHP"
+            android:label="Sobre AHP"></activity>
+        <activity android:name=".Activity.Preferencias"
+            android:label="Preferências"></activity>
     </application>
 
 </manifest>

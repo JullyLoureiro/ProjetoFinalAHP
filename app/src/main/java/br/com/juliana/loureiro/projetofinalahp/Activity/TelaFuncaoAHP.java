@@ -47,6 +47,8 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         declaraObjetos();
+        new CriterioDao(this).deletaTemp();
+        new AlternativaDao(this).deletaTemp();
     }
 
 

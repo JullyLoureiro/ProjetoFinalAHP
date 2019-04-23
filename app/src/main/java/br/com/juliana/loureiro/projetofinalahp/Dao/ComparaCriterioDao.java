@@ -77,4 +77,30 @@ public class ComparaCriterioDao {
         return lista;
     }
 
+    public void atualizaImportancia(ComparaCriterioBean comparaCriterioBean, int critimport) {
+        try {
+            ContentValues content = new ContentValues();
+            if(critimport==1) {
+                content.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+            } else {
+                content.put(ComparaCriterioBean.IMPORTANCIA, (1/comparaCriterioBean.getImportancia()));
+            }
+            String where = "IDCRIT1 = ? AND IDCRIT2 = ?";
+            String argumentos[] = {String.valueOf(comparaCriterioBean.getIdcrit1()), String.valueOf(comparaCriterioBean.getIdcrit2())};
+            db.update(CriterioBean.TABELA_temp, content, where, argumentos);
+
+
+           content = new ContentValues();
+            if(critimport==1) {
+                content.put(ComparaCriterioBean.IMPORTANCIA, (1/comparaCriterioBean.getImportancia()));
+            } else {
+                content.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+            }
+            where = "IDCRIT2 = ? AND IDCRIT1 = ?";
+            String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdcrit1()), String.valueOf(comparaCriterioBean.getIdcrit2())};
+            db.update(CriterioBean.TABELA_temp, content, where, argumentos2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

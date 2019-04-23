@@ -55,6 +55,19 @@ public class AlternativaDao {
 
     }
 
+    public boolean deletaTemp() {
+        try {
+            db.execSQL("DELETE FROM " + AlternativaBean.TABELA_temp);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public List<AlternativaBean> carregaAlternativas() {
         List<AlternativaBean> lista = new ArrayList<>();
         try {

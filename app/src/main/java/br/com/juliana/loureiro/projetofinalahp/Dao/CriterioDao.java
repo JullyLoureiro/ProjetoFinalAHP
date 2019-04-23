@@ -54,6 +54,19 @@ public class CriterioDao {
 
     }
 
+    public boolean deletaTemp() {
+        try {
+            db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp );
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public List<CriterioBean> carregaCriterios() {
         List<CriterioBean> lista = new ArrayList<>();
         try {

@@ -11,13 +11,13 @@ public class ComparaCriterioBean {
     private int id;
     private int idcrit1;
     private int idcrit2;
-    private int importancia;
+    private float importancia;
 
-    public int getImportancia() {
+    public float getImportancia() {
         return importancia;
     }
 
-    public void setImportancia(int importancia) {
+    public void setImportancia(float importancia) {
         this.importancia = importancia;
     }
 

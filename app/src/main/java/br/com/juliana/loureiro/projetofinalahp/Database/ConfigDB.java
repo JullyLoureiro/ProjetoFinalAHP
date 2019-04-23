@@ -67,7 +67,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
                 "IDCRIT2 INTEGER, " +
-                "IMPORTANCIA INTEGER " +
+                "IMPORTANCIA FLOAT " +
                 " )";
 
         db.execSQL(CREATE_COMPARACRITERIO);
@@ -76,7 +76,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
                 "IDCRIT2 INTEGER, " +
-                "IMPORTANCIA INTEGER " +
+                "IMPORTANCIA FLOAT " +
                 " )";
 
         db.execSQL(CREATE_COMPARACRITERIO_TEMP);
