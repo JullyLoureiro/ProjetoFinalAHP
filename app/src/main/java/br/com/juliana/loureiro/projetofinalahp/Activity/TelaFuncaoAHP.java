@@ -12,8 +12,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +36,8 @@ import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class TelaFuncaoAHP extends AppCompatActivity {
 
-    private RelativeLayout rltobjetivo, rltcriterio, rltalternativa;
-    private BottomNavigationView navigation;
-    public static ListView listCriterios;
-    public static ListView listAlternativas;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,56 +47,6 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         declaraObjetos();
-
-        navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.obj:
-                    rltobjetivo.setVisibility(View.VISIBLE);
-                    rltcriterio.setVisibility(View.GONE);
-                    rltalternativa.setVisibility(View.GONE);
-                    return true;
-                case R.id.crit:
-                    rltobjetivo.setVisibility(View.GONE);
-                    rltcriterio.setVisibility(View.VISIBLE);
-                    rltalternativa.setVisibility(View.GONE);
-                    return true;
-                case R.id.alt:
-                    rltobjetivo.setVisibility(View.GONE);
-                    rltcriterio.setVisibility(View.GONE);
-                    rltalternativa.setVisibility(View.VISIBLE);
-                    cadastraCompCriterio();
-                    return true;
-            }
-            return false;
-        }
-    };
-
-    private void cadastraCompCriterio() {
-        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
-
-        for (int i = 0; i < listaCriterios.size(); i++) {
-            for (int j = 0; j < listaCriterios.size(); j++) {
-                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
-                comparaCriterioBean.setIdcrit1(listaCriterios.get(i).getId());
-                comparaCriterioBean.setIdcrit2(listaCriterios.get(j).getId());
-                if(i==j) {
-                    comparaCriterioBean.setImportancia(1);
-                } else {
-                    comparaCriterioBean.setImportancia(0);
-                }
-
-                new ComparaCriterioDao(this).insereComparacoes(comparaCriterioBean);
-            }
-        }
-
     }
 
 
@@ -112,65 +65,50 @@ public class TelaFuncaoAHP extends AppCompatActivity {
     }
 
     private void declaraObjetos() {
-        rltobjetivo = findViewById(R.id.rltobjetivo);
-        rltcriterio = findViewById(R.id.rltcriterio);
-        rltalternativa = findViewById(R.id.rltalternativa);
 
-        listCriterios = findViewById(R.id.listCriterios);
+        viewPager = findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        listAlternativas = findViewById(R.id.listAlternativas);
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
-    //CLICKS
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new OneFragment(this), "OBJETIVO");
+        adapter.addFragment(new TwoFragment(this), "CRITÉRIOS");
+        adapter.addFragment(new ThreeFragment(this), "ALTERNATIVAS");
+        viewPager.setAdapter(adapter);
+    }
 
-    public void addCriterio(View view) {
-        EditText edtcriterio = findViewById(R.id.edtcriterio);
-        if (edtcriterio.getText().length() > 0) {
-            CriterioBean criterioBean = new CriterioBean();
-            criterioBean.setDescricao(edtcriterio.getText().toString());
-            new CriterioDao(this).insereCriterio(criterioBean);
-            List<CriterioBean> lista = new CriterioDao(this).carregaCriterios();
-            listCriterios.setAdapter(new CriteriosList(lista, this));
-            edtcriterio.setText("");
-        } else {
-            edtcriterio.setError("Informe a descrição!");
-            edtcriterio.requestFocus();
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        Utils.hideKeyboard(this, edtcriterio);
-    }
-
-    public void addAlternativa(View view) {
-        EditText edtalternativa = findViewById(R.id.edtalternativa);
-        if (edtalternativa.getText().length() > 0) {
-            AlternativaBean alternativaBean = new AlternativaBean();
-            alternativaBean.setDescricao(edtalternativa.getText().toString());
-            new AlternativaDao(this).insereAlternativa(alternativaBean);
-            List<AlternativaBean> lista = new AlternativaDao(this).carregaAlternativas();
-            listAlternativas.setAdapter(new AlternativasList(lista, this));
-            edtalternativa.setText("");
-        } else {
-            edtalternativa.setError("Informe a descrição!");
-            edtalternativa.requestFocus();
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
-        Utils.hideKeyboard(this, edtalternativa);
-    }
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
 
-    public void continuar(View v) {
-        if (rltobjetivo.getVisibility() == View.VISIBLE) {
-            navigation.setSelectedItemId(R.id.crit);
-            rltobjetivo.setVisibility(View.GONE);
-            rltcriterio.setVisibility(View.VISIBLE);
-            rltalternativa.setVisibility(View.GONE);
-        } else if (rltcriterio.getVisibility() == View.VISIBLE) {
-            navigation.setSelectedItemId(R.id.alt);
-            rltobjetivo.setVisibility(View.GONE);
-            rltcriterio.setVisibility(View.GONE);
-            rltalternativa.setVisibility(View.VISIBLE);
-        } else if (rltalternativa.getVisibility() == View.VISIBLE) {
-            cadastraCompCriterio();
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
+
 }

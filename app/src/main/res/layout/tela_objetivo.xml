@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.juliana.loureiro.projetofinalahp.Activity.OneFragment">
+
+    <RelativeLayout
+        android:background="@drawable/shape_branco"
+        android:id="@+id/rltobjetivo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/objetivotitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OBJETIVO"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Título"
+            android:textColor="@color/preto"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edttitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titulo"
+            android:hint="Título" />
+
+        <TextView
+            android:id="@+id/descricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edttitulo"
+            android:layout_marginTop="10dp"
+            android:text="Descrição"
+            android:textColor="@color/preto"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edtdescricao"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_below="@+id/descricao"
+            android:gravity="top"
+            android:hint="Descrição"
+            android:inputType="textMultiLine" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

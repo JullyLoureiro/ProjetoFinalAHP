@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Activity.TelaFuncaoAHP;
+import br.com.juliana.loureiro.projetofinalahp.Activity.ThreeFragment;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
@@ -62,7 +63,7 @@ public class AlternativasList extends BaseAdapter {
             public void onClick(View view) {
                 new AlternativaDao(activity).deletaAlternativa(alternativaBeans.get(position).getId());
                 alternativaBeans.remove(position);
-                TelaFuncaoAHP.listCriterios.setAdapter(new AlternativasList(alternativaBeans, activity));
+                ThreeFragment.listAlternativas.setAdapter(new AlternativasList(alternativaBeans, activity));
             }
         });
 

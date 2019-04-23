@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Activity.TelaFuncaoAHP;
+import br.com.juliana.loureiro.projetofinalahp.Activity.TwoFragment;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
@@ -62,7 +63,7 @@ public class CriteriosList extends BaseAdapter {
             public void onClick(View view) {
                 new CriterioDao(activity).deletaCriterio(criterios.get(position).getId());
                 criterios.remove(position);
-                TelaFuncaoAHP.listCriterios.setAdapter(new CriteriosList(criterios, activity));
+                TwoFragment.listCriterios.setAdapter(new CriteriosList(criterios, activity));
             }
         });
 

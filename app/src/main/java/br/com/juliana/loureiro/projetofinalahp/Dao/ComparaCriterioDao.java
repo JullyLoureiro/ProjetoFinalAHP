@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
@@ -29,7 +32,7 @@ public class ComparaCriterioDao {
                     + ComparaCriterioBean.IDCRIT1 + " = " + comparaCriterioBean.getIdcrit1() +
                     " AND " + ComparaCriterioBean.IDCRIT2 + " = " + comparaCriterioBean.getIdcrit2(), null);
 
-            if(cursor.getCount()<=0) {
+            if (cursor.getCount() <= 0) {
                 ContentValues valores;
 
                 db = banco.getWritableDatabase();
@@ -46,6 +49,32 @@ public class ComparaCriterioDao {
             db.close();
         }
         return false;
+    }
+
+    public List<ComparaCriterioBean> carregaComparacoes() {
+        List<ComparaCriterioBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+
+                if(comparaCriterioBean.getIdcrit1()!= comparaCriterioBean.getIdcrit2()) {
+                    lista.add(comparaCriterioBean);
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
     }
 
 }

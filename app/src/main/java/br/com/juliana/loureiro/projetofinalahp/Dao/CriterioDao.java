@@ -61,7 +61,7 @@ public class CriterioDao {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
-                    CriterioBean criterioBean= new CriterioBean();
+                    CriterioBean criterioBean = new CriterioBean();
                     criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
                     criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
 
@@ -74,6 +74,21 @@ public class CriterioDao {
         return lista;
     }
 
+    public String retornaDescricao(int id) {
+        try {
+            cursor = db.rawQuery("SELECT " + CriterioBean.DESCRICAO + " FROM " + CriterioBean.TABELA_temp +
+                    " WHERE " + CriterioBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public void atualizaCriterio(CriterioBean criterioBean) {
         try {
             ContentValues content = new ContentValues();
@@ -81,7 +96,7 @@ public class CriterioDao {
             String where = "ID = ?";
             String argumentos[] = {String.valueOf(criterioBean.getId())};
             db.update(CriterioBean.TABELA_temp, content, where, argumentos);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
