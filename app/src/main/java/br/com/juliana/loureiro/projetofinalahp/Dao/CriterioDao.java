@@ -113,4 +113,14 @@ public class CriterioDao {
             e.printStackTrace();
         }
     }
+
+    public int retornaQtdCriterios(){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+           return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

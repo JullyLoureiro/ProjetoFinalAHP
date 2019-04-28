@@ -27,6 +27,8 @@
             android:label="Sobre AHP"></activity>
         <activity android:name=".Activity.Preferencias"
             android:label="Preferências"></activity>
+        <activity android:name=".Activity.Resultados"
+            android:label="Resultados"></activity>
     </application>
 
 </manifest>

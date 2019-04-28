@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rltprincipal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_branco"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lnrprincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/delete" />
+
+        <TextView
+            android:id="@+id/txtmensagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_button"
+            android:text="SIM"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

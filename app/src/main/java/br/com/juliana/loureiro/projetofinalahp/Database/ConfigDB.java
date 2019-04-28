@@ -81,6 +81,30 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_COMPARACRITERIO_TEMP);
 
+        String CREATE_SOMACOLUNA = "CREATE TABLE SOMA_COLUNA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRIT INTEGER, " +
+                "SOMA FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SOMACOLUNA);
+
+        //PESO DOS CRITERIOS
+        String CREATE_SOMALINHA = "CREATE TABLE PESO_CRITERIOS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRIT INTEGER, " +
+                "PESO FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SOMALINHA);
+
+        String CREATE_MATRIZCRITERIO_NORMALIZADA = "CREATE TABLE CRITERIO_NORMALIZADA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRIT1 INTEGER, " +
+                "IDCRIT2 INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+        db.execSQL(CREATE_MATRIZCRITERIO_NORMALIZADA);
 
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");

@@ -1,43 +1,45 @@
 package br.com.juliana.loureiro.projetofinalahp.Activity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
-import br.com.juliana.loureiro.projetofinalahp.ListAdapter.AlternativasList;
-import br.com.juliana.loureiro.projetofinalahp.ListAdapter.CriteriosList;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
-import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class TelaFuncaoAHP extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+   //public static float [][] matrizCrit;
+   // public static float [][] matrizCritNormalizada;
+
+  //  public static float [][] matrizAlt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,10 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         declaraObjetos();
+        new ObjetivoDao(this).deletaTemp();
         new CriterioDao(this).deletaTemp();
         new AlternativaDao(this).deletaTemp();
+        new ComparaCriterioDao(this).deletaTemp();
     }
 
 
@@ -56,17 +60,82 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        super.onBackPressed();
+        alerta();
+        //super.onBackPressed();
+    }
+
+    private void alerta() {
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
+
+        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
+        mensagem.setText("Tem certeza que deseja voltar?");
+        Button yes = alertLayout.findViewById(R.id.yes);
+        ImageView close = alertLayout.findViewById(R.id.close);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+
+        final AlertDialog dialog = alert.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
+        switch (item.getItemId()) {
+            case R.id.avancar:
+
+                List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
+              //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
+                for (int i = 0; i < listaCriterios.size(); i++) {
+                    for (int j = 0; j < listaCriterios.size(); j++) {
+                        ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                        comparaCriterioBean.setIdcrit1(listaCriterios.get(i).getId());
+                        comparaCriterioBean.setIdcrit2(listaCriterios.get(j).getId());
+                        if (i == j) {
+                            comparaCriterioBean.setImportancia(1);
+                        } else {
+                            comparaCriterioBean.setImportancia(0);
+                        }
+
+                        new ComparaCriterioDao(this).insereComparacoes(comparaCriterioBean);
+                    }
+                }
+
+                Intent intent = new Intent(this, Preferencias.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                onBackPressed();
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     private void declaraObjetos() {
+        //matrizCrit = new float[][]{};
+        //matrizAlt = new float[][]{};
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -74,6 +143,16 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.optionsmenu, menu);
+        MenuItem ajuda = menu.findItem(R.id.ajuda);
+        MenuItem avancar = menu.findItem(R.id.avancar);
+        ajuda.setVisible(false);
+        avancar.setVisible(true);
+        return true;
     }
 
     private void setupViewPager(ViewPager viewPager) {

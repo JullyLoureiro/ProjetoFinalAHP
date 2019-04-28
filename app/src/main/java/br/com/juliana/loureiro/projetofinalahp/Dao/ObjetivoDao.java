@@ -25,6 +25,19 @@ public class ObjetivoDao {
         db = banco.getReadableDatabase();
     }
 
+    public boolean deletaTemp() {
+        try {
+            db.execSQL("DELETE FROM " + ObjetivoBean.TABELA_TEMP);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public boolean insereObjetivo(ObjetivoBean objetivoBean) {
         try {
             ContentValues valores;

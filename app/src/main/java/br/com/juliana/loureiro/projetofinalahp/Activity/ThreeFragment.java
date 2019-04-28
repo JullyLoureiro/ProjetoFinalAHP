@@ -50,7 +50,6 @@ public class ThreeFragment extends Fragment {
         FloatingActionButton add = view.findViewById(R.id.btnaddalternativa);
         listAlternativas = view.findViewById(R.id.listAlternativas);
         final EditText edtalternativa = view.findViewById(R.id.edtalternativa);
-        FloatingActionButton btncontinuar = view.findViewById(R.id.btncontinuar);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,32 +68,6 @@ public class ThreeFragment extends Fragment {
                 }
 
                 Utils.hideKeyboard(activity, edtalternativa);
-            }
-        });
-
-        btncontinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<CriterioBean> listaCriterios = new CriterioDao(activity).carregaCriterios();
-
-                for (int i = 0; i < listaCriterios.size(); i++) {
-                    for (int j = 0; j < listaCriterios.size(); j++) {
-                        ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
-                        comparaCriterioBean.setIdcrit1(listaCriterios.get(i).getId());
-                        comparaCriterioBean.setIdcrit2(listaCriterios.get(j).getId());
-                        if(i==j) {
-                            comparaCriterioBean.setImportancia(1);
-                        } else {
-                            comparaCriterioBean.setImportancia(0);
-                        }
-
-                        new ComparaCriterioDao(activity).insereComparacoes(comparaCriterioBean);
-                    }
-                }
-
-                Intent intent = new Intent(activity, Preferencias.class);
-                activity.startActivity(intent);
-                activity.finish();
             }
         });
 
