@@ -67,6 +67,32 @@ public class ComparaCriterioDao {
     public List<ComparaCriterioBean> carregaComparacoes() {
         List<ComparaCriterioBean> lista = new ArrayList<>();
 
+        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp + " WHERE (" +
+                ComparaCriterioBean.IDCRIT2 + " <> " + ComparaCriterioBean.IDCRIT1 + ") AND " +
+                ComparaCriterioBean.IDCRIT1 + " < " + ComparaCriterioBean.IDCRIT2, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
+    public List<ComparaCriterioBean> carregaComparacoes2() {
+        List<ComparaCriterioBean> lista = new ArrayList<>();
+
         cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -77,11 +103,9 @@ public class ComparaCriterioDao {
                 comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
                 comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
                 comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
-                comparaCriterioBean.setImportancia(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
 
-                if (comparaCriterioBean.getIdcrit1() != comparaCriterioBean.getIdcrit2()) {
-                    lista.add(comparaCriterioBean);
-                }
 
             } while (cursor.moveToNext());
         }
@@ -135,7 +159,7 @@ public class ComparaCriterioDao {
                 comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
                 comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
                 comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
-                comparaCriterioBean.setImportancia(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
                 lista.add(comparaCriterioBean);
 
             } while (cursor.moveToNext());
@@ -144,4 +168,12 @@ public class ComparaCriterioDao {
 
         return lista;
     }
+
+    /*public float carregaImportancia(int id){
+        try{
+
+        }catch (Exception ignored) {
+
+        }
+    } */
 }

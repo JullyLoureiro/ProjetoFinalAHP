@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,29 +39,22 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void declaraObjetos() {
         imgsplash = findViewById(R.id.imgsplash);
 
-       // Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-       // anim.reset();
-       // RelativeLayout l = findViewById(R.id.lin_lay);
-      //  l.clearAnimation();
-       // l.startAnimation(anim);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        anim.reset();
+        LinearLayout l = findViewById(R.id.lnr);
+        l.clearAnimation();
+        l.startAnimation(anim);
 
-    //    anim = AnimationUtils.loadAnimation(this, R.anim.translate);
-     //   anim.reset();
-      //  imgsplash.clearAnimation();
-      //  imgsplash.startAnimation(anim);
+        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+        anim.reset();
+        imgsplash.clearAnimation();
+        imgsplash.startAnimation(anim);
 
-        //RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-        //anim.setInterpolator(new LinearInterpolator());
-       // anim.setRepeatCount(Animation.INFINITE); //Repeat animation indefinitely
-        //anim.setDuration(400); //Put desired duration per anim cycle here, in milliseconds
-
-      //  imgsplash.startAnimation(anim);
     }
 
     private void exibirTelaPrincipal() {
         Intent intent = new Intent(SplashScreenActivity.this,
-                TelaPrincipal.class);
+                Tutorial.class);
         startActivity(intent);
         finish();
     }

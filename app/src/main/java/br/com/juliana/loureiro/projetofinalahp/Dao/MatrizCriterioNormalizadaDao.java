@@ -46,4 +46,8 @@ public class MatrizCriterioNormalizadaDao {
         }
         return false;
     }
+
+    public void deleta() {
+        db.execSQL("DELETE FROM " + MatrizCriterioNormalizadaBean.TABELA);
+    }
 }

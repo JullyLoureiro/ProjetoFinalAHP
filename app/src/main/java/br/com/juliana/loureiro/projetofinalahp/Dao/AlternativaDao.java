@@ -88,13 +88,13 @@ public class AlternativaDao {
         return lista;
     }
 
-    public void atualizaCriterio(CriterioBean criterioBean) {
+    public void atualizaAlternativa(AlternativaBean alternativaBean) {
         try {
             ContentValues content = new ContentValues();
-            content.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
+            content.put(AlternativaBean.DESCRICAO, alternativaBean.getDescricao());
             String where = "ID = ?";
-            String argumentos[] = {String.valueOf(criterioBean.getId())};
-            db.update(CriterioBean.TABELA_temp, content, where, argumentos);
+            String argumentos[] = {String.valueOf(alternativaBean.getId())};
+            db.update(AlternativaBean.TABELA_temp, content, where, argumentos);
         }catch (Exception e) {
             e.printStackTrace();
         }

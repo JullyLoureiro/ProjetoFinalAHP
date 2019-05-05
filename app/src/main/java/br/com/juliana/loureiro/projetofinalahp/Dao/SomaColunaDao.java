@@ -62,4 +62,8 @@ public class SomaColunaDao {
         }
         return 0;
     }
+
+    public void deleta() {
+        db.execSQL("DELETE FROM " + SomaColunaBean.TABELA);
+    }
 }

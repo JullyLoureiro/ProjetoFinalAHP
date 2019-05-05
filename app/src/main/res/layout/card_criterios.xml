@@ -21,6 +21,18 @@
             android:textColor="@color/preto"
             android:textSize="18sp" />
 
+        <EditText
+            android:id="@+id/edttitulo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Critério"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/preto"
+            android:textSize="18sp" />
+
 
         <ImageView
             android:id="@+id/editar"

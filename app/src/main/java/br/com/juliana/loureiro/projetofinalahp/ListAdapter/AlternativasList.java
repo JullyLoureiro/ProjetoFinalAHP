@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +46,8 @@ public class AlternativasList extends BaseAdapter {
         @SuppressLint("ViewHolder") View v = activity.getLayoutInflater()
                 .inflate(R.layout.card_criterios, viewGroup, false);
 
-        TextView titulo = v.findViewById(R.id.titulo);
+        final TextView titulo = v.findViewById(R.id.titulo);
+        final EditText edttitulo = v.findViewById(R.id.edttitulo);
         ImageView editar = v.findViewById(R.id.editar);
         ImageView apagar = v.findViewById(R.id.apagar);
 
@@ -54,7 +56,18 @@ public class AlternativasList extends BaseAdapter {
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(titulo.getVisibility() == View.VISIBLE) {
+                    titulo.setVisibility(View.GONE);
+                    edttitulo.setVisibility(View.VISIBLE);
+                    edttitulo.setText(titulo.getText());
+                    edttitulo.requestFocus();
+                } else {
+                    edttitulo.setVisibility(View.GONE);
+                    titulo.setText(edttitulo.getText());
+                    alternativaBeans.get(position).setDescricao(edttitulo.getText().toString());
+                    titulo.setVisibility(View.VISIBLE);
+                    new AlternativaDao(activity).atualizaAlternativa(alternativaBeans.get(position));
+                }
             }
         });
 

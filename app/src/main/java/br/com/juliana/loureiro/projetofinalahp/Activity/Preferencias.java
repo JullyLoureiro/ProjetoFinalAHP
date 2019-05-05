@@ -33,6 +33,7 @@ import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.OnSwip;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class Preferencias extends AppCompatActivity {
     Button criterio1, criterio2;
@@ -55,42 +56,7 @@ public class Preferencias extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        alerta();
-    }
-
-    private void alerta() {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
-
-        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
-        mensagem.setText("Tem certeza que deseja voltar?");
-        Button yes = alertLayout.findViewById(R.id.yes);
-        ImageView close = alertLayout.findViewById(R.id.close);
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setView(alertLayout);
-        alert.setCancelable(true);
-
-        final AlertDialog dialog = alert.create();
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        dialog.show();
-
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        Utils.alerta(this,"Tem certeza que deseja voltar?" );
     }
 
     private void declaraObjetos() {
@@ -106,17 +72,21 @@ public class Preferencias extends AppCompatActivity {
 
             }
 
-            public void onSwipeRight() {
+            public void onSwipeLeft() {
                 i++;
                 criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                 criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
+                //float setSeek = new ComparaCriterioDao(Preferencias.this).carregaImportancia(listaComp.get(i).getId());
+                //seekBar.setProgress(setSeek);
             }
 
-            public void onSwipeLeft() {
+            public void onSwipeRight() {
                if(i>0){
                    i--;
                    criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                    criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
+                  // float setSeek = new ComparaCriterioDao(Preferencias.this).carregaImportancia(listaComp.get(i).getId());
+                   //seekBar.setProgress(setSeek);
                }
             }
 
@@ -245,7 +215,7 @@ public class Preferencias extends AppCompatActivity {
                 }else {
                     Intent intent = new Intent(this, Resultados.class);
                     startActivity(intent);
-                    finish();
+                   //finish();
                 }
 
                 break;

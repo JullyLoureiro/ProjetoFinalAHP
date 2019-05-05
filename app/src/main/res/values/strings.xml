@@ -8,4 +8,7 @@
     <string name="excluir">Excluir</string>
     <string name="principal">Principal</string>
     <string name="sobre">Sobre</string>
+    <string name="next">PRÓXIMO</string>
+    <string name="skip">PULAR</string>
+    <string name="start">COMEÇAR</string>
 </resources>

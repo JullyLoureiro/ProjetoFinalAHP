@@ -29,8 +29,12 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class TelaFuncaoAHP extends AppCompatActivity {
 
@@ -53,6 +57,9 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         new CriterioDao(this).deletaTemp();
         new AlternativaDao(this).deletaTemp();
         new ComparaCriterioDao(this).deletaTemp();
+        new MatrizCriterioNormalizadaDao(this).deleta();
+        new PesoCriteriosDao(this).deleta();
+        new SomaColunaDao(this).deleta();
     }
 
 
@@ -60,43 +67,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        alerta();
-        //super.onBackPressed();
-    }
-
-    private void alerta() {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
-
-        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
-        mensagem.setText("Tem certeza que deseja voltar?");
-        Button yes = alertLayout.findViewById(R.id.yes);
-        ImageView close = alertLayout.findViewById(R.id.close);
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setView(alertLayout);
-        alert.setCancelable(true);
-
-        final AlertDialog dialog = alert.create();
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        dialog.show();
-
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                finish();
-            }
-        });
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        Utils.alerta(this,"Tem certeza que deseja voltar?" );
     }
 
     @Override

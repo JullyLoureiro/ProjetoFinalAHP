@@ -67,6 +67,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
                 "IDCRIT2 INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
 
@@ -76,6 +77,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
                 "IDCRIT2 INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
 
@@ -93,6 +95,8 @@ public class ConfigDB extends SQLiteOpenHelper {
         String CREATE_SOMALINHA = "CREATE TABLE PESO_CRITERIOS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT INTEGER, " +
+                "YMAX FLOAT, " +
+                "TOTALDIVISAO FLOAT, " +
                 "PESO FLOAT " +
                 " )";
 

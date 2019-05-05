@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class ObjetivosList extends BaseAdapter {
@@ -44,7 +45,7 @@ public class ObjetivosList extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         @SuppressLint("ViewHolder") View view = activity.getLayoutInflater()
                 .inflate(R.layout.card_objetivos, parent, false);
 
@@ -68,8 +69,9 @@ public class ObjetivosList extends BaseAdapter {
                                 break;
                             case R.id.resultados:
                                 break;
-                                case R.id.excluir:
-                                    break;
+                            case R.id.excluir:
+                                new ObjetivoDao(activity).deletaObjetivo(objetivos.get(position).getId());
+                                break;
                         }
                         return true;
                     }
