@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
@@ -58,6 +59,37 @@ public class PesoCriteriosDao {
         return pesos;
     }
 
+    public List<PesoCriteriosBean> somaLinhasAlternativa(float qtdcriterios) {
+        List<PesoCriteriosBean> pesos = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT IDALTERNATIVA1, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP  GROUP BY IDALTERNATIVA1", null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                try {
+                    ContentValues valores;
+
+                    db = banco.getWritableDatabase();
+                    valores = new ContentValues();
+                    valores.put(PesoCriteriosBean.IDALTERNATIVA, cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                    valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+
+                    db.insert(PesoCriteriosBean.PESO_ALTERNATIVAS, null, valores);
+
+                    PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                    pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+                    pesos.add(pesoCriteriosBean);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } while (cursor.moveToNext());
+        }
+        return pesos;
+    }
+
     public float retornaSoma(int id) {
         try {
             cursor = db.rawQuery("SELECT " + PesoCriteriosBean.SOMA + " FROM " + PesoCriteriosBean.TABELA +
@@ -93,6 +125,26 @@ public class PesoCriteriosDao {
         }
     }
 
+    public void atualizaYMaxAlternativa(int id, double ymax) {
+        try {
+            cursor = db.rawQuery("SELECT YMAX FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS + " WHERE " + PesoCriteriosBean.IDALTERNATIVA +
+                    " = " + id, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                ymax = ymax + cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.YMAX));
+            }
+
+            ContentValues content = new ContentValues();
+            content.put(PesoCriteriosBean.YMAX, ymax);
+            String where = "IDALTERNATIVA = ?";
+            String argumentos[] = {String.valueOf(id)};
+            db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
+        } catch (Exception ignored) {
+
+        }
+    }
+
     public void atualizaTotalDivisao(int id, float totaldiv) {
         try {
             ContentValues content = new ContentValues();
@@ -100,6 +152,18 @@ public class PesoCriteriosDao {
             String where = "IDCRIT = ?";
             String argumentos[] = {String.valueOf(id)};
             db.update(PesoCriteriosBean.TABELA, content, where, argumentos);
+        } catch (Exception ignored) {
+
+        }
+    }
+
+    public void atualizaTotalDivisaoAlternativa(int id, float totaldiv) {
+        try {
+            ContentValues content = new ContentValues();
+            content.put(PesoCriteriosBean.TOTALDIVISAO, totaldiv);
+            String where = "IDALTERNATIVA = ?";
+            String argumentos[] = {String.valueOf(id)};
+            db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
         } catch (Exception ignored) {
 
         }
@@ -115,6 +179,27 @@ public class PesoCriteriosDao {
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
                     pesoCriteriosBean.setYmax(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.YMAX)));
                     pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(PesoCriteriosBean.IDCRIT)));
+                    pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA)));
+                    lista.add(pesoCriteriosBean);
+
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception ignored) {
+
+        }
+        return lista;
+    }
+
+    public List<PesoCriteriosBean> carregaYMaxAlternativa() {
+        List<PesoCriteriosBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setYmax(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.YMAX)));
+                    pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex(PesoCriteriosBean.IDALTERNATIVA)));
                     pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA)));
                     lista.add(pesoCriteriosBean);
 

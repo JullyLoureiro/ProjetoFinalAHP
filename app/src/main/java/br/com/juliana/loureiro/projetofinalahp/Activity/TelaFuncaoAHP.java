@@ -24,9 +24,12 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
@@ -40,10 +43,10 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-   //public static float [][] matrizCrit;
-   // public static float [][] matrizCritNormalizada;
+    //public static float [][] matrizCrit;
+    // public static float [][] matrizCritNormalizada;
 
-  //  public static float [][] matrizAlt;
+    //  public static float [][] matrizAlt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         new CriterioDao(this).deletaTemp();
         new AlternativaDao(this).deletaTemp();
         new ComparaCriterioDao(this).deletaTemp();
+        new ComparaAlternativaDao(this).deletaTemp();
         new MatrizCriterioNormalizadaDao(this).deleta();
         new PesoCriteriosDao(this).deleta();
         new SomaColunaDao(this).deleta();
@@ -67,7 +71,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Utils.alerta(this,"Tem certeza que deseja voltar?" );
+        Utils.alerta(this, "Tem certeza que deseja voltar?");
     }
 
     @Override
@@ -76,7 +80,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
             case R.id.avancar:
 
                 List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
-              //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
+                //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
                 for (int i = 0; i < listaCriterios.size(); i++) {
                     for (int j = 0; j < listaCriterios.size(); j++) {
                         ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
@@ -89,6 +93,27 @@ public class TelaFuncaoAHP extends AppCompatActivity {
                         }
 
                         new ComparaCriterioDao(this).insereComparacoes(comparaCriterioBean);
+                    }
+                }
+
+                List<AlternativaBean> listaAlternativas = new AlternativaDao(this).carregaAlternativas();
+
+                for (int x = 0; x < listaCriterios.size(); x++) {
+                    for (int i = 0; i < listaAlternativas.size(); i++) {
+                        for (int j = 0; j < listaAlternativas.size(); j++) {
+                            ComparaAlternativaBean alternativaBean = new ComparaAlternativaBean();
+                            alternativaBean.setIdalternativa1(listaAlternativas.get(i).getId());
+                            alternativaBean.setIdalternativa2(listaAlternativas.get(j).getId());
+                            alternativaBean.setIdcriterio(listaCriterios.get(x).getId());
+                            alternativaBean.setIdobjetivo(0);
+                            if (i == j) {
+                                alternativaBean.setImportancia(1);
+                            } else {
+                                alternativaBean.setImportancia(0);
+                            }
+                            new ComparaAlternativaDao(this).insereComparacoes(alternativaBean);
+
+                        }
                     }
                 }
 

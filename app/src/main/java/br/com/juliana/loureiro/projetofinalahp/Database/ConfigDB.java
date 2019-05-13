@@ -73,6 +73,18 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_COMPARACRITERIO);
 
+
+        String CREATE_COMPARAALTERNATIVA = "CREATE TABLE COMPARA_ALTERNATIVA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDALTERNATIVA1 INTEGER, " +
+                "IDALTERNATIVA2 INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_COMPARAALTERNATIVA);
+
         String CREATE_COMPARACRITERIO_TEMP = "CREATE TABLE COMPARA_CRITERIOS_TEMP ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
@@ -83,6 +95,17 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_COMPARACRITERIO_TEMP);
 
+        String CREATE_COMPARAALTERNATIVATEMP = "CREATE TABLE COMPARA_ALTERNATIVATEMP ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDALTERNATIVA1 INTEGER, " +
+                "IDALTERNATIVA2 INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_COMPARAALTERNATIVATEMP);
+
         String CREATE_SOMACOLUNA = "CREATE TABLE SOMA_COLUNA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT INTEGER, " +
@@ -90,6 +113,14 @@ public class ConfigDB extends SQLiteOpenHelper {
                 " )";
 
         db.execSQL(CREATE_SOMACOLUNA);
+
+        String SOMA_COLUNA_ALTERNATIVA = "CREATE TABLE SOMA_COLUNA_ALTERNATIVA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDALT INTEGER, " +
+                "SOMA FLOAT " +
+                " )";
+
+        db.execSQL(SOMA_COLUNA_ALTERNATIVA);
 
         //PESO DOS CRITERIOS
         String CREATE_SOMALINHA = "CREATE TABLE PESO_CRITERIOS ( " +
@@ -102,6 +133,16 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_SOMALINHA);
 
+        String CREATE_SOMALINHA_ALTERNATIVA = "CREATE TABLE PESO_ALTERNATIVAS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDALTERNATIVA INTEGER, " +
+                "YMAX FLOAT, " +
+                "TOTALDIVISAO FLOAT, " +
+                "PESO FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SOMALINHA_ALTERNATIVA);
+
         String CREATE_MATRIZCRITERIO_NORMALIZADA = "CREATE TABLE CRITERIO_NORMALIZADA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
@@ -109,6 +150,15 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IMPORTANCIA FLOAT " +
                 " )";
         db.execSQL(CREATE_MATRIZCRITERIO_NORMALIZADA);
+
+        String CREATE_MATRIZALTERNARTIVA_NORMALIZADA = "CREATE TABLE ALTERNATIVA_NORMALIZADA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDALTERNATIVA1 INTEGER, " +
+                "IDALTERNATIVA2 INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+        db.execSQL(CREATE_MATRIZALTERNARTIVA_NORMALIZADA);
 
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
         db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");

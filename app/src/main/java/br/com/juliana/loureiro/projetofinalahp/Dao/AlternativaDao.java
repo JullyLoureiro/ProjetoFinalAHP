@@ -99,4 +99,19 @@ public class AlternativaDao {
             e.printStackTrace();
         }
     }
+
+    public String retornaDescricao(int id) {
+        try {
+            cursor = db.rawQuery("SELECT " + AlternativaBean.DESCRICAO + " FROM " + AlternativaBean.TABELA_temp +
+                    " WHERE " + AlternativaBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

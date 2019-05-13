@@ -3,16 +3,27 @@ package br.com.juliana.loureiro.projetofinalahp.Bean;
 public class PesoCriteriosBean {
     public static String ID = "ID";
     public static String IDCRIT = "IDCRIT";
+    public static String IDALTERNATIVA = "IDALTERNATIVA";
     public static String SOMA= "PESO";
     public static String YMAX= "YMAX";
     public static String TOTALDIVISAO= "TOTALDIVISAO";
     public static String TABELA = "PESO_CRITERIOS";
+    public static String PESO_ALTERNATIVAS = "PESO_ALTERNATIVAS";
 
     private int id;
     private int idcrit;
     private float peso;
     private float ymax;
     private float totaldivisao;
+    private Integer idalternativa;
+
+    public Integer getIdalternativa() {
+        return idalternativa;
+    }
+
+    public void setIdalternativa(Integer idalternativa) {
+        this.idalternativa = idalternativa;
+    }
 
     public float getTotaldivisao() {
         return totaldivisao;

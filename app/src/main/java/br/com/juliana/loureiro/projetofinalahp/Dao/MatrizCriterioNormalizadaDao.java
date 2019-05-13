@@ -47,6 +47,34 @@ public class MatrizCriterioNormalizadaDao {
         return false;
     }
 
+    public boolean insereMatrizNormalizadaAlternativa(MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean) {
+        try {
+
+            cursor = db.rawQuery("SELECT * FROM " + MatrizCriterioNormalizadaBean.TABELA + " WHERE "
+                    + MatrizCriterioNormalizadaBean.IDALTERNATIVA1 + " = " + matrizCriterioNormalizadaBean.getIdcrit1() +
+                    " AND " + MatrizCriterioNormalizadaBean.IDALTERNATIVA2 + " = " + matrizCriterioNormalizadaBean.getIdcrit2()
+                    + " AND " + MatrizCriterioNormalizadaBean.IDCRITERIO + " = " + matrizCriterioNormalizadaBean.getIdcriterio(), null);
+
+            if (cursor.getCount() <= 0) {
+                ContentValues valores;
+
+                db = banco.getWritableDatabase();
+                valores = new ContentValues();
+                valores.put(MatrizCriterioNormalizadaBean.IDALTERNATIVA1, matrizCriterioNormalizadaBean.getIdalternativa1());
+                valores.put(MatrizCriterioNormalizadaBean.IDALTERNATIVA2, matrizCriterioNormalizadaBean.getIdalternativa2());
+                valores.put(MatrizCriterioNormalizadaBean.IDCRITERIO, matrizCriterioNormalizadaBean.getIdcriterio());
+                valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
+                db.insert(MatrizCriterioNormalizadaBean.TABELA, null, valores);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
     public void deleta() {
         db.execSQL("DELETE FROM " + MatrizCriterioNormalizadaBean.TABELA);
     }

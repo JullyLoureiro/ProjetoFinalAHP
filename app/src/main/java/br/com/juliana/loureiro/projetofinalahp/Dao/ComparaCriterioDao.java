@@ -119,10 +119,8 @@ public class ComparaCriterioDao {
             ContentValues content = new ContentValues();
             if (critimport == 1) {
                 content.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
-                // TelaFuncaoAHP.matrizCrit[comparaCriterioBean.getI()][comparaCriterioBean.getJ()] = comparaCriterioBean.getImportancia();
             } else {
                 content.put(ComparaCriterioBean.IMPORTANCIA, (1 / comparaCriterioBean.getImportancia()));
-                // TelaFuncaoAHP.matrizCrit[comparaCriterioBean.getI()][comparaCriterioBean.getJ()] = (1/comparaCriterioBean.getImportancia());
             }
             String where = "IDCRIT1 = ? AND IDCRIT2 = ?";
             String argumentos[] = {String.valueOf(comparaCriterioBean.getIdcrit1()), String.valueOf(comparaCriterioBean.getIdcrit2())};
@@ -132,10 +130,8 @@ public class ComparaCriterioDao {
             content = new ContentValues();
             if (critimport == 1) {
                 content.put(ComparaCriterioBean.IMPORTANCIA, (1 / comparaCriterioBean.getImportancia()));
-                //   TelaFuncaoAHP.matrizCrit[comparaCriterioBean.getJ()][comparaCriterioBean.getI()] = (1/comparaCriterioBean.getImportancia());
             } else {
                 content.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
-                // TelaFuncaoAHP.matrizCrit[comparaCriterioBean.getJ()][comparaCriterioBean.getI()] = comparaCriterioBean.getImportancia();
             }
             where = "IDCRIT2 = ? AND IDCRIT1 = ?";
             String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdcrit1()), String.valueOf(comparaCriterioBean.getIdcrit2())};
