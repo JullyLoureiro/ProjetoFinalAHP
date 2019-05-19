@@ -62,8 +62,11 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         new ComparaCriterioDao(this).deletaTemp();
         new ComparaAlternativaDao(this).deletaTemp();
         new MatrizCriterioNormalizadaDao(this).deleta();
+        new MatrizCriterioNormalizadaDao(this).deletaAlternativa();
         new PesoCriteriosDao(this).deleta();
+        new PesoCriteriosDao(this).deletaAlternativa();
         new SomaColunaDao(this).deleta();
+        new SomaColunaDao(this).deletaAlternativa();
     }
 
 

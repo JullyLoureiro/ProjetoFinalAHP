@@ -7,6 +7,7 @@ public class PesoCriteriosBean {
     public static String SOMA= "PESO";
     public static String YMAX= "YMAX";
     public static String TOTALDIVISAO= "TOTALDIVISAO";
+    public static String TOTAL= "TOTAL";
     public static String TABELA = "PESO_CRITERIOS";
     public static String PESO_ALTERNATIVAS = "PESO_ALTERNATIVAS";
 
@@ -15,7 +16,16 @@ public class PesoCriteriosBean {
     private float peso;
     private float ymax;
     private float totaldivisao;
+    private double perc;
     private Integer idalternativa;
+
+    public double getPerc() {
+        return perc;
+    }
+
+    public void setPerc(double perc) {
+        this.perc = perc;
+    }
 
     public Integer getIdalternativa() {
         return idalternativa;

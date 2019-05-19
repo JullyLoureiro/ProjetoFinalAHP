@@ -39,52 +39,7 @@ public class SobreAHP extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       /* ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4f, 5));
-        entries.add(new BarEntry(6f, 1));
-        entries.add(new BarEntry(5f, 2));
-        entries.add(new BarEntry(7f, 3));
-
-        BarDataSet dataset = new BarDataSet(entries, "legenda");
-
-        BarChart chart = new BarChart(this);
-        chart.setDrawGridBackground(false);
-        chart.setDrawBarShadow(false);
-        chart.setDrawGridBackground(false);
-        chart.setFitBars(false);
-        chart.setHighlightFullBarEnabled(false);
-
-        setContentView(chart);
-
-        BarData data = new BarData(dataset);
-        chart.setData(data);
-
-        Description description = new Description();
-        description.setText("");
-        chart.setDescription(description);
-
-        dataset.setColors(ColorTemplate.VORDIPLOM_COLORS);
-
-        XAxis xAxis = chart.getXAxis();
-       // xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setDrawGridLines(false);
-
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setDrawLabels(true);
-
-        YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
-        rightAxis.setDrawLabels(false);
-
-        chart.animateY(1000);
-        chart.invalidate();*/
-        //chart.saveToGallery("mychart.jpg", 85);
-        //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-
-        chart = findViewById(R.id.chart);
+        /*chart = findViewById(R.id.chart);
         chart.setBackgroundColor(Color.rgb(60, 65, 82));
 
         chart.getDescription().setEnabled(false);
@@ -95,8 +50,6 @@ public class SobreAHP extends AppCompatActivity {
         chart.setWebColorInner(Color.LTGRAY);
         chart.setWebAlpha(100);
 
-        // create a custom MarkerView (extend MarkerView) and specify the layout
-        // to use for it
         MarkerView mv = new RadarMarkerView(this, R.layout.radar_markerview);
         mv.setChartView(chart); // For bounds control
         chart.setMarker(mv); // Set the marker to the chart
@@ -106,7 +59,6 @@ public class SobreAHP extends AppCompatActivity {
         chart.animateXY(1400, 1400, Easing.EaseInOutQuad);
 
         XAxis xAxis = chart.getXAxis();
-      //  xAxis.setTypeface(tfLight);
         xAxis.setTextSize(9f);
         xAxis.setYOffset(0f);
         xAxis.setXOffset(0f);
@@ -122,7 +74,7 @@ public class SobreAHP extends AppCompatActivity {
         xAxis.setTextColor(Color.WHITE);
 
         YAxis yAxis = chart.getYAxis();
-      //  yAxis.setTypeface(tfLight);
+
         yAxis.setLabelCount(5, false);
         yAxis.setTextSize(9f);
         yAxis.setAxisMinimum(0f);
@@ -134,10 +86,10 @@ public class SobreAHP extends AppCompatActivity {
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
-      //  l.setTypeface(tfLight);
+
         l.setXEntrySpace(7f);
         l.setYEntrySpace(5f);
-        l.setTextColor(Color.WHITE);
+        l.setTextColor(Color.WHITE);*/
     }
 
     @Override

@@ -60,7 +60,8 @@ public class SomaColunaDao {
 
                     db = banco.getWritableDatabase();
                     valores = new ContentValues();
-                    valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
+                    valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
+                    valores.put("IDCRIT", idcriterio);
                     valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
                     db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
@@ -87,10 +88,10 @@ public class SomaColunaDao {
         return 0;
     }
 
-    public float retornaSomaAlternativa(int id) {
+    public float retornaSomaAlternativa(int id, int idcrit) {
         try {
             cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
-                    " WHERE IDALT = " + id, null);
+                    " WHERE IDALT = " + id +  " AND IDCRIT = " + idcrit, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 return cursor.getFloat(cursor.getColumnIndex(SomaColunaBean.SOMA));
@@ -104,5 +105,8 @@ public class SomaColunaDao {
 
     public void deleta() {
         db.execSQL("DELETE FROM " + SomaColunaBean.TABELA);
+    }
+    public void deletaAlternativa() {
+        db.execSQL("DELETE FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA);
     }
 }

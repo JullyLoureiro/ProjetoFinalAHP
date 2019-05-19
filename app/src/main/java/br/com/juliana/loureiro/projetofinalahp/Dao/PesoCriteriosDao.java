@@ -3,6 +3,7 @@ package br.com.juliana.loureiro.projetofinalahp.Dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class PesoCriteriosDao {
     public List<PesoCriteriosBean> somaLinhasAlternativa(float qtdcriterios) {
         List<PesoCriteriosBean> pesos = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT IDALTERNATIVA1, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP  GROUP BY IDALTERNATIVA1", null);
+        cursor = db.rawQuery("SELECT IDALTERNATIVA1, IDCRITERIO, SUM(IMPORTANCIA) AS SOMA FROM ALTERNATIVA_NORMALIZADA  GROUP BY IDALTERNATIVA1, IDCRITERIO", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -72,16 +73,18 @@ public class PesoCriteriosDao {
                     db = banco.getWritableDatabase();
                     valores = new ContentValues();
                     valores.put(PesoCriteriosBean.IDALTERNATIVA, cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                    valores.put("IDCRITERIO", cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
                     valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
 
                     db.insert(PesoCriteriosBean.PESO_ALTERNATIVAS, null, valores);
 
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
                     pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
                     pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
                     pesos.add(pesoCriteriosBean);
 
-                } catch (Exception e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
@@ -91,6 +94,21 @@ public class PesoCriteriosDao {
     }
 
     public float retornaSoma(int id) {
+        try {
+            cursor = db.rawQuery("SELECT " + PesoCriteriosBean.SOMA + " FROM " + PesoCriteriosBean.TABELA +
+                    " WHERE " + PesoCriteriosBean.IDCRIT + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public float retornaPeso(int id) {
         try {
             cursor = db.rawQuery("SELECT " + PesoCriteriosBean.SOMA + " FROM " + PesoCriteriosBean.TABELA +
                     " WHERE " + PesoCriteriosBean.IDCRIT + " = " + id, null);
@@ -154,6 +172,18 @@ public class PesoCriteriosDao {
             db.update(PesoCriteriosBean.TABELA, content, where, argumentos);
         } catch (Exception ignored) {
 
+        }
+    }
+
+    public void atualizaTotal(PesoCriteriosBean pesoCriteriosBean) {
+        try {
+            ContentValues content = new ContentValues();
+            content.put(PesoCriteriosBean.TOTAL, pesoCriteriosBean.getTotaldivisao());
+            String where = "IDCRITERIO = ? AND IDALTERNATIVA = ?";
+            String argumentos[] = {String.valueOf(pesoCriteriosBean.getIdcrit()), String.valueOf(pesoCriteriosBean.getIdalternativa())};
+            db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -227,4 +257,30 @@ public class PesoCriteriosDao {
     public void deleta() {
         db.execSQL("DELETE FROM " + PesoCriteriosBean.TABELA);
     }
+
+    public void deletaAlternativa() {
+        db.execSQL("DELETE FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS);
+    }
+
+    public List<PesoCriteriosBean> retornaResultado() {
+        List<PesoCriteriosBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT IDALTERNATIVA, SUM(TOTAL * 100) AS PERC FROM PESO_ALTERNATIVAS GROUP BY IDALTERNATIVA", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                do {
+                    PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setPerc(cursor.getDouble(cursor.getColumnIndex("PERC")));
+                    pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA")));
+                    lista.add(pesoCriteriosBean);
+                } while (cursor.moveToNext());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 }

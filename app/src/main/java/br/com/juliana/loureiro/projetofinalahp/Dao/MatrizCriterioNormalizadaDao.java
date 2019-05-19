@@ -50,7 +50,7 @@ public class MatrizCriterioNormalizadaDao {
     public boolean insereMatrizNormalizadaAlternativa(MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean) {
         try {
 
-            cursor = db.rawQuery("SELECT * FROM " + MatrizCriterioNormalizadaBean.TABELA + " WHERE "
+            cursor = db.rawQuery("SELECT * FROM ALTERNATIVA_NORMALIZADA WHERE "
                     + MatrizCriterioNormalizadaBean.IDALTERNATIVA1 + " = " + matrizCriterioNormalizadaBean.getIdcrit1() +
                     " AND " + MatrizCriterioNormalizadaBean.IDALTERNATIVA2 + " = " + matrizCriterioNormalizadaBean.getIdcrit2()
                     + " AND " + MatrizCriterioNormalizadaBean.IDCRITERIO + " = " + matrizCriterioNormalizadaBean.getIdcriterio(), null);
@@ -64,7 +64,7 @@ public class MatrizCriterioNormalizadaDao {
                 valores.put(MatrizCriterioNormalizadaBean.IDALTERNATIVA2, matrizCriterioNormalizadaBean.getIdalternativa2());
                 valores.put(MatrizCriterioNormalizadaBean.IDCRITERIO, matrizCriterioNormalizadaBean.getIdcriterio());
                 valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
-                db.insert(MatrizCriterioNormalizadaBean.TABELA, null, valores);
+                db.insert("ALTERNATIVA_NORMALIZADA", null, valores);
                 return true;
             }
         } catch (Exception e) {
@@ -77,5 +77,9 @@ public class MatrizCriterioNormalizadaDao {
 
     public void deleta() {
         db.execSQL("DELETE FROM " + MatrizCriterioNormalizadaBean.TABELA);
+    }
+
+    public void deletaAlternativa() {
+        db.execSQL("DELETE FROM ALTERNATIVA_NORMALIZADA");
     }
 }

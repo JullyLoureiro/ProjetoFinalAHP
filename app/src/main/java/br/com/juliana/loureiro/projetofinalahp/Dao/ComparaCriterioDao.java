@@ -165,11 +165,73 @@ public class ComparaCriterioDao {
         return lista;
     }
 
-    /*public float carregaImportancia(int id){
-        try{
+    public int retornaImportancia(int id1, int id2) {
+        try {
+            cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaCriterioBean.TABELA_temp + " WHERE " + ComparaCriterioBean.IDCRIT1
+                    + " = " + id1 + " AND " + ComparaCriterioBean.IDCRIT2 + " = " + id2, null);
 
-        }catch (Exception ignored) {
-
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                double importancia = cursor.getDouble(cursor.getColumnIndex("IMPORTANCIA"));
+                if (importancia < 1) {
+                    cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaCriterioBean.TABELA_temp + " WHERE " + ComparaCriterioBean.IDCRIT1
+                            + " = " + id2 + " AND " + ComparaCriterioBean.IDCRIT2 + " = " + id1, null);
+                    if (cursor.getCount() > 0) {
+                        cursor.moveToFirst();
+                        double importancia2 = cursor.getDouble(cursor.getColumnIndex("IMPORTANCIA"));
+                        switch ((int) importancia2) {
+                            case 0:
+                                return 8;
+                            case 1:
+                                return 8;
+                            case 2:
+                                return 7;
+                            case 3:
+                                return 6;
+                            case 4:
+                                return 5;
+                            case 5:
+                                return 4;
+                            case 6:
+                                return 3;
+                            case 7:
+                                return 2;
+                            case 8:
+                                return 1;
+                            case 9:
+                                return 0;
+                        }
+                    }
+                } else {
+                    switch ((int) importancia) {
+                        case 0:
+                            return 8;
+                        case 1:
+                            return 8;
+                        case 2:
+                            return 9;
+                        case 3:
+                            return 10;
+                        case 4:
+                            return 11;
+                        case 5:
+                            return 12;
+                        case 6:
+                            return 13;
+                        case 7:
+                            return 14;
+                        case 8:
+                            return 15;
+                        case 9:
+                            return 16;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-    } */
+        return 1;
+    }
 }

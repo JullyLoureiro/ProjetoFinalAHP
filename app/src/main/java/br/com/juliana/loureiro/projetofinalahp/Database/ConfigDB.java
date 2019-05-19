@@ -117,6 +117,7 @@ public class ConfigDB extends SQLiteOpenHelper {
         String SOMA_COLUNA_ALTERNATIVA = "CREATE TABLE SOMA_COLUNA_ALTERNATIVA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDALT INTEGER, " +
+                "IDCRIT INTEGER, " +
                 "SOMA FLOAT " +
                 " )";
 
@@ -136,8 +137,9 @@ public class ConfigDB extends SQLiteOpenHelper {
         String CREATE_SOMALINHA_ALTERNATIVA = "CREATE TABLE PESO_ALTERNATIVAS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDALTERNATIVA INTEGER, " +
+                "IDCRITERIO INTEGER, " +
                 "YMAX FLOAT, " +
-                "TOTALDIVISAO FLOAT, " +
+                "TOTAL FLOAT, " +
                 "PESO FLOAT " +
                 " )";
 

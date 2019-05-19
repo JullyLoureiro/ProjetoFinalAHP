@@ -11,6 +11,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:padding="10dp"
+            android:visibility="visible"
             android:background="@drawable/shape_branco"
             android:paddingTop="20dp">
 
@@ -137,7 +138,7 @@
             app:srcCompat="@drawable/rigth_arrow" />
 
         <SeekBar
-            android:layout_below="@+id/alternativa1"
+
             android:id="@+id/seekBar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

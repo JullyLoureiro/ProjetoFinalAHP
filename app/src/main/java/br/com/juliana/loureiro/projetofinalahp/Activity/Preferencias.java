@@ -88,6 +88,9 @@ public class Preferencias extends AppCompatActivity {
                     i--;
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
+
+                    int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
+                    seekBar.setProgress(imp);
                 }
             }
         });
@@ -100,6 +103,9 @@ public class Preferencias extends AppCompatActivity {
                 if (i < listaComp.size()) {
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
+
+                    int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
+                    seekBar.setProgress(imp);
                 }
             }
         });
@@ -111,6 +117,10 @@ public class Preferencias extends AppCompatActivity {
                     i--;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
+
+                    int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
+                    seekBar2.setProgress(imp);
+
                     txvtitulo2.setText("Entre a alternativa " + alternativa1.getText().toString() + " e a alternativa " + alternativa2.getText().toString() +
                             ", qual possui maior relevância em relação ao critério " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdcriterio()) + "?");
@@ -126,6 +136,9 @@ public class Preferencias extends AppCompatActivity {
                     i++;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
+                    int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
+                    seekBar2.setProgress(imp);
+
                     txvtitulo2.setText("Entre a alternativa " + alternativa1.getText().toString() + " e a alternativa " + alternativa2.getText().toString() +
                             ", qual possui maior relevância em relação ao critério " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdcriterio()) + "?");
@@ -142,7 +155,8 @@ public class Preferencias extends AppCompatActivity {
                 i++;
                 criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                 criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
-
+                int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
+                seekBar.setProgress(imp);
             }
 
             public void onSwipeRight() {
@@ -150,6 +164,8 @@ public class Preferencias extends AppCompatActivity {
                     i--;
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
+                    int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
+                    seekBar.setProgress(imp);
                 }
             }
 
@@ -168,6 +184,10 @@ public class Preferencias extends AppCompatActivity {
                 i++;
                 alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                 alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
+
+                int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
+                seekBar2.setProgress(imp);
+
                 txvtitulo2.setText("Entre a alternativa " + alternativa1.getText().toString() + " e a alternativa " + alternativa2.getText().toString() +
                         ", qual possui maior relevância em relação ao critério " +
                         new CriterioDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdcriterio()) + "?");
@@ -178,6 +198,10 @@ public class Preferencias extends AppCompatActivity {
                     i--;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
+
+                    int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
+                    seekBar2.setProgress(imp);
+
                     txvtitulo2.setText("Entre a alternativa " + alternativa1.getText().toString() + " e a alternativa " + alternativa2.getText().toString() +
                             ", qual possui maior relevância em relação ao critério " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdcriterio()) + "?");
@@ -389,7 +413,7 @@ public class Preferencias extends AppCompatActivity {
                 }
 
                 listaComp.get(i).setImportancia(importancia);
-                Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
+                //Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
                 new ComparaCriterioDao(Preferencias.this).atualizaImportancia(listaComp.get(i), critImportancia);
 
             }
@@ -584,7 +608,7 @@ public class Preferencias extends AppCompatActivity {
                 }
 
                 listaCompAlt.get(i).setImportancia(importancia);
-                Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
+               // Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
                 new ComparaAlternativaDao(Preferencias.this).atualizaImportancia(listaCompAlt.get(i), altimportancia);
 
             }
@@ -625,7 +649,7 @@ public class Preferencias extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(this, Resultados.class);
                     startActivity(intent);
-                    //finish();
+                    finish();
                 }
 
                 break;

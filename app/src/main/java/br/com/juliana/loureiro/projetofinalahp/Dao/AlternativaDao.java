@@ -114,4 +114,14 @@ public class AlternativaDao {
         }
         return "";
     }
+
+    public int retornaQtd(){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA_temp, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
