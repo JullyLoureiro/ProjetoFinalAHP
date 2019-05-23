@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorSecond">#E22967</color>
-    <!--<color name="colorSecond2">#7A1745</color>-->
-    <color name="colorTerc">#E22967</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#3F51B5</color>
+  <!--  <color name="colorSecond">#FFBB00</color>
+    <color name="colorTerc">#FFBB00</color>
+    <color name="colorTercClaro">#5972A7</color>
+    <color name="colorPrimary">#384D77</color>
+    <color name="colorPrimaryDark">#131D2C</color>-->
+ <color name="colorSecond">#009688</color>
+    <color name="colorTerc">#009688</color>
+    <color name="colorTercClaro">#FFE082</color>
+    <color name="colorPrimary">#FFC107</color>
+    <color name="colorPrimaryDark">#FF9800</color>
+
+
     <color name="preto">#000000</color>
     <color name="branco">#ffffff</color>
     <color name="cinza">#D5D3D3</color>
     <color name="cinzaescuro">#818181</color>
+    <color name="cinzaescuro2">#5F5F5F</color>
     <color name="transparent">#00CE94B8</color>
 
     <!--TUTORIAL-->

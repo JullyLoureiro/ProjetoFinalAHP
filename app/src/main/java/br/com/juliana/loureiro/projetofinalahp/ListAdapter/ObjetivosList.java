@@ -50,11 +50,14 @@ public class ObjetivosList extends BaseAdapter {
                 .inflate(R.layout.card_objetivos, parent, false);
 
         CardView card = view.findViewById(R.id.card);
-        final ImageView opcoes = view.findViewById(R.id.opcoes);
+        //final ImageView opcoes = view.findViewById(R.id.opcoes);
         TextView titulo = view.findViewById(R.id.titulo);
         TextView descricao = view.findViewById(R.id.descricao);
 
-        opcoes.setOnClickListener(new View.OnClickListener() {
+        titulo.setText(objetivos.get(position).getTitulo());
+        descricao.setText(objetivos.get(position).getDescricao());
+
+       /* opcoes.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ViewHolder")
             @Override
             public void onClick(View v) {
@@ -79,7 +82,7 @@ public class ObjetivosList extends BaseAdapter {
 
                 popup.show();
             }
-        });
+        });*/
 
         return view;
     }
