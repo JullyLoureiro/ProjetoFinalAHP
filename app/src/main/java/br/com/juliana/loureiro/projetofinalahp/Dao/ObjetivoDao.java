@@ -14,6 +14,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class ObjetivoDao {
 
@@ -61,6 +62,26 @@ public class ObjetivoDao {
 
     }
 
+    public int insereObjetivo2(ObjetivoBean objetivoBean) {
+        try {
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(ObjetivoBean.TITULO, objetivoBean.getTitulo());
+            valores.put(ObjetivoBean.DESCRICAO, objetivoBean.getDescricao());
+
+            db.insert(ObjetivoBean.TABELA, null, valores);
+            return Utils.returnLastId(db);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return 0;
+    }
+
     public boolean deletaObjetivo(int id) {
         try {
             db.execSQL("DELETE FROM  " + ObjetivoBean.TABELA + "WHERE ID = " + id);
@@ -96,5 +117,24 @@ public class ObjetivoDao {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    public ObjetivoBean carregaObjetivosTemp() {
+        ObjetivoBean objetivoBean = new ObjetivoBean();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA_TEMP, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+
+                    objetivoBean.setId(cursor.getInt(cursor.getColumnIndex(ObjetivoBean.ID)));
+                    objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
+                    objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return objetivoBean;
     }
 }

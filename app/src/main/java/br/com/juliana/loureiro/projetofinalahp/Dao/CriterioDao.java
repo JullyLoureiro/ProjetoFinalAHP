@@ -41,6 +41,25 @@ public class CriterioDao {
 
     }
 
+    public boolean insereCriterio2(CriterioBean criterioBean, int id) {
+        try {
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
+            valores.put(CriterioBean.IDOBJETIVO, criterioBean.getDescricao());
+            db.insert(CriterioBean.TABELA, null, valores);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public boolean deletaCriterio(int id) {
         try {
             db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp + " WHERE ID = " + id);

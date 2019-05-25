@@ -1,5 +1,7 @@
 package br.com.juliana.loureiro.projetofinalahp.Dao;
 
+
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -45,6 +47,27 @@ public class ComparaAlternativaDao {
                 db.insert(ComparaAlternativaBean.TABELA_temp, null, valores);
                 return true;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
+    public boolean insereComparacoes2(ComparaAlternativaBean comparaAlternativaBean) {
+        try {
+                ContentValues valores;
+
+                db = banco.getWritableDatabase();
+                valores = new ContentValues();
+                valores.put(ComparaAlternativaBean.IDALTERNATIVA1, comparaAlternativaBean.getIdalternativa1());
+                valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
+                valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
+                valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+                db.insert(ComparaAlternativaBean.TABELA, null, valores);
+                return true;
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -149,6 +172,29 @@ public class ComparaAlternativaDao {
 
             do {
 
+                ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
+                comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
+                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
+    public List<ComparaAlternativaBean> carregaComparacoesTemp() {
+        List<ComparaAlternativaBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaAlternativaBean.TABELA_temp, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
                 ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
                 comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
                 comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));

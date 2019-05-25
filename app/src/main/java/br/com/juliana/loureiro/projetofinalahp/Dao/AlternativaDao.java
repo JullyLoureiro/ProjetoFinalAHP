@@ -42,6 +42,25 @@ public class AlternativaDao {
 
     }
 
+    public boolean insereAlternativa2(AlternativaBean alternativaBean, int id) {
+        try {
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(AlternativaBean.DESCRICAO, alternativaBean.getDescricao());
+            valores.put(AlternativaBean.IDOBJETIVO, alternativaBean.getDescricao());
+            db.insert(AlternativaBean.TABELA, null, valores);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public boolean deletaAlternativa(int id) {
         try {
             db.execSQL("DELETE FROM " + AlternativaBean.TABELA_temp + " WHERE ID = " + id);

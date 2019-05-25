@@ -2,6 +2,8 @@ package br.com.juliana.loureiro.projetofinalahp.Util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -56,5 +58,18 @@ public class Utils {
                 dialog.dismiss();
             }
         });
+    }
+
+    public static int returnLastId(SQLiteDatabase DB) {
+        int codId = 0;
+        try {
+            Cursor cursor = DB.rawQuery("SELECT LAST_INSERT_ROWID()", null);
+            if (cursor.moveToFirst()) {
+                codId = cursor.getInt(cursor.getColumnIndex("LAST_INSERT_ROWID()"));
+                cursor.close();
+            }
+        } catch (Exception ignored) {
+        }
+        return codId;
     }
 }

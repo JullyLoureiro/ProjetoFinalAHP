@@ -67,7 +67,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
                 "IDCRIT2 INTEGER, " +
-                "IDOBJETIVO INTEGER, " +
+              //  "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
 
@@ -79,7 +79,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IDALTERNATIVA1 INTEGER, " +
                 "IDALTERNATIVA2 INTEGER, " +
                 "IDCRITERIO INTEGER, " +
-                "IDOBJETIVO INTEGER, " +
+               // "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
 

@@ -28,6 +28,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
@@ -43,10 +44,9 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    //public static float [][] matrizCrit;
-    // public static float [][] matrizCritNormalizada;
+    public static String tituloobj = "";
+    public static String descricaoobj = "";
 
-    //  public static float [][] matrizAlt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         new PesoCriteriosDao(this).deletaAlternativa();
         new SomaColunaDao(this).deleta();
         new SomaColunaDao(this).deletaAlternativa();
+
     }
 
 
@@ -119,6 +120,12 @@ public class TelaFuncaoAHP extends AppCompatActivity {
                         }
                     }
                 }
+
+
+                ObjetivoBean objetivoBean = new ObjetivoBean();
+                objetivoBean.setTitulo(tituloobj);
+                objetivoBean.setDescricao(descricaoobj);
+                new ObjetivoDao(this).insereObjetivo(objetivoBean);
 
                 Intent intent = new Intent(this, Preferencias.class);
                 startActivity(intent);

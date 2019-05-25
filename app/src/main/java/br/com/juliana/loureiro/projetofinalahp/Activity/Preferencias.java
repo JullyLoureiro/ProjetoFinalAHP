@@ -1,5 +1,6 @@
 package br.com.juliana.loureiro.projetofinalahp.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,12 +29,21 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.OnSwip;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
@@ -132,7 +142,7 @@ public class Preferencias extends AppCompatActivity {
         proximo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((i+1) < listaCompAlt.size()) {
+                if ((i + 1) < listaCompAlt.size()) {
                     i++;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
@@ -608,7 +618,7 @@ public class Preferencias extends AppCompatActivity {
                 }
 
                 listaCompAlt.get(i).setImportancia(importancia);
-               // Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
+                // Toast.makeText(Preferencias.this, String.valueOf(importancia), Toast.LENGTH_LONG).show();
                 new ComparaAlternativaDao(Preferencias.this).atualizaImportancia(listaCompAlt.get(i), altimportancia);
 
             }
@@ -647,9 +657,32 @@ public class Preferencias extends AppCompatActivity {
                     critImportancia = 1;
                     i = 0;
                 } else {
-                    Intent intent = new Intent(this, Resultados.class);
-                    startActivity(intent);
-                    finish();
+                    ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivosTemp();
+                    int id = new ObjetivoDao(this).insereObjetivo2(objetivoBean);
+
+
+                    List<CriterioBean> criterios = new CriterioDao(this).carregaCriterios();
+                    for (int i = 0; i < criterios.size(); i++) {
+                        new CriterioDao(this).insereCriterio2(criterios.get(i), id);
+                    }
+
+                    List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas();
+                    for (int i = 0; i < alternativas.size(); i++) {
+                        new AlternativaDao(this).insereAlternativa2(alternativas.get(i), id);
+                    }
+
+
+                    List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
+                    for(int i = 0; i < compcriterios.size(); i++) {
+                        new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i));
+                    }
+
+                    List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
+                    for(int i = 0; i < compcriterios.size(); i++) {
+                        new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i));
+                    }
+
+                    calculaResultados();
                 }
 
                 break;
@@ -658,5 +691,157 @@ public class Preferencias extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void calculaResultados() {
+
+        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
+        new SomaColunaDao(this).somaColunas();
+        List<ComparaCriterioBean> listaComparacao = new ComparaCriterioDao(this).carregaComparacoes2();
+
+        for (int i = 0; i < listaComparacao.size(); i++) {
+            float soma = new SomaColunaDao(this).retornaSoma(listaComparacao.get(i).getIdcrit2());
+
+            MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
+            matrizCriterioNormalizadaBean.setIdcrit1(listaComparacao.get(i).getIdcrit1());
+            matrizCriterioNormalizadaBean.setIdcrit2(listaComparacao.get(i).getIdcrit2());
+
+            float importancia = listaComparacao.get(i).getImportancia() / soma;
+
+            matrizCriterioNormalizadaBean.setImportancia(importancia);
+            new MatrizCriterioNormalizadaDao(this).insereMatrizNormalizada(matrizCriterioNormalizadaBean);
+
+        }
+
+        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
+        int  qtd = new CriterioDao(this).retornaQtdCriterios();
+        List<PesoCriteriosBean> pesos = new PesoCriteriosDao(this).somaLinhas(qtd);
+
+        for (int i = 0; i < pesos.size(); i++) {
+            List<ComparaCriterioBean> listaComp = new ComparaCriterioDao(this).carregaComparacoes(pesos.get(i).getIdcrit());
+            for (int j = 0; j < listaComp.size(); j++) {
+                float mult = pesos.get(i).getSoma() * listaComp.get(j).getImportancia();
+                new PesoCriteriosDao(this).atualizaYMax(listaComp.get(j).getIdcrit1(), mult);
+            }
+        }
+
+        //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
+        List<PesoCriteriosBean> listaYMax = new PesoCriteriosDao(this).carregaYMax();
+        for (int i = 0; i < listaYMax.size(); i++) {
+            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getSoma();
+            new PesoCriteriosDao(this).atualizaTotalDivisao(listaYMax.get(i).getIdcrit(), div);
+        }
+
+
+        //CÁLCULO DE INCONSISTÊNCIA
+        float YmaxMedia = new PesoCriteriosDao(this).calculaMedia();
+        float CI = (YmaxMedia - qtd) / (qtd - 1);
+
+        float CR, RI = 0;
+        //TABELA RI
+        switch (qtd) {
+            case 1:
+                RI = 0;
+                break;
+            case 2:
+                RI = 0;
+                break;
+            case 3:
+                RI = (float) 0.52;
+                break;
+            case 4:
+                RI = (float) 0.9;
+                break;
+            case 5:
+                RI = (float) 1.12;
+                break;
+            case 6:
+                RI = (float) 1.25;
+                break;
+            case 7:
+                RI = (float) 1.35;
+                break;
+            case 8:
+                RI = (float) 1.42;
+                break;
+            case 9:
+                RI = (float) 1.46;
+                break;
+            case 10:
+                RI = (float) 1.49;
+                break;
+            case 11:
+                RI = (float) 1.52;
+                break;
+            case 12:
+                RI = (float) 1.54;
+                break;
+            case 13:
+                RI = (float) 1.56;
+                break;
+            case 14:
+                RI = (float) 1.58;
+                break;
+            case 15:
+                RI = (float) 1.59;
+                break;
+            default:
+                break;
+        }
+
+        CR = CI / RI;
+        if(CR>0.1) {
+            String msg = "Cálculo de consistência: " + String.valueOf(CR) + "\nVolte e revise seus julgamentos!";
+            alerta(this, msg, CR);
+        } else {
+            String msg = "Cálculo de consistência: " + String.valueOf(CR);
+            alerta(this, msg, CR);
+        }
+
+
+    }
+
+    public void alerta(final Activity activity, String mensag, final float cr) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
+
+        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
+        mensagem.setText(mensag);
+        Button yes = alertLayout.findViewById(R.id.yes);
+        ImageView close = alertLayout.findViewById(R.id.close);
+
+        if(cr > 0.1){
+            yes.setVisibility(View.GONE);
+        }
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+
+        final AlertDialog dialog = alert.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cr > 0.1){
+                    dialog.dismiss();
+                } else {
+                    Intent intent = new Intent(Preferencias.this, Resultados.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }
