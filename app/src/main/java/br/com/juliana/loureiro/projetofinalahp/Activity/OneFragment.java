@@ -32,8 +32,8 @@ public class OneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.tela_objetivo, container, false);
-        final EditText edttitulo = v.findViewById(R.id.objetivotitulo);
-        final EditText edtdescricao = v.findViewById(R.id.edttitulo);
+        final EditText edttitulo = v.findViewById(R.id.edttitulo);
+        //final EditText edtdescricao = v.findViewById(R.id.edtdescricao);
 
         edttitulo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -48,7 +48,7 @@ public class OneFragment extends Fragment {
             }
         });
 
-        edtdescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*edtdescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(edtdescricao.getText().length()>0) {
@@ -59,7 +59,7 @@ public class OneFragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
 
         return v;

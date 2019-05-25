@@ -33,7 +33,7 @@ public class Utils {
         mensagem.setText(mensag);
         Button yes = alertLayout.findViewById(R.id.yes);
         ImageView close = alertLayout.findViewById(R.id.close);
-
+        yes.setText("Ok");
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(alertLayout);
         alert.setCancelable(true);

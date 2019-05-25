@@ -1,6 +1,7 @@
 package br.com.juliana.loureiro.projetofinalahp.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +39,6 @@ public class TelaPrincipal extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         navigation.setSelectedItemId(R.id.navigation_home);
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -76,7 +76,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.optionsmenu, menu);
+       //getMenuInflater().inflate(R.menu.optionsmenu, menu);
         return true;
         //return super.onCreateOptionsMenu(menu);
     }

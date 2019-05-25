@@ -55,7 +55,14 @@ public class ObjetivosList extends BaseAdapter {
         TextView descricao = view.findViewById(R.id.descricao);
 
         titulo.setText(objetivos.get(position).getTitulo());
-        descricao.setText(objetivos.get(position).getDescricao());
+        //descricao.setText(objetivos.get(position).getDescricao());
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
        /* opcoes.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ViewHolder")

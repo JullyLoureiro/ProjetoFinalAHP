@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:background="@drawable/shape_lista"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
@@ -8,9 +7,9 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -19,9 +18,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Critério"
+            android:padding="10dp"
+            android:background="@drawable/shape_lista"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/branco"
+            android:textColor="@color/pretofosco"
             android:textSize="18sp" />
 
         <EditText
@@ -33,21 +34,22 @@
             android:gravity="center_vertical"
             android:visibility="gone"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/preto"
+            android:textColor="@color/pretofosco"
             android:textSize="18sp" />
 
 
         <ImageView
             android:id="@+id/editar"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/pencil" />
 
         <ImageView
             android:id="@+id/apagar"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/delete" />
 
     </LinearLayout>

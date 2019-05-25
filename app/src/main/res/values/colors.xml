@@ -5,15 +5,16 @@
     <color name="colorTercClaro">#5972A7</color>
     <color name="colorPrimary">#384D77</color>
     <color name="colorPrimaryDark">#131D2C</color>-->
- <color name="colorSecond">#009688</color>
-    <color name="colorTerc">#009688</color>
-    <color name="colorTercClaro">#FFE082</color>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FF9800</color>
+ <color name="colorSecond">#00BCD4</color>
+    <color name="colorTerc">#00BCD4</color>
+    <color name="colorTercClaro">#D5D3D3</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
 
 
     <color name="preto">#000000</color>
-    <color name="branco">#ffffff</color>
+    <color name="pretofosco">#000000</color>
+    <color name="branco">#FFFFFF</color>
     <color name="cinza">#D5D3D3</color>
     <color name="cinzaescuro">#818181</color>
     <color name="cinzaescuro2">#5F5F5F</color>

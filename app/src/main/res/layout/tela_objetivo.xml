@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/shape_gradient"
+    android:background="@color/branco"
     android:layout_height="match_parent"
     tools:context="br.com.juliana.loureiro.projetofinalahp.Activity.OneFragment">
 
@@ -16,15 +16,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/objetivotitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OBJETIVO"
-            android:textAlignment="center"
-            android:textColor="@color/branco"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/titulo"
@@ -32,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Título"
-            android:textColor="@color/branco"
+            android:textColor="@color/cinzaescuro"
             android:textSize="17sp" />
 
         <EditText
@@ -52,7 +43,7 @@
             android:layout_below="@+id/edttitulo"
             android:layout_marginTop="20dp"
             android:text="Descrição"
-            android:textColor="@color/branco"
+            android:textColor="@color/cinzaescuro"
             android:textSize="17sp" />
 
         <EditText

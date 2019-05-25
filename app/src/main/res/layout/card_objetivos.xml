@@ -7,9 +7,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="70dp"
         android:layout_marginLeft="15dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:elevation="20dp"
@@ -33,19 +33,19 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Titulo"
-                android:textColor="@color/branco"
+                android:textColor="@color/pretofosco"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                />
 
-            <TextView
+          <!--  <TextView
                 android:layout_below="@+id/titulo"
                 android:id="@+id/descricao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Descrição"
-                android:textColor="@color/branco"
-                android:textSize="16sp" />
+                android:textColor="@color/pretofosco"
+                android:textSize="16sp" />-->
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
