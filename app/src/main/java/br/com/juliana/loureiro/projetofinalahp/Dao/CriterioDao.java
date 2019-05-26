@@ -48,7 +48,7 @@ public class CriterioDao {
             db = banco.getWritableDatabase();
             valores = new ContentValues();
             valores.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
-            valores.put(CriterioBean.IDOBJETIVO, criterioBean.getDescricao());
+            valores.put(CriterioBean.IDOBJETIVO, id);
             db.insert(CriterioBean.TABELA, null, valores);
             return true;
         } catch (Exception e) {
@@ -90,6 +90,26 @@ public class CriterioDao {
         List<CriterioBean> lista = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    CriterioBean criterioBean = new CriterioBean();
+                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
+
+                    lista.add(criterioBean);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<CriterioBean> carregaCriterios2(int idobjetivo) {
+        List<CriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA + " WHERE " + CriterioBean.IDOBJETIVO + " = " + idobjetivo, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {

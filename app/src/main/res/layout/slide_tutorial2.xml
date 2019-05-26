@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_screen2">
+    android:background="@color/colorTerc">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,14 +14,15 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/next" />
+            android:src="@drawable/criterio" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="slide 2"
-            android:textColor="@android:color/white"
+            android:text="CRITÉRIOS"
+            android:textColor="@color/branco"
             android:textSize="@dimen/slide_title"
+            android:layout_marginTop="50dp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,10 +31,10 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="tutorial"
+            android:text="Inclua todos os critérios que \npodem influenciar na sua escolha... "
             android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:textColor="@color/branco"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

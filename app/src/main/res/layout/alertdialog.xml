@@ -15,20 +15,20 @@
 
         <ImageView
             android:id="@+id/close"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="end"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/delete" />
+            android:layout_margin="30dp"
+            app:srcCompat="@drawable/cancel" />
 
         <TextView
             android:id="@+id/txtmensagem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:textSize="17sp" />
 
@@ -40,8 +40,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_button"
             android:text="PROSSEGUIR"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="20dp"
             android:textColor="@color/branco"
             android:textSize="18sp" />
     </LinearLayout>

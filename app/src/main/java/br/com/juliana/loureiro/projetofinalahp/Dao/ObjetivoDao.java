@@ -69,6 +69,7 @@ public class ObjetivoDao {
             db = banco.getWritableDatabase();
             valores = new ContentValues();
             valores.put(ObjetivoBean.TITULO, objetivoBean.getTitulo());
+            valores.put("DATA", Utils.DataHojeSemHorasBR());
             valores.put(ObjetivoBean.DESCRICAO, objetivoBean.getDescricao());
 
             db.insert(ObjetivoBean.TABELA, null, valores);
@@ -101,7 +102,7 @@ public class ObjetivoDao {
     public List<ObjetivoBean> carregaObjetivos() {
         List<ObjetivoBean> lista = new ArrayList<>();
         try {
-            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA, null);
+            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA + " ORDER BY DATA", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -109,6 +110,7 @@ public class ObjetivoDao {
                     objetivoBean.setId(cursor.getInt(cursor.getColumnIndex(ObjetivoBean.ID)));
                     objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
                     objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
+                    objetivoBean.setData(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DATA)));
 
                     lista.add(objetivoBean);
                 } while (cursor.moveToNext());

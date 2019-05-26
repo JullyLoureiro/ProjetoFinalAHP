@@ -49,7 +49,7 @@ public class AlternativaDao {
             db = banco.getWritableDatabase();
             valores = new ContentValues();
             valores.put(AlternativaBean.DESCRICAO, alternativaBean.getDescricao());
-            valores.put(AlternativaBean.IDOBJETIVO, alternativaBean.getDescricao());
+            valores.put(AlternativaBean.IDOBJETIVO, id);
             db.insert(AlternativaBean.TABELA, null, valores);
             return true;
         } catch (Exception e) {
@@ -91,6 +91,26 @@ public class AlternativaDao {
         List<AlternativaBean> lista = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    AlternativaBean alternativaBean= new AlternativaBean();
+                    alternativaBean.setDescricao(cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO)));
+                    alternativaBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
+
+                    lista.add(alternativaBean);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<AlternativaBean> carregaAlternativas(int idobjetivo) {
+        List<AlternativaBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA + " WHERE " + AlternativaBean.IDOBJETIVO + " = " + idobjetivo, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {

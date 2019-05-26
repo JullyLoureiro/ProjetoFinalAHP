@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Activity.TelaFuncaoAHP;
@@ -48,7 +50,7 @@ public class AlternativasList extends BaseAdapter {
 
         final TextView titulo = v.findViewById(R.id.titulo);
         final EditText edttitulo = v.findViewById(R.id.edttitulo);
-        ImageView editar = v.findViewById(R.id.editar);
+        final ImageView editar = v.findViewById(R.id.editar);
         ImageView apagar = v.findViewById(R.id.apagar);
 
         titulo.setText(alternativaBeans.get(position).getDescricao());
@@ -61,12 +63,14 @@ public class AlternativasList extends BaseAdapter {
                     edttitulo.setVisibility(View.VISIBLE);
                     edttitulo.setText(titulo.getText());
                     edttitulo.requestFocus();
+                    editar.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
                 } else {
                     edttitulo.setVisibility(View.GONE);
                     titulo.setText(edttitulo.getText());
                     alternativaBeans.get(position).setDescricao(edttitulo.getText().toString());
                     titulo.setVisibility(View.VISIBLE);
                     new AlternativaDao(activity).atualizaAlternativa(alternativaBeans.get(position));
+                    editar.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
                 }
             }
         });

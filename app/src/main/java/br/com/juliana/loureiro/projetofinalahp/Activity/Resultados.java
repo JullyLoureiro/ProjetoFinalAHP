@@ -28,6 +28,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
@@ -45,8 +46,7 @@ import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class Resultados extends AppCompatActivity {
-    private int qtd;
-    private int qtdAlt;
+    private int idobjetivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,20 @@ public class Resultados extends AppCompatActivity {
         setContentView(R.layout.activity_resultados);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        qtd = new CriterioDao(this).retornaQtdCriterios();
+
+        int qtd = new CriterioDao(this).retornaQtdCriterios();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle params = intent.getExtras();
+            if (params != null) {
+                if (params.getInt("verResult", 0) != 0) {
+                    idobjetivo = params.getInt("verResult", 0);
+                    calculaCriterios();
+                }
+            }
+        }
+
 
         calculaAlternativas();
     }
@@ -86,16 +99,16 @@ public class Resultados extends AppCompatActivity {
         }
 
         //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
-        qtdAlt = new AlternativaDao(this).retornaQtd();
+        int qtdAlt = new AlternativaDao(this).retornaQtd();
         List<PesoCriteriosBean> pesosAlternativas = new PesoCriteriosDao(this).somaLinhasAlternativa(qtdAlt);
 
         for (int i = 0; i < pesosAlternativas.size(); i++) {
-           double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i).getIdcrit());
+            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i).getIdcrit());
 
 
-           double multi = pesocriterio * pesosAlternativas.get(i).getSoma();
-           pesosAlternativas.get(i).setTotaldivisao((float) multi);
-           new PesoCriteriosDao(this).atualizaTotal(pesosAlternativas.get(i));
+            double multi = pesocriterio * pesosAlternativas.get(i).getSoma();
+            pesosAlternativas.get(i).setTotaldivisao((float) multi);
+            new PesoCriteriosDao(this).atualizaTotal(pesosAlternativas.get(i));
 
         }
 
@@ -106,8 +119,8 @@ public class Resultados extends AppCompatActivity {
 
     private void geraGrafico(List<PesoCriteriosBean> resultado) {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for(int i = 0; i<resultado.size(); i++) {
-            entries.add(new BarEntry(i, (float)resultado.get(i).getPerc()));
+        for (int i = 0; i < resultado.size(); i++) {
+            entries.add(new BarEntry(i, (float) resultado.get(i).getPerc()));
         }
 
         BarDataSet dataset = new BarDataSet(entries, "legenda");
@@ -122,8 +135,8 @@ public class Resultados extends AppCompatActivity {
 
         //setContentView(chart);
 
-       BarData data = new BarData(dataset);
-       //BarData data = new BarData(getDataSet(resultado));
+        BarData data = new BarData(dataset);
+        //BarData data = new BarData(getDataSet(resultado));
 
         chart.setData(data);
 
@@ -159,11 +172,11 @@ public class Resultados extends AppCompatActivity {
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
 
         for (int i = 0; i < resultado.size(); i++) {
-            BarEntry v1e1 = new BarEntry(i, (float)resultado.get(i).getPerc());
+            BarEntry v1e1 = new BarEntry(i, (float) resultado.get(i).getPerc());
             valueSet1.add(v1e1);
             BarDataSet barDataSet1;
             barDataSet1 = new BarDataSet(valueSet1, new AlternativaDao(this).retornaDescricao(resultado.get(i).getIdalternativa()));
-           // barDataSet1.setColor(getResources().getColor(R.color.botaocielo));
+            // barDataSet1.setColor(getResources().getColor(R.color.botaocielo));
             //barDataSet1.setValueFormatter(new FormatGraph());
             barDataSet1.setValueTextSize(15);
             dataSets.add(barDataSet1);
@@ -187,4 +200,27 @@ public class Resultados extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+
+    private void calculaCriterios() {
+
+        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios2(idobjetivo);
+        for(int i = 0; i < listaCriterios.size(); i++) {
+            new CriterioDao(this).insereCriterio(listaCriterios.get(i));
+        }
+
+        List<AlternativaBean> listaAlternativa = new AlternativaDao(this).carregaAlternativas(idobjetivo);
+        for(int i = 0; i < listaAlternativa.size(); i++) {
+            new AlternativaDao(this).insereAlternativa(listaAlternativa.get(i));
+        }
+
+        /*List<ComparaCriterioBean> listaCompCrit = new ComparaCriterioDao(this).carregaComparacoes(idobjetivo);
+        for(int i = 0; i < listaAlternativa.size(); i++) {
+            new AlternativaDao(this).insereAlternativa(listaAlternativa.get(i));
+        }*/
+
+
+        Utils.calculacriterios(this);
+
+    }
+
 }

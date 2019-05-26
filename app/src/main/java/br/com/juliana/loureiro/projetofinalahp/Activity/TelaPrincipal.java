@@ -76,7 +76,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       //getMenuInflater().inflate(R.menu.optionsmenu, menu);
+       getMenuInflater().inflate(R.menu.optionsmenu, menu);
         return true;
         //return super.onCreateOptionsMenu(menu);
     }

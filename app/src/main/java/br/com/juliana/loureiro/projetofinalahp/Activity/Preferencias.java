@@ -651,12 +651,12 @@ public class Preferencias extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.avancar:
                 if (rltpreferencia.getVisibility() == View.VISIBLE) {
-                    rltpreferencia.setVisibility(View.GONE);
-                    rltpreferencia2.setVisibility(View.VISIBLE);
-                    altimportancia = 1;
-                    critImportancia = 1;
-                    i = 0;
+                    calculaResultados();
                 } else {
+                    Intent intent = new Intent(Preferencias.this, Resultados.class);
+                    startActivity(intent);
+                    finish();
+
                     ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivosTemp();
                     int id = new ObjetivoDao(this).insereObjetivo2(objetivoBean);
 
@@ -682,7 +682,7 @@ public class Preferencias extends AppCompatActivity {
                         new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i));
                     }
 
-                    calculaResultados();
+
                 }
 
                 break;
@@ -695,43 +695,9 @@ public class Preferencias extends AppCompatActivity {
 
     private void calculaResultados() {
 
-        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
-        new SomaColunaDao(this).somaColunas();
-        List<ComparaCriterioBean> listaComparacao = new ComparaCriterioDao(this).carregaComparacoes2();
-
-        for (int i = 0; i < listaComparacao.size(); i++) {
-            float soma = new SomaColunaDao(this).retornaSoma(listaComparacao.get(i).getIdcrit2());
-
-            MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
-            matrizCriterioNormalizadaBean.setIdcrit1(listaComparacao.get(i).getIdcrit1());
-            matrizCriterioNormalizadaBean.setIdcrit2(listaComparacao.get(i).getIdcrit2());
-
-            float importancia = listaComparacao.get(i).getImportancia() / soma;
-
-            matrizCriterioNormalizadaBean.setImportancia(importancia);
-            new MatrizCriterioNormalizadaDao(this).insereMatrizNormalizada(matrizCriterioNormalizadaBean);
-
-        }
-
-        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
         int  qtd = new CriterioDao(this).retornaQtdCriterios();
-        List<PesoCriteriosBean> pesos = new PesoCriteriosDao(this).somaLinhas(qtd);
 
-        for (int i = 0; i < pesos.size(); i++) {
-            List<ComparaCriterioBean> listaComp = new ComparaCriterioDao(this).carregaComparacoes(pesos.get(i).getIdcrit());
-            for (int j = 0; j < listaComp.size(); j++) {
-                float mult = pesos.get(i).getSoma() * listaComp.get(j).getImportancia();
-                new PesoCriteriosDao(this).atualizaYMax(listaComp.get(j).getIdcrit1(), mult);
-            }
-        }
-
-        //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
-        List<PesoCriteriosBean> listaYMax = new PesoCriteriosDao(this).carregaYMax();
-        for (int i = 0; i < listaYMax.size(); i++) {
-            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getSoma();
-            new PesoCriteriosDao(this).atualizaTotalDivisao(listaYMax.get(i).getIdcrit(), div);
-        }
-
+        Utils.calculacriterios(this);
 
         //CÁLCULO DE INCONSISTÊNCIA
         float YmaxMedia = new PesoCriteriosDao(this).calculaMedia();
@@ -830,9 +796,11 @@ public class Preferencias extends AppCompatActivity {
                 if(cr > 0.1){
                     dialog.dismiss();
                 } else {
-                    Intent intent = new Intent(Preferencias.this, Resultados.class);
-                    startActivity(intent);
-                    finish();
+                    rltpreferencia.setVisibility(View.GONE);
+                    rltpreferencia2.setVisibility(View.VISIBLE);
+                    altimportancia = 1;
+                    critImportancia = 1;
+                    i = 0;
                 }
             }
         });

@@ -16,6 +16,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class Utils {
@@ -72,4 +85,51 @@ public class Utils {
         }
         return codId;
     }
+
+    public static String DataHojeSemHorasBR() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        Date data = new Date();
+        return sdf.format(data.getTime());
+    }
+
+    public static void calculacriterios(Activity activity) {
+        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
+        new SomaColunaDao(activity).somaColunas();
+        List<ComparaCriterioBean> listaComparacao = new ComparaCriterioDao(activity).carregaComparacoes2();
+
+        for (int i = 0; i < listaComparacao.size(); i++) {
+            float soma = new SomaColunaDao(activity).retornaSoma(listaComparacao.get(i).getIdcrit2());
+
+            MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
+            matrizCriterioNormalizadaBean.setIdcrit1(listaComparacao.get(i).getIdcrit1());
+            matrizCriterioNormalizadaBean.setIdcrit2(listaComparacao.get(i).getIdcrit2());
+
+            float importancia = listaComparacao.get(i).getImportancia() / soma;
+
+            matrizCriterioNormalizadaBean.setImportancia(importancia);
+            new MatrizCriterioNormalizadaDao(activity).insereMatrizNormalizada(matrizCriterioNormalizadaBean);
+
+        }
+
+        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
+        int  qtd = new CriterioDao(activity).retornaQtdCriterios();
+        List<PesoCriteriosBean> pesos = new PesoCriteriosDao(activity).somaLinhas(qtd);
+
+        for (int i = 0; i < pesos.size(); i++) {
+            List<ComparaCriterioBean> listaComp = new ComparaCriterioDao(activity).carregaComparacoes(pesos.get(i).getIdcrit());
+            for (int j = 0; j < listaComp.size(); j++) {
+                float mult = pesos.get(i).getSoma() * listaComp.get(j).getImportancia();
+                new PesoCriteriosDao(activity).atualizaYMax(listaComp.get(j).getIdcrit1(), mult);
+            }
+        }
+
+        //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
+        List<PesoCriteriosBean> listaYMax = new PesoCriteriosDao(activity).carregaYMax();
+        for (int i = 0; i < listaYMax.size(); i++) {
+            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getSoma();
+            new PesoCriteriosDao(activity).atualizaTotalDivisao(listaYMax.get(i).getIdcrit(), div);
+        }
+
+    }
+
 }

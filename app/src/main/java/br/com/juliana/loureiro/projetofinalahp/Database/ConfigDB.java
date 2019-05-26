@@ -18,6 +18,7 @@ public class ConfigDB extends SQLiteOpenHelper {
         String CREATE_OBJETIVO = "CREATE TABLE OBJETIVOS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "TITULO TEXT, " +
+                "DATA DATE, " +
                 "DESCRICAO TEXT " +
                 " )";
 
@@ -162,9 +163,13 @@ public class ConfigDB extends SQLiteOpenHelper {
                 " )";
         db.execSQL(CREATE_MATRIZALTERNARTIVA_NORMALIZADA);
 
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO) VALUES ('Exemplo', 'Bla bla bla')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
+        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '26/05/2019')");
     }
 
     @Override
