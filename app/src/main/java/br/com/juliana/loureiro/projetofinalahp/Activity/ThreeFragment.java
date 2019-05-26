@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -50,6 +51,15 @@ public class ThreeFragment extends Fragment {
         FloatingActionButton add = view.findViewById(R.id.btnaddalternativa);
         listAlternativas = view.findViewById(R.id.listAlternativas);
         final EditText edtalternativa = view.findViewById(R.id.edtalternativa);
+
+        ImageView help = view.findViewById(R.id.help);
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.alerta(activity, "Possibilidades pelas quais se pode optar para se alcançar seu objetivo final.", "ALTERNATIVA");
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override

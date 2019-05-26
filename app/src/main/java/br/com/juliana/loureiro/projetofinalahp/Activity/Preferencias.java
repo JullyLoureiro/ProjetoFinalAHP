@@ -252,7 +252,7 @@ public class Preferencias extends AppCompatActivity {
                 switch (progresValue) {
                     case 0:
                         importancia = 9;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.one));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.nine));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -262,7 +262,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 1:
                         importancia = 8;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.eight));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -272,7 +272,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 2:
                         importancia = 7;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.seven));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -282,7 +282,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 3:
                         importancia = 6;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -302,7 +302,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 5:
                         importancia = 4;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -312,7 +312,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 6:
                         importancia = 3;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -322,7 +322,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 7:
                         importancia = 2;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
                         criterio2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -332,7 +332,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 8:
                         importancia = 1;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.one));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -342,7 +342,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 9:
                         importancia = 2;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -352,7 +352,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 10:
                         importancia = 3;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -362,7 +362,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 11:
                         importancia = 4;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -382,7 +382,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 13:
                         importancia = 6;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -392,7 +392,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 14:
                         importancia = 7;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.seven));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -402,7 +402,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 15:
                         importancia = 8;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.eight));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -412,7 +412,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 16:
                         importancia = 9;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.nine));
                         criterio1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         criterio1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -447,7 +447,7 @@ public class Preferencias extends AppCompatActivity {
                 switch (progresValue) {
                     case 0:
                         importancia = 9;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.one));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.nine));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -457,7 +457,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 1:
                         importancia = 8;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.eight));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -467,7 +467,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 2:
                         importancia = 7;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.seven));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -477,7 +477,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 3:
                         importancia = 6;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -497,7 +497,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 5:
                         importancia = 4;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -507,7 +507,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 6:
                         importancia = 3;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -517,7 +517,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 7:
                         importancia = 2;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
                         alternativa2.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa2.setTextColor(getResources().getColor(R.color.branco));
 
@@ -527,7 +527,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 8:
                         importancia = 1;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.one));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -537,7 +537,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 9:
                         importancia = 2;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.two));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -547,7 +547,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 10:
                         importancia = 3;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.three));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -557,7 +557,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 11:
                         importancia = 4;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.four));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -577,7 +577,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 13:
                         importancia = 6;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.six));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -587,7 +587,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 14:
                         importancia = 7;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.seven));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -597,7 +597,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 15:
                         importancia = 8;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.eight));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -607,7 +607,7 @@ public class Preferencias extends AppCompatActivity {
                         break;
                     case 16:
                         importancia = 9;
-                        seekBar.setThumb(getResources().getDrawable(R.drawable.five));
+                        seekBar.setThumb(getResources().getDrawable(R.drawable.nine));
                         alternativa1.setBackground(ActivityCompat.getDrawable(Preferencias.this, R.drawable.shape_button));
                         alternativa1.setTextColor(getResources().getColor(R.color.branco));
 
@@ -674,12 +674,12 @@ public class Preferencias extends AppCompatActivity {
 
                     List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
                     for(int i = 0; i < compcriterios.size(); i++) {
-                        new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i));
+                        new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), id);
                     }
 
                     List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
                     for(int i = 0; i < compcriterios.size(); i++) {
-                        new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i));
+                        new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
                     }
 
 
@@ -796,6 +796,7 @@ public class Preferencias extends AppCompatActivity {
                 if(cr > 0.1){
                     dialog.dismiss();
                 } else {
+                    dialog.dismiss();
                     rltpreferencia.setVisibility(View.GONE);
                     rltpreferencia2.setVisibility(View.VISIBLE);
                     altimportancia = 1;

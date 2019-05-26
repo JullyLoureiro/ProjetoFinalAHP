@@ -39,6 +39,7 @@ import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
@@ -66,10 +67,12 @@ public class Resultados extends AppCompatActivity {
                     calculaCriterios();
                 }
             }
+        } else {
+            calculaAlternativas();
         }
 
 
-        calculaAlternativas();
+
     }
 
     private void calculaAlternativas() {
@@ -195,6 +198,18 @@ public class Resultados extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        new ObjetivoDao(this).deletaTemp();
+        new CriterioDao(this).deletaTemp();
+        new AlternativaDao(this).deletaTemp();
+        new ComparaCriterioDao(this).deletaTemp();
+        new ComparaAlternativaDao(this).deletaTemp();
+        new MatrizCriterioNormalizadaDao(this).deleta();
+        new MatrizCriterioNormalizadaDao(this).deletaAlternativa();
+        new PesoCriteriosDao(this).deleta();
+        new PesoCriteriosDao(this).deletaAlternativa();
+        new SomaColunaDao(this).deleta();
+        new SomaColunaDao(this).deletaAlternativa();
+
         Intent intent = new Intent(this, TelaPrincipal.class);
         startActivity(intent);
         finish();
@@ -213,14 +228,18 @@ public class Resultados extends AppCompatActivity {
             new AlternativaDao(this).insereAlternativa(listaAlternativa.get(i));
         }
 
-        /*List<ComparaCriterioBean> listaCompCrit = new ComparaCriterioDao(this).carregaComparacoes(idobjetivo);
+        List<ComparaCriterioBean> listaCompCrit = new ComparaCriterioDao(this).carregaComparacoesObjetivo(idobjetivo);
         for(int i = 0; i < listaAlternativa.size(); i++) {
-            new AlternativaDao(this).insereAlternativa(listaAlternativa.get(i));
-        }*/
+            new ComparaCriterioDao(this).insereComparacoes(listaCompCrit.get(i));
+        }
 
+        List<ComparaAlternativaBean> listaCompAlt = new ComparaAlternativaDao(this).carregaComparacoesObjetivo(idobjetivo);
+        for(int i = 0; i < listaCompAlt.size(); i++) {
+            new ComparaAlternativaDao(this).insereComparacoes(listaCompAlt.get(i));
+        }
 
         Utils.calculacriterios(this);
-
+        calculaAlternativas();
     }
 
 }

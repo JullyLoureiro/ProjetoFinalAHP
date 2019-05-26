@@ -64,7 +64,7 @@ public class ComparaCriterioDao {
         return false;
     }
 
-    public boolean insereComparacoes2(ComparaCriterioBean comparaCriterioBean) {
+    public boolean insereComparacoes2(ComparaCriterioBean comparaCriterioBean, int id) {
         try {
 
                 ContentValues valores;
@@ -74,6 +74,7 @@ public class ComparaCriterioDao {
                 valores.put(ComparaCriterioBean.IDCRIT1, comparaCriterioBean.getIdcrit1());
                 valores.put(ComparaCriterioBean.IDCRIT2, comparaCriterioBean.getIdcrit2());
                 valores.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+                valores.put("IDOBJETIVO", id);
                 db.insert(ComparaCriterioBean.TABELA, null, valores);
                 return true;
 
@@ -190,6 +191,30 @@ public class ComparaCriterioDao {
         List<ComparaCriterioBean> lista = new ArrayList<>();
 
         cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
+    public List<ComparaCriterioBean> carregaComparacoesObjetivo(int idobjetivo) {
+        List<ComparaCriterioBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO " +
+                "= " + idobjetivo, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 

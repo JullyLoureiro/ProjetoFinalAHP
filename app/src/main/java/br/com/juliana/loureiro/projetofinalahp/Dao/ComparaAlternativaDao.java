@@ -55,7 +55,7 @@ public class ComparaAlternativaDao {
         return false;
     }
 
-    public boolean insereComparacoes2(ComparaAlternativaBean comparaAlternativaBean) {
+    public boolean insereComparacoes2(ComparaAlternativaBean comparaAlternativaBean, int id) {
         try {
                 ContentValues valores;
 
@@ -65,6 +65,7 @@ public class ComparaAlternativaDao {
                 valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
                 valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
                 valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+                valores.put("IDOBJETIVO", id);
                 db.insert(ComparaAlternativaBean.TABELA, null, valores);
                 return true;
 
@@ -167,6 +168,31 @@ public class ComparaAlternativaDao {
 
         cursor = db.rawQuery("SELECT * FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA2 +
                 "= " + alt2, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
+                comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
+                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
+    public List<ComparaAlternativaBean> carregaComparacoesObjetivo(int idobj) {
+        List<ComparaAlternativaBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaAlternativaBean.TABELA + " WHERE IDOBJETIVO "  +
+                "= " + idobj, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 

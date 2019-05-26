@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Preferências"
+            android:text="PREFERÊNCIAS"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
             android:layout_marginTop="50dp"
@@ -31,10 +31,10 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="E por fim, faça as comparações de \nacordo com suas preferências!"
+            android:text="E por fim, faça as comparações de acordo com suas preferências!"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 

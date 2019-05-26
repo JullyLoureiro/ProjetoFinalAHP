@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -46,6 +47,15 @@ public class TwoFragment extends Fragment {
         FloatingActionButton add = v.findViewById(R.id.btnaddcriterio);
         listCriterios = v.findViewById(R.id.listCriterios);
         final EditText edtcriterio = v.findViewById(R.id.edtcriterio);
+
+        ImageView help = v.findViewById(R.id.help);
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.alerta(activity, "Atributos que servem de base para serem comparadas e julgadas a partir de alternativas.", "CRITÉRIO");
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override

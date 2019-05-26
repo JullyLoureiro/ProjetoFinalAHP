@@ -73,6 +73,36 @@ public class Utils {
         });
     }
 
+    public static void alerta(final Activity activity, String mensag, String titulo) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
+
+        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
+        TextView txttitulo = alertLayout.findViewById(R.id.txttitulo);
+        mensagem.setText(mensag);
+        txttitulo.setText(titulo);
+        txttitulo.setVisibility(View.VISIBLE);
+        Button yes = alertLayout.findViewById(R.id.yes);
+        yes.setVisibility(View.GONE);
+        ImageView close = alertLayout.findViewById(R.id.close);
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+
+        final AlertDialog dialog = alert.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     public static int returnLastId(SQLiteDatabase DB) {
         int codId = 0;
         try {

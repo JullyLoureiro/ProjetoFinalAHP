@@ -31,10 +31,10 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="Inclua todos os critérios que \npodem influenciar na sua escolha... "
+            android:text="Inclua todos os critérios que podem influenciar na sua escolha... "
             android:textAlignment="center"
             android:textColor="@color/branco"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 

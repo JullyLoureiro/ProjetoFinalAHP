@@ -17,6 +17,13 @@
         android:layout_marginTop="10dp"
        >
 
+        <ImageView
+            android:id="@+id/help"
+          android:layout_alignParentEnd="true"
+            android:src="@drawable/help"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
         <TextView
             android:id="@+id/criteriotitulo"
             android:layout_width="match_parent"
