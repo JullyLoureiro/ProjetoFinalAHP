@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
@@ -85,10 +86,11 @@ public class ObjetivoDao {
 
     public boolean deletaObjetivo(int id) {
         try {
-            db.execSQL("DELETE FROM  " + ObjetivoBean.TABELA + "WHERE ID = " + id);
-            db.execSQL("DELETE FROM  " + CriterioBean.TABELA + "WHERE IDOBJETIVO = " + id);
-            db.execSQL("DELETE FROM  " + AlternativaBean.TABELA + "WHERE IDOBJETIVO = " + id);
-            db.execSQL("DELETE FROM  " + ComparaCriterioBean.TABELA + "WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ObjetivoBean.TABELA + " WHERE ID = " + id);
+            db.execSQL("DELETE FROM  " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + AlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaAlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

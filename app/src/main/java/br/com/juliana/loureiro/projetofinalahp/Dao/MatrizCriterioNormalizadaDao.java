@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SomaColunaBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
 public class MatrizCriterioNormalizadaDao {
@@ -38,6 +39,12 @@ public class MatrizCriterioNormalizadaDao {
                 valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
                 db.insert(MatrizCriterioNormalizadaBean.TABELA, null, valores);
                 return true;
+            } else {
+                ContentValues valores = new ContentValues();
+                valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
+                String where = "IDCRIT1 = ? AND IDCRIT2 = ?";
+                String argumentos2[] = {String.valueOf(matrizCriterioNormalizadaBean.getIdcrit1()), String.valueOf(matrizCriterioNormalizadaBean.getIdcrit2())};
+                db.update(MatrizCriterioNormalizadaBean.TABELA, valores, where, argumentos2);
             }
         } catch (Exception e) {
             e.printStackTrace();

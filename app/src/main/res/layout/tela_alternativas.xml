@@ -16,6 +16,14 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="ALTERNATIVAS"
+            android:textColor="@color/cinzaescuro"
+            android:textSize="17sp" />
+
         <ImageView
             android:id="@+id/help"
             android:layout_alignParentEnd="true"
@@ -68,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lnralternativa"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="20dp" />
 
     </RelativeLayout>
 

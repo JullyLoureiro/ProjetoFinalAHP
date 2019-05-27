@@ -50,6 +50,8 @@ public class ThreeFragment extends Fragment {
         final View view =  inflater.inflate(R.layout.tela_alternativas, container, false);
         FloatingActionButton add = view.findViewById(R.id.btnaddalternativa);
         listAlternativas = view.findViewById(R.id.listAlternativas);
+        List<AlternativaBean> lista = new AlternativaDao(activity).carregaAlternativas();
+        listAlternativas.setAdapter(new AlternativasList(lista, activity));
         final EditText edtalternativa = view.findViewById(R.id.edtalternativa);
 
         ImageView help = view.findViewById(R.id.help);

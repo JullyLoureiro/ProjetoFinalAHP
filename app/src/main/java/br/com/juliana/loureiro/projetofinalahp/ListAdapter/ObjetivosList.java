@@ -22,6 +22,7 @@ import br.com.juliana.loureiro.projetofinalahp.Activity.Resultados;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class ObjetivosList extends BaseAdapter {
 
@@ -92,32 +93,16 @@ public class ObjetivosList extends BaseAdapter {
             }
         });
 
-       /* opcoes.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ViewHolder")
+        card.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(activity, opcoes);
+            public boolean onLongClick(View v) {
 
-                popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+                Utils.alertaExcluir(activity, objetivos.get(position).getId());
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.editar:
-                                break;
-                            case R.id.resultados:
-                                break;
-                            case R.id.excluir:
-                                new ObjetivoDao(activity).deletaObjetivo(objetivos.get(position).getId());
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();
+                return false;
             }
-        });*/
+        });
+
 
         return view;
     }

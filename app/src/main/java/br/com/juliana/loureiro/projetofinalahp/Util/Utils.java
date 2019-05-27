@@ -21,14 +21,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import br.com.juliana.loureiro.projetofinalahp.Activity.TelaPrincipal;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
+import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class Utils {
@@ -98,6 +102,45 @@ public class Utils {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public static void alertaExcluir(final Activity activity, final int idobjetivo) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
+
+        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
+        TextView txttitulo = alertLayout.findViewById(R.id.txttitulo);
+        mensagem.setText("Tem certeza que deseja removê-lo?");
+        txttitulo.setVisibility(View.VISIBLE);
+        Button yes = alertLayout.findViewById(R.id.yes);
+        yes.setText("REMOVER");
+        ImageView close = alertLayout.findViewById(R.id.close);
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+
+        final AlertDialog dialog = alert.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ObjetivoDao(activity).deletaObjetivo(idobjetivo);
+                List<ObjetivoBean> listaObjetivos = new ObjetivoDao(activity).carregaObjetivos();
+                TelaPrincipal.listObjetivos.setAdapter(new ObjetivosList(listaObjetivos, activity));
                 dialog.dismiss();
             }
         });

@@ -46,6 +46,8 @@ public class TwoFragment extends Fragment {
 
         FloatingActionButton add = v.findViewById(R.id.btnaddcriterio);
         listCriterios = v.findViewById(R.id.listCriterios);
+        List<CriterioBean> lista = new CriterioDao(activity).carregaCriterios();
+        listCriterios.setAdapter(new CriteriosList(lista, activity));
         final EditText edtcriterio = v.findViewById(R.id.edtcriterio);
 
         ImageView help = v.findViewById(R.id.help);

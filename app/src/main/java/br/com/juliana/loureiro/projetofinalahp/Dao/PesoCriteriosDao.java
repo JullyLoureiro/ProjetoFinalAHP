@@ -14,6 +14,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SomaColunaBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
 public class PesoCriteriosDao {
@@ -37,14 +38,31 @@ public class PesoCriteriosDao {
             cursor.moveToFirst();
             do {
                 try {
-                    ContentValues valores;
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1));
+                    Cursor cursor2 = db.rawQuery("SELECT * FROM " + PesoCriteriosBean.TABELA +
+                            " WHERE IDCRIT = " + idcrit, null);
 
-                    db = banco.getWritableDatabase();
-                    valores = new ContentValues();
-                    valores.put(PesoCriteriosBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
-                    valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+                    if (cursor2.getCount() > 0) {
+                        ContentValues valores;
 
-                    db.insert(PesoCriteriosBean.TABELA, null, valores);
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+
+                        String where = "IDCRIT = ?";
+                        String[] argumentos = {String.valueOf(idcrit)};
+                        db.update(PesoCriteriosBean.TABELA, valores, where, argumentos);
+                    } else {
+                        ContentValues valores;
+
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put(PesoCriteriosBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                        valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+
+                        db.insert(PesoCriteriosBean.TABELA, null, valores);
+                    }
+
 
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
                     pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));

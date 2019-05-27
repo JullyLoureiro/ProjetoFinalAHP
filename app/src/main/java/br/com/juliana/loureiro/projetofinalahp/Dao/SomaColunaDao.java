@@ -31,21 +31,39 @@ public class SomaColunaDao {
                 " GROUP BY IDCRIT2", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            do{
+            do {
                 try {
-                    ContentValues valores;
-
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2));
+                    Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.TABELA +
+                            " WHERE  IDCRIT = " + idcrit, null);
                     db = banco.getWritableDatabase();
-                    valores = new ContentValues();
-                    valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
-                    valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+                    if(cursor2.getCount()>0) {
 
-                    db.insert(SomaColunaBean.TABELA, null, valores);
+                        ContentValues valores = new ContentValues();
+                        valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+
+                        String where = "IDCRIT = ?";
+                        String argumentos2[] = {String.valueOf(idcrit)};
+                        db.update(SomaColunaBean.TABELA, valores, where, argumentos2);
+
+                    } else {
+                        ContentValues valores;
+
+
+                        valores = new ContentValues();
+                        valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+
+                        db.insert(SomaColunaBean.TABELA, null, valores);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
     }
 
@@ -54,7 +72,7 @@ public class SomaColunaDao {
                 "WHERE IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            do{
+            do {
                 try {
                     ContentValues valores;
 
@@ -69,7 +87,7 @@ public class SomaColunaDao {
                     e.printStackTrace();
                 }
 
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
     }
 
@@ -79,7 +97,7 @@ public class SomaColunaDao {
                     " WHERE " + SomaColunaBean.IDCRIT + " = " + id, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                    return cursor.getFloat(cursor.getColumnIndex(SomaColunaBean.SOMA));
+                return cursor.getFloat(cursor.getColumnIndex(SomaColunaBean.SOMA));
 
             }
         } catch (Exception e) {
@@ -91,7 +109,7 @@ public class SomaColunaDao {
     public float retornaSomaAlternativa(int id, int idcrit) {
         try {
             cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
-                    " WHERE IDALT = " + id +  " AND IDCRIT = " + idcrit, null);
+                    " WHERE IDALT = " + id + " AND IDCRIT = " + idcrit, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 return cursor.getFloat(cursor.getColumnIndex(SomaColunaBean.SOMA));
@@ -106,6 +124,7 @@ public class SomaColunaDao {
     public void deleta() {
         db.execSQL("DELETE FROM " + SomaColunaBean.TABELA);
     }
+
     public void deletaAlternativa() {
         db.execSQL("DELETE FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA);
     }

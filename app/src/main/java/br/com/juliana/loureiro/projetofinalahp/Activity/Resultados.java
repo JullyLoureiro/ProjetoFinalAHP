@@ -66,6 +66,8 @@ public class Resultados extends AppCompatActivity {
                     idobjetivo = params.getInt("verResult", 0);
                     calculaCriterios();
                 }
+            } else {
+                calculaAlternativas();
             }
         } else {
             calculaAlternativas();
@@ -229,7 +231,7 @@ public class Resultados extends AppCompatActivity {
         }
 
         List<ComparaCriterioBean> listaCompCrit = new ComparaCriterioDao(this).carregaComparacoesObjetivo(idobjetivo);
-        for(int i = 0; i < listaAlternativa.size(); i++) {
+        for(int i = 0; i < listaCompCrit.size(); i++) {
             new ComparaCriterioDao(this).insereComparacoes(listaCompCrit.get(i));
         }
 

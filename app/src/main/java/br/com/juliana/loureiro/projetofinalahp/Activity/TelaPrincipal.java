@@ -25,7 +25,7 @@ import br.com.juliana.loureiro.projetofinalahp.R;
 public class TelaPrincipal extends AppCompatActivity {
 
     //private RelativeLayout rltPrincipal;
-    private ListView listObjetivos;
+    public static ListView listObjetivos;
     private BottomNavigationView navigation;
 
     @Override
