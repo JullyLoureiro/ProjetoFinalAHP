@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:orientation="vertical"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_marginStart="40dp"
         android:id="@+id/lnr"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/titulo"
+            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:background="@drawable/shape_lista"
-            android:gravity="center_vertical"
+            android:text="Subcritério"
             android:padding="10dp"
-            android:text="Critério"
+            android:background="@drawable/shape_button_cinza"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/pretofosco"
             android:textSize="18sp" />
 
         <EditText
             android:id="@+id/edttitulo"
+            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
             android:text="Critério"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/pretofosco"
-            android:textSize="18sp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/add"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/add" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/editar"
@@ -61,13 +55,6 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listsubcriterios"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-       >
 
-    </ListView>
 
-</LinearLayout>
+</RelativeLayout>

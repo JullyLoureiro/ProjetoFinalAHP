@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rltprincipal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_branco"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_margin="30dp"
+        android:id="@+id/lnrprincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txttitulo"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTerc"
+                android:text="INFORME O SUBCRITÉRIO"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="end"
+
+                app:srcCompat="@drawable/cancel" />
+
+        </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/edtsub"
+        android:background="@drawable/shape_edittext"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:hint="Subcritério"
+        android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnsub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:background="@drawable/shape_button"
+            android:text="ADICIONAR"
+            android:layout_margin="20dp"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

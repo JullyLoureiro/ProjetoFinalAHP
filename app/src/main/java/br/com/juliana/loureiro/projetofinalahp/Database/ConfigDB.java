@@ -40,6 +40,25 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_CRITERIO);
 
+
+        String CREATE_SUBCRITERIO = "CREATE TABLE SUBCRITERIOS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "DESCRICAO TEXT " +
+                " )";
+
+        db.execSQL(CREATE_SUBCRITERIO);
+
+        String CREATE_SUBCRITERIOTEMP = "CREATE TABLE SUBCRITERIOS_TEMP ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDOBJETIVO INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "DESCRICAO TEXT " +
+                " )";
+
+        db.execSQL(CREATE_SUBCRITERIOTEMP);
+
         String CREATE_CRITERIO_TEMP = "CREATE TABLE CRITERIOS_TEMP ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDOBJETIVO INTEGER, " +

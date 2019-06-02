@@ -26,12 +26,15 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
+import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
@@ -205,4 +208,19 @@ public class Utils {
 
     }
 
+
+    public static void deletaTemp(Activity activity) {
+        new ObjetivoDao(activity).deletaTemp();
+        new CriterioDao(activity).deletaTemp();
+        new AlternativaDao(activity).deletaTemp();
+        new ComparaCriterioDao(activity).deletaTemp();
+        new ComparaAlternativaDao(activity).deletaTemp();
+        new MatrizCriterioNormalizadaDao(activity).deleta();
+        new MatrizCriterioNormalizadaDao(activity).deletaAlternativa();
+        new PesoCriteriosDao(activity).deleta();
+        new PesoCriteriosDao(activity).deletaAlternativa();
+        new SomaColunaDao(activity).deleta();
+        new SomaColunaDao(activity).deletaAlternativa();
+        new SubcriteriosDao(activity).deletaTemp();
+    }
 }

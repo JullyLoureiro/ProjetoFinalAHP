@@ -42,6 +42,7 @@ import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
@@ -200,17 +201,7 @@ public class Resultados extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new ObjetivoDao(this).deletaTemp();
-        new CriterioDao(this).deletaTemp();
-        new AlternativaDao(this).deletaTemp();
-        new ComparaCriterioDao(this).deletaTemp();
-        new ComparaAlternativaDao(this).deletaTemp();
-        new MatrizCriterioNormalizadaDao(this).deleta();
-        new MatrizCriterioNormalizadaDao(this).deletaAlternativa();
-        new PesoCriteriosDao(this).deleta();
-        new PesoCriteriosDao(this).deletaAlternativa();
-        new SomaColunaDao(this).deleta();
-        new SomaColunaDao(this).deletaAlternativa();
+        Utils.deletaTemp(this);
 
         Intent intent = new Intent(this, TelaPrincipal.class);
         startActivity(intent);

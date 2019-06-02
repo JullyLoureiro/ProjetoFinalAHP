@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
 public class CriterioDao {
@@ -63,6 +64,7 @@ public class CriterioDao {
     public boolean deletaCriterio(int id) {
         try {
             db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp + " WHERE ID = " + id);
+            db.execSQL("DELETE FROM " + SubcriterioBean.TABELA_temp + " WHERE IDCRITERIO = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

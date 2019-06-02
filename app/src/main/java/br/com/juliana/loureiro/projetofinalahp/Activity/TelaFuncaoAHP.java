@@ -56,17 +56,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         declaraObjetos();
-        new ObjetivoDao(this).deletaTemp();
-        new CriterioDao(this).deletaTemp();
-        new AlternativaDao(this).deletaTemp();
-        new ComparaCriterioDao(this).deletaTemp();
-        new ComparaAlternativaDao(this).deletaTemp();
-        new MatrizCriterioNormalizadaDao(this).deleta();
-        new MatrizCriterioNormalizadaDao(this).deletaAlternativa();
-        new PesoCriteriosDao(this).deleta();
-        new PesoCriteriosDao(this).deletaAlternativa();
-        new SomaColunaDao(this).deleta();
-        new SomaColunaDao(this).deletaAlternativa();
+        Utils.deletaTemp(this);
 
     }
 

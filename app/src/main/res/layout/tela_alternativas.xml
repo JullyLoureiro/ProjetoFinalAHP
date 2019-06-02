@@ -66,7 +66,7 @@
                 app:fabSize="mini"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add" />
+                android:src="@drawable/addwhite" />
 
         </LinearLayout>
 
