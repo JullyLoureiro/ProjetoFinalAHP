@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -117,9 +118,13 @@ public class TelaFuncaoAHP extends AppCompatActivity {
                 objetivoBean.setDescricao(descricaoobj);
                 new ObjetivoDao(this).insereObjetivo(objetivoBean);
 
-                Intent intent = new Intent(this, Preferencias.class);
-                startActivity(intent);
-                finish();
+
+                if(validaCampos()){
+                    Intent intent = new Intent(this, Preferencias.class);
+                    startActivity(intent);
+                    finish();
+                }
+
                 break;
             default:
                 onBackPressed();
@@ -127,6 +132,24 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean validaCampos() {
+        if(OneFragment.edttitulo.getText().length()==0){
+            Toast.makeText(this, "Informe seu objetivo!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(new CriterioDao(this).carregaCriterios().isEmpty()){
+            Toast.makeText(this, "Inclua critérios!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(new AlternativaDao(this).carregaAlternativas().isEmpty()){
+            Toast.makeText(this, "Inclua suas alternativas!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void declaraObjetos() {

@@ -24,6 +24,21 @@ public class SubcriteriosDao {
         db = banco.getReadableDatabase();
     }
 
+    public String retornaDescricao(int id) {
+        try {
+            cursor = db.rawQuery("SELECT " + SubcriterioBean.DESCRICAO + " FROM " + SubcriterioBean.TABELA_temp +
+                    " WHERE " + SubcriterioBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(SubcriterioBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public boolean insereCriterioTemp(SubcriterioBean criterioBean) {
         try {
             ContentValues valores;
@@ -43,14 +58,14 @@ public class SubcriteriosDao {
 
     }
 
-    public boolean insereCriterio(SubcriterioBean criterioBean) {
+    public boolean insereCriterio(SubcriterioBean criterioBean, int id) {
         try {
             ContentValues valores;
 
             db = banco.getWritableDatabase();
             valores = new ContentValues();
             valores.put(SubcriterioBean.DESCRICAO, criterioBean.getDescricao());
-            valores.put(SubcriterioBean.IDOBJETIVO, criterioBean.getDescricao());
+            valores.put(SubcriterioBean.IDOBJETIVO, id);
             valores.put(SubcriterioBean.IDCRITERIO, criterioBean.getIdcriterio());
             db.insert(SubcriterioBean.TABELA, null, valores);
             return true;

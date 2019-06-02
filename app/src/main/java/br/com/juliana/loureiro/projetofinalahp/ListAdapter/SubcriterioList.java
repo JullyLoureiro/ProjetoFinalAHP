@@ -2,33 +2,36 @@ package br.com.juliana.loureiro.projetofinalahp.ListAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 
-import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 
-public class SubcriteriosList extends BaseAdapter {
+public class SubcriterioList extends BaseAdapter {
     private final List<SubcriterioBean> criterios;
     private Activity activity;
 
-    public SubcriteriosList(List<SubcriterioBean> criterios, Activity act) {
+    SubcriterioList(List<SubcriterioBean> criterios, Activity act) {
         this.criterios = criterios;
         this.activity = act;
     }
-
 
     @Override
     public int getCount() {
@@ -41,23 +44,20 @@ public class SubcriteriosList extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int position) {
-        return criterios.get(position).getId();
+    public long getItemId(int i) {
+        return 0;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        LayoutInflater layout = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View v = null;
-        if (layout != null) {
-            v = layout.inflate(R.layout.card_subcriterios, null);
-        }
-
+    public View getView(final int position, final View view, ViewGroup viewGroup) {
+        @SuppressLint("ViewHolder") final View v = activity.getLayoutInflater()
+                .inflate(R.layout.card_subcriterios, viewGroup, false);
 
         final TextView titulo = v.findViewById(R.id.titulo);
         final EditText edttitulo = v.findViewById(R.id.edttitulo);
         final ImageView editar = v.findViewById(R.id.editar);
         final ImageView apagar = v.findViewById(R.id.apagar);
+
 
         titulo.setText(criterios.get(position).getDescricao());
 
@@ -86,7 +86,7 @@ public class SubcriteriosList extends BaseAdapter {
             public void onClick(View view) {
                 new SubcriteriosDao(activity).deletaSubCriterio(criterios.get(position).getId());
                 criterios.remove(position);
-                CriteriosList.listasubcriterios.setAdapter(new SubcriteriosList(criterios, activity));
+                CriteriosList.listasubcriterios.setAdapter(new SubcriterioList(criterios, activity));
             }
         });
 

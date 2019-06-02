@@ -104,8 +104,9 @@ public class CriteriosList extends BaseAdapter {
 
                             new SubcriteriosDao(activity).insereCriterioTemp(subcriterioBean);
                             List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios();
-                            listasubcriterios.setAdapter(new SubcriteriosList(lista, activity));
                             listasubcriterios.setVisibility(View.VISIBLE);
+                            listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+
                         } else {
                             edtsub.setError("Informe o subcritério!");
                             edtsub.requestFocus();

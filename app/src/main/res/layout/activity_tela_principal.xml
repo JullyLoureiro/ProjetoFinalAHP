@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lt_content"
     android:layout_width="match_parent"
+    android:background="@drawable/shape_gradiente_fundo"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
 

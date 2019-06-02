@@ -17,19 +17,12 @@
         android:layout_marginTop="10dp"
        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="CRITÉRIOS"
-            android:textColor="@color/cinzaescuro"
-            android:textSize="17sp" />
-
         <ImageView
             android:id="@+id/help"
           android:layout_alignParentEnd="true"
             android:src="@drawable/help"
             android:layout_width="32dp"
+            android:layout_marginEnd="5dp"
             android:layout_height="32dp" />
 
         <TextView
@@ -37,10 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CRITÉRIOS"
+            android:layout_marginEnd="5dp"
             android:textAlignment="center"
-            android:textColor="@color/branco"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/cinzaescuro"
+            android:textSize="17sp"
+            />
 
         <LinearLayout
             android:id="@+id/lnrcriterio"

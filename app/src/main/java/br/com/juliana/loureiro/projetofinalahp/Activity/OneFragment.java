@@ -15,6 +15,7 @@ import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class OneFragment extends Fragment {
     private Activity activity;
+    public static  EditText edttitulo;
 
     public OneFragment() {
         // Required empty public constructor
@@ -34,7 +35,7 @@ public class OneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.tela_objetivo, container, false);
-        final EditText edttitulo = v.findViewById(R.id.edttitulo);
+         edttitulo = v.findViewById(R.id.edttitulo);
         ImageView help = v.findViewById(R.id.help);
 
         help.setOnClickListener(new View.OnClickListener() {

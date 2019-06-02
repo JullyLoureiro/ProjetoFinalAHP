@@ -93,6 +93,16 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_COMPARACRITERIO);
 
+        String CREATE_SUBCOMPARACRITERIO = "CREATE TABLE COMPARA_SUBCRITERIOS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRITERIO NTEGER, " +
+                "IDSUBCRIT1 NTEGER, " +
+                "IDSUBCRIT2 INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SUBCOMPARACRITERIO);
 
         String CREATE_COMPARAALTERNATIVA = "CREATE TABLE COMPARA_ALTERNATIVA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
