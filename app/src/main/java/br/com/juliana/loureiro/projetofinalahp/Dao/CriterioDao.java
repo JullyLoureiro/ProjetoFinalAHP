@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class CriterioDao {
     private Context context;
@@ -42,7 +43,7 @@ public class CriterioDao {
 
     }
 
-    public boolean insereCriterio2(CriterioBean criterioBean, int id) {
+    public int insereCriterio2(CriterioBean criterioBean, int id) {
         try {
             ContentValues valores;
 
@@ -51,13 +52,15 @@ public class CriterioDao {
             valores.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
             valores.put(CriterioBean.IDOBJETIVO, id);
             db.insert(CriterioBean.TABELA, null, valores);
-            return true;
+
+            return Utils.returnLastId(db);
+           // return true;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             db.close();
         }
-        return false;
+        return 0;
 
     }
 
@@ -92,6 +95,26 @@ public class CriterioDao {
         List<CriterioBean> lista = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    CriterioBean criterioBean = new CriterioBean();
+                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
+
+                    lista.add(criterioBean);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<CriterioBean> carregaCriteriosObjetivo(int idobjetivo) {
+        List<CriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + idobjetivo, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -159,6 +182,16 @@ public class CriterioDao {
         try {
             cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int retornaQtdCriterios2(int idobjetivo){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA +  " WHERE IDOBJETIVO = " + idobjetivo, null);
+            return cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();
         }

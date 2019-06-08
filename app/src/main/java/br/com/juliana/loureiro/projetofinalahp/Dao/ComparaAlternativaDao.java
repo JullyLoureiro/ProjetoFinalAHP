@@ -163,6 +163,33 @@ public class ComparaAlternativaDao {
         return lista;
     }
 
+
+    public List<ComparaAlternativaBean> carregaComparacoes3(int idobjetivo) {
+        List<ComparaAlternativaBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaAlternativaBean.TABELA + " WHERE IDOBJETIVO = "+idobjetivo, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
+                comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
+                comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getDouble(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
+                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                lista.add(comparaCriterioBean);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
+
     public List<ComparaAlternativaBean> carregaComparacoes(int alt2) {
         List<ComparaAlternativaBean> lista = new ArrayList<>();
 
@@ -308,4 +335,23 @@ public class ComparaAlternativaDao {
         return 1;
     }
 
+    public void atualizaIdAlternativa(int novoid, int antigoid) {
+        try{
+            db.execSQL("UPDATE " + ComparaAlternativaBean.TABELA_temp + " SET " + ComparaAlternativaBean.IDALTERNATIVA1 + " = "+ novoid +
+                    " WHERE IDALTERNATIVA1 = " + antigoid);
+            db.execSQL("UPDATE " + ComparaAlternativaBean.TABELA_temp + " SET " + ComparaAlternativaBean.IDALTERNATIVA2 + " = "+ novoid +
+                    " WHERE IDALTERNATIVA2 = " + antigoid);
+        }catch (Exception ignored) {
+
+        }
+    }
+
+    public void atualizaIdCriterio(int novoid, int antigoid) {
+        try{
+            db.execSQL("UPDATE " + ComparaAlternativaBean.TABELA_temp + " SET " + ComparaAlternativaBean.IDCRITERIO + " = "+ novoid +
+                    " WHERE IDCRITERIO = " + antigoid);
+        }catch (Exception ignored) {
+
+        }
+    }
 }

@@ -136,6 +136,30 @@ public class ComparaCriterioDao {
         return lista;
     }
 
+    public List<ComparaCriterioBean> carregaComparacoes3(int idobjetivo) {
+        List<ComparaCriterioBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO = " + idobjetivo, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
     public void atualizaImportancia(ComparaCriterioBean comparaCriterioBean, int critimport) {
         try {
             ContentValues content = new ContentValues();
@@ -187,10 +211,11 @@ public class ComparaCriterioDao {
         return lista;
     }
 
-    public List<ComparaCriterioBean> carregaComparacoesTemp() {
+    public List<ComparaCriterioBean> carregaComparacoes2(int crit2) {
         List<ComparaCriterioBean> lista = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp, null);
+        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA + " WHERE " + ComparaCriterioBean.IDCRIT2 +
+                "= " + crit2, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
@@ -210,26 +235,56 @@ public class ComparaCriterioDao {
         return lista;
     }
 
-    public List<ComparaCriterioBean> carregaComparacoesObjetivo(int idobjetivo) {
+    public List<ComparaCriterioBean> carregaComparacoesTemp() {
         List<ComparaCriterioBean> lista = new ArrayList<>();
+        try {
 
-        cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO " +
-                "= " + idobjetivo, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
 
-            do {
+            cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
 
-                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
-                comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
-                comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
-                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
-                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
-                lista.add(comparaCriterioBean);
+                do {
 
-            } while (cursor.moveToNext());
+                    ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                    comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                    comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                    comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                    comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                    lista.add(comparaCriterioBean);
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
         }
 
+
+        return lista;
+    }
+
+    public List<ComparaCriterioBean> carregaComparacoesObjetivo(int idobjetivo) {
+        List<ComparaCriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO " +
+                    "= " + idobjetivo, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                do {
+
+                    ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                    comparaCriterioBean.setIdcrit1(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
+                    comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                    comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
+                    comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                    lista.add(comparaCriterioBean);
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
+        }
 
         return lista;
     }
@@ -302,5 +357,16 @@ public class ComparaCriterioDao {
             e.printStackTrace();
         }
         return 1;
+    }
+
+    public void atualizaIdCriterio(int novoid, int antigoid) {
+        try{
+            db.execSQL("UPDATE " + ComparaCriterioBean.TABELA_temp + " SET " + ComparaCriterioBean.IDCRIT1 + " = "+ novoid +
+                    " WHERE IDCRIT1 = " + antigoid);
+            db.execSQL("UPDATE " + ComparaCriterioBean.TABELA_temp + " SET " + ComparaCriterioBean.IDCRIT2 + " = "+ novoid +
+                    " WHERE IDCRIT2 = " + antigoid);
+        }catch (Exception ignored) {
+
+        }
     }
 }

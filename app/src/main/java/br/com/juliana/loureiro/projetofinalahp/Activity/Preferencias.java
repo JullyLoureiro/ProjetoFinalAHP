@@ -960,39 +960,6 @@ public class Preferencias extends AppCompatActivity {
                     Intent intent = new Intent(Preferencias.this, Resultados.class);
                     startActivity(intent);
                     finish();
-
-                    ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivosTemp();
-                    int id = new ObjetivoDao(this).insereObjetivo2(objetivoBean);
-
-
-                    List<CriterioBean> criterios = new CriterioDao(this).carregaCriterios();
-                    for (int i = 0; i < criterios.size(); i++) {
-                        new CriterioDao(this).insereCriterio2(criterios.get(i), id);
-                    }
-
-
-                    List<SubcriterioBean> subcriterios = new SubcriteriosDao(this).carregaCriterios();
-                    for (int i = 0; i < subcriterios.size(); i++) {
-                        new SubcriteriosDao(this).insereCriterio(subcriterios.get(i), id);
-                    }
-
-                    List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas();
-                    for (int i = 0; i < alternativas.size(); i++) {
-                        new AlternativaDao(this).insereAlternativa2(alternativas.get(i), id);
-                    }
-
-
-                    List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
-                    for (int i = 0; i < compcriterios.size(); i++) {
-                        new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), id);
-                    }
-
-                    List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
-                    for (int i = 0; i < compcriterios.size(); i++) {
-                        new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
-                    }
-
-
                 }
 
                 break;
@@ -1007,7 +974,7 @@ public class Preferencias extends AppCompatActivity {
 
         int qtd = new CriterioDao(this).retornaQtdCriterios();
 
-        Utils.calculacriterios(this);
+        Utils.calculacriteriosTemp(this);
 
         //CÁLCULO DE INCONSISTÊNCIA
         float YmaxMedia = new PesoCriteriosDao(this).calculaMedia();

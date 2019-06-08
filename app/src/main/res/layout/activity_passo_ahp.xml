@@ -26,5 +26,15 @@
 
     </androidx.viewpager.widget.ViewPager>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:onClick="nextPreferencias"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/next"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        />
 
 </RelativeLayout>

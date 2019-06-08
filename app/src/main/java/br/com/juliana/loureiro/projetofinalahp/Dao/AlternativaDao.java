@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class AlternativaDao {
     private Context context;
@@ -42,7 +43,7 @@ public class AlternativaDao {
 
     }
 
-    public boolean insereAlternativa2(AlternativaBean alternativaBean, int id) {
+    public int insereAlternativa2(AlternativaBean alternativaBean, int id) {
         try {
             ContentValues valores;
 
@@ -51,13 +52,13 @@ public class AlternativaDao {
             valores.put(AlternativaBean.DESCRICAO, alternativaBean.getDescricao());
             valores.put(AlternativaBean.IDOBJETIVO, id);
             db.insert(AlternativaBean.TABELA, null, valores);
-            return true;
+            return Utils.returnLastId(db);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             db.close();
         }
-        return false;
+        return 0;
 
     }
 
@@ -157,6 +158,16 @@ public class AlternativaDao {
     public int retornaQtd(){
         try {
             cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA_temp, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int retornaQtd2(int idobjetivo){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA + " WHERE IDOBJETIVO = "+ idobjetivo, null);
             return cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();

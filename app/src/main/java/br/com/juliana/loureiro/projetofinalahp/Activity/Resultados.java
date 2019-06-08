@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -33,7 +34,9 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
@@ -49,6 +52,7 @@ import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class Resultados extends AppCompatActivity {
     private int idobjetivo;
+    private ListView listResultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +61,7 @@ public class Resultados extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int qtd = new CriterioDao(this).retornaQtdCriterios();
+        listResultado = findViewById(R.id.listResultado);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -68,17 +72,64 @@ public class Resultados extends AppCompatActivity {
                     calculaCriterios();
                 }
             } else {
-                calculaAlternativas();
+                calculaAlternativasTemp();
             }
         } else {
-            calculaAlternativas();
+            calculaAlternativasTemp();
         }
 
 
 
     }
 
-    private void calculaAlternativas() {
+    private void calculaAlternativas(int idobjetivo) {
+        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
+        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriteriosObjetivo(idobjetivo);
+        for (int i = 0; i < listaCriterios.size(); i++) {
+            new SomaColunaDao(this).somaColunasAlternativas2(listaCriterios.get(i).getId(), idobjetivo);
+        }
+
+        List<ComparaAlternativaBean> listaComparacao = new ComparaAlternativaDao(this).carregaComparacoes3(idobjetivo);
+
+        for (int i = 0; i < listaComparacao.size(); i++) {
+            float soma = new SomaColunaDao(this).retornaSomaAlternativa(listaComparacao.get(i).getIdalternativa2(), listaComparacao.get(i).getIdcriterio());
+
+            MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
+            matrizCriterioNormalizadaBean.setIdalternativa1(listaComparacao.get(i).getIdalternativa1());
+            matrizCriterioNormalizadaBean.setIdalternativa2(listaComparacao.get(i).getIdalternativa2());
+            matrizCriterioNormalizadaBean.setIdcriterio(listaComparacao.get(i).getIdcriterio());
+
+            double imp = listaComparacao.get(i).getImportancia();
+
+            double importancia = imp / soma;
+
+            matrizCriterioNormalizadaBean.setImportancia((float) importancia);
+            new MatrizCriterioNormalizadaDao(this).insereMatrizNormalizadaAlternativa(matrizCriterioNormalizadaBean);
+
+        }
+
+        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
+        int qtdAlt = new AlternativaDao(this).retornaQtd2(idobjetivo);
+        List<PesoCriteriosBean> pesosAlternativas = new PesoCriteriosDao(this).somaLinhasAlternativa(qtdAlt);
+
+        for (int i = 0; i < pesosAlternativas.size(); i++) {
+            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i).getIdcrit());
+
+
+            double multi = pesocriterio * pesosAlternativas.get(i).getSoma();
+            pesosAlternativas.get(i).setTotaldivisao((float) multi);
+            new PesoCriteriosDao(this).atualizaTotal(pesosAlternativas.get(i));
+
+        }
+
+        List<PesoCriteriosBean> resultado = new PesoCriteriosDao(this).retornaResultado();
+
+        geraGrafico(resultado);
+
+        geraTabela(resultado);
+    }
+
+    private void calculaAlternativasTemp() {
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
         for (int i = 0; i < listaCriterios.size(); i++) {
@@ -121,6 +172,11 @@ public class Resultados extends AppCompatActivity {
         List<PesoCriteriosBean> resultado = new PesoCriteriosDao(this).retornaResultado();
 
         geraGrafico(resultado);
+        geraTabela(resultado);
+    }
+
+    private void geraTabela(List<PesoCriteriosBean> resultado){
+
     }
 
     private void geraGrafico(List<PesoCriteriosBean> resultado) {
@@ -169,6 +225,47 @@ public class Resultados extends AppCompatActivity {
         chart.invalidate();
         //chart.saveToGallery("mychart.jpg", 85);
         //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+        Utils.deletaTemp(this);
+
+        salvaDados();
+    }
+
+    private void salvaDados() {
+        ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivosTemp();
+        int id = new ObjetivoDao(this).insereObjetivo2(objetivoBean);
+
+
+        List<CriterioBean> criterios = new CriterioDao(this).carregaCriterios();
+        for (int i = 0; i < criterios.size(); i++) {
+            int idcriterio = new CriterioDao(this).insereCriterio2(criterios.get(i), id);
+            new ComparaCriterioDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
+            new ComparaAlternativaDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
+        }
+
+
+        List<SubcriterioBean> subcriterios = new SubcriteriosDao(this).carregaCriterios();
+        for (int i = 0; i < subcriterios.size(); i++) {
+            new SubcriteriosDao(this).insereCriterio(subcriterios.get(i), id);
+        }
+
+        List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas();
+        for (int i = 0; i < alternativas.size(); i++) {
+            int idalt = new AlternativaDao(this).insereAlternativa2(alternativas.get(i), id);
+            new ComparaAlternativaDao(this).atualizaIdAlternativa(idalt, alternativas.get(i).getId());
+        }
+
+
+        List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
+        for (int i = 0; i < compcriterios.size(); i++) {
+            new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), id);
+        }
+
+        List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
+        for (int i = 0; i < compalternativas.size(); i++) {
+            new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
+        }
+
     }
 
     private ArrayList<IBarDataSet> getDataSet(List<PesoCriteriosBean> resultado) {
@@ -203,15 +300,15 @@ public class Resultados extends AppCompatActivity {
     public void onBackPressed() {
         Utils.deletaTemp(this);
 
-        Intent intent = new Intent(this, TelaPrincipal.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, TelaPrincipal.class);
+       // startActivity(intent);
         finish();
         super.onBackPressed();
     }
 
     private void calculaCriterios() {
 
-        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios2(idobjetivo);
+        /*List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios2(idobjetivo);
         for(int i = 0; i < listaCriterios.size(); i++) {
             new CriterioDao(this).insereCriterio(listaCriterios.get(i));
         }
@@ -229,10 +326,10 @@ public class Resultados extends AppCompatActivity {
         List<ComparaAlternativaBean> listaCompAlt = new ComparaAlternativaDao(this).carregaComparacoesObjetivo(idobjetivo);
         for(int i = 0; i < listaCompAlt.size(); i++) {
             new ComparaAlternativaDao(this).insereComparacoes(listaCompAlt.get(i));
-        }
+        }*/
 
-        Utils.calculacriterios(this);
-        calculaAlternativas();
+        Utils.calculacriterios(this, idobjetivo);
+        calculaAlternativas(idobjetivo);
     }
 
 }

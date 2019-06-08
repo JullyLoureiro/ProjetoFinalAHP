@@ -71,67 +71,62 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.avancar:
-
-                List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
-                //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
-                for (int i = 0; i < listaCriterios.size(); i++) {
-                    for (int j = 0; j < listaCriterios.size(); j++) {
-                        ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
-                        comparaCriterioBean.setIdcrit1(listaCriterios.get(i).getId());
-                        comparaCriterioBean.setIdcrit2(listaCriterios.get(j).getId());
-                        if (i == j) {
-                            comparaCriterioBean.setImportancia(1);
-                        } else {
-                            comparaCriterioBean.setImportancia(0);
-                        }
-
-                        new ComparaCriterioDao(this).insereComparacoes(comparaCriterioBean);
-                    }
-                }
-
-                List<AlternativaBean> listaAlternativas = new AlternativaDao(this).carregaAlternativas();
-
-                for (int x = 0; x < listaCriterios.size(); x++) {
-                    for (int i = 0; i < listaAlternativas.size(); i++) {
-                        for (int j = 0; j < listaAlternativas.size(); j++) {
-                            ComparaAlternativaBean alternativaBean = new ComparaAlternativaBean();
-                            alternativaBean.setIdalternativa1(listaAlternativas.get(i).getId());
-                            alternativaBean.setIdalternativa2(listaAlternativas.get(j).getId());
-                            alternativaBean.setIdcriterio(listaCriterios.get(x).getId());
-                            alternativaBean.setIdobjetivo(0);
-                            if (i == j) {
-                                alternativaBean.setImportancia(1);
-                            } else {
-                                alternativaBean.setImportancia(0);
-                            }
-                            new ComparaAlternativaDao(this).insereComparacoes(alternativaBean);
-
-                        }
-                    }
-                }
-
-
-                ObjetivoBean objetivoBean = new ObjetivoBean();
-                objetivoBean.setTitulo(tituloobj);
-                objetivoBean.setDescricao(descricaoobj);
-                new ObjetivoDao(this).insereObjetivo(objetivoBean);
-
-
-                if(validaCampos()){
-                    Intent intent = new Intent(this, Preferencias.class);
-                    startActivity(intent);
-                    finish();
-                }
-
-                break;
-            default:
-                onBackPressed();
-                break;
-        }
+        onBackPressed();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void nextPreferencias(View v) {
+        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
+        //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
+        for (int i = 0; i < listaCriterios.size(); i++) {
+            for (int j = 0; j < listaCriterios.size(); j++) {
+                ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
+                comparaCriterioBean.setIdcrit1(listaCriterios.get(i).getId());
+                comparaCriterioBean.setIdcrit2(listaCriterios.get(j).getId());
+                if (i == j) {
+                    comparaCriterioBean.setImportancia(1);
+                } else {
+                    comparaCriterioBean.setImportancia(0);
+                }
+
+                new ComparaCriterioDao(this).insereComparacoes(comparaCriterioBean);
+            }
+        }
+
+        List<AlternativaBean> listaAlternativas = new AlternativaDao(this).carregaAlternativas();
+
+        for (int x = 0; x < listaCriterios.size(); x++) {
+            for (int i = 0; i < listaAlternativas.size(); i++) {
+                for (int j = 0; j < listaAlternativas.size(); j++) {
+                    ComparaAlternativaBean alternativaBean = new ComparaAlternativaBean();
+                    alternativaBean.setIdalternativa1(listaAlternativas.get(i).getId());
+                    alternativaBean.setIdalternativa2(listaAlternativas.get(j).getId());
+                    alternativaBean.setIdcriterio(listaCriterios.get(x).getId());
+                    alternativaBean.setIdobjetivo(0);
+                    if (i == j) {
+                        alternativaBean.setImportancia(1);
+                    } else {
+                        alternativaBean.setImportancia(0);
+                    }
+                    new ComparaAlternativaDao(this).insereComparacoes(alternativaBean);
+
+                }
+            }
+        }
+
+
+        ObjetivoBean objetivoBean = new ObjetivoBean();
+        objetivoBean.setTitulo(tituloobj);
+        objetivoBean.setDescricao(descricaoobj);
+        new ObjetivoDao(this).insereObjetivo(objetivoBean);
+
+
+        if(validaCampos()){
+            Intent intent = new Intent(this, Preferencias.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private boolean validaCampos() {
@@ -166,11 +161,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.optionsmenu, menu);
-        MenuItem ajuda = menu.findItem(R.id.ajuda);
-        MenuItem avancar = menu.findItem(R.id.avancar);
-        ajuda.setVisible(false);
-        avancar.setVisible(true);
+
         return true;
     }
 

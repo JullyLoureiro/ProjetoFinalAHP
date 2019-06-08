@@ -27,67 +27,149 @@ public class SomaColunaDao {
     }
 
     public void somaColunas() {
-        cursor = db.rawQuery("SELECT IDCRIT2, SUM(IMPORTANCIA) AS SOMA FROM " + ComparaCriterioBean.TABELA_temp +
-                " GROUP BY IDCRIT2", null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                try {
-                    int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2));
-                    Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.TABELA +
-                            " WHERE  IDCRIT = " + idcrit, null);
-                    db = banco.getWritableDatabase();
-                    if(cursor2.getCount()>0) {
+        try {
+            cursor = db.rawQuery("SELECT IDCRIT2, SUM(IMPORTANCIA) AS SOMA FROM " + ComparaCriterioBean.TABELA_temp +
+                    " GROUP BY IDCRIT2", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    try {
+                        int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2));
+                        Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.TABELA +
+                                " WHERE  IDCRIT = " + idcrit, null);
+                        db = banco.getWritableDatabase();
+                        if (cursor2.getCount() > 0) {
 
-                        ContentValues valores = new ContentValues();
-                        valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
-                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+                            ContentValues valores = new ContentValues();
+                            valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                            valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
-                        String where = "IDCRIT = ?";
-                        String argumentos2[] = {String.valueOf(idcrit)};
-                        db.update(SomaColunaBean.TABELA, valores, where, argumentos2);
+                            String where = "IDCRIT = ?";
+                            String argumentos2[] = {String.valueOf(idcrit)};
+                            db.update(SomaColunaBean.TABELA, valores, where, argumentos2);
 
-                    } else {
-                        ContentValues valores;
+                        } else {
+                            ContentValues valores;
 
 
-                        valores = new ContentValues();
-                        valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
-                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+                            valores = new ContentValues();
+                            valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                            valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
-                        db.insert(SomaColunaBean.TABELA, null, valores);
+                            db.insert(SomaColunaBean.TABELA, null, valores);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        }
+    }
 
-            } while (cursor.moveToNext());
+    public void somaColunas2(int idobjetivo) {
+        try {
+            cursor = db.rawQuery("SELECT IDCRIT2, SUM(IMPORTANCIA) AS SOMA FROM " + ComparaCriterioBean.TABELA +
+                    " WHERE IDOBJETIVO = " + idobjetivo + " GROUP BY IDCRIT2", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    try {
+                        int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2));
+                        Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.TABELA +
+                                " WHERE  IDCRIT = " + idcrit, null);
+                        db = banco.getWritableDatabase();
+                        if (cursor2.getCount() > 0) {
+
+                            ContentValues valores = new ContentValues();
+                            valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                            valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+
+                            String where = "IDCRIT = ?";
+                            String argumentos2[] = {String.valueOf(idcrit)};
+                            db.update(SomaColunaBean.TABELA, valores, where, argumentos2);
+
+                        } else {
+                            ContentValues valores;
+
+
+                            valores = new ContentValues();
+                            valores.put(SomaColunaBean.IDCRIT, cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
+                            valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+
+                            db.insert(SomaColunaBean.TABELA, null, valores);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
         }
     }
 
     public void somaColunasAlternativas(int idcriterio) {
-        cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP " +
-                "WHERE IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                try {
-                    ContentValues valores;
 
-                    db = banco.getWritableDatabase();
-                    valores = new ContentValues();
-                    valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
-                    valores.put("IDCRIT", idcriterio);
-                    valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+        try {
+            cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP " +
+                    "WHERE IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    try {
+                        ContentValues valores;
 
-                    db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
+                        valores.put("IDCRIT", idcriterio);
+                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
-            } while (cursor.moveToNext());
+                        db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
+        }
+    }
+
+    public void somaColunasAlternativas2(int idcriterio, int idobjetivo) {
+        try {
+            cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVA " +
+                    "WHERE IDOBJETIVO = " + idobjetivo + " AND IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    try {
+                        ContentValues valores;
+
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
+                        valores.put("IDCRIT", idcriterio);
+                        valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
+
+                        db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
         }
     }
 

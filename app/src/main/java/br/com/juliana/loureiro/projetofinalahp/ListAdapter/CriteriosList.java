@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -62,95 +64,117 @@ public class CriteriosList extends BaseAdapter {
 
         final TextView titulo = v.findViewById(R.id.titulo);
         final EditText edttitulo = v.findViewById(R.id.edttitulo);
-        final ImageView editar = v.findViewById(R.id.editar);
+       //final ImageView editar = v.findViewById(R.id.editar);
         final ImageView apagar = v.findViewById(R.id.apagar);
         final ImageView add = v.findViewById(R.id.add);
+        final ImageView options = v.findViewById(R.id.options);
+        final ImageView save = v.findViewById(R.id.save);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edttitulo.setVisibility(View.GONE);
+                titulo.setText(edttitulo.getText());
+                criterios.get(position).setDescricao(edttitulo.getText().toString());
+                titulo.setVisibility(View.VISIBLE);
+                new CriterioDao(activity).atualizaCriterio(criterios.get(position));
+                save.setVisibility(View.GONE);
+                options.setVisibility(View.VISIBLE);
+            }
+        });
+
         listasubcriterios = v.findViewById(R.id.listsubcriterios);
 
         titulo.setText(criterios.get(position).getDescricao());
 
-        add.setOnClickListener(new View.OnClickListener() {
+
+        options.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = activity.getLayoutInflater();
-                @SuppressLint("ViewHolder") View alertLayout = inflater.inflate(R.layout.layoutddsubcriterio, null);
+                final PopupMenu popupMenu = new PopupMenu(activity, options);
+                popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
 
-                Button btnsub = alertLayout.findViewById(R.id.btnsub);
-                ImageView close = alertLayout.findViewById(R.id.close);
-
-                final EditText edtsub = alertLayout.findViewById(R.id.edtsub);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setView(alertLayout);
-                alert.setCancelable(true);
-
-                final AlertDialog dialog = alert.create();
-                if (dialog.getWindow() != null) {
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                }
-                dialog.show();
-
-                btnsub.setOnClickListener(new View.OnClickListener() {
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.add:
+                                LayoutInflater inflater = activity.getLayoutInflater();
+                                @SuppressLint("ViewHolder") View alertLayout = inflater.inflate(R.layout.layoutddsubcriterio, null);
 
-                        if(edtsub.getText().length()>0) {
+                                Button btnsub = alertLayout.findViewById(R.id.btnsub);
+                                ImageView close = alertLayout.findViewById(R.id.close);
 
-                            dialog.dismiss();
+                                final EditText edtsub = alertLayout.findViewById(R.id.edtsub);
 
-                            SubcriterioBean subcriterioBean = new SubcriterioBean();
-                            subcriterioBean.setIdcriterio(criterios.get(position).getId());
-                            subcriterioBean.setDescricao(edtsub.getText().toString());
+                                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                                alert.setView(alertLayout);
+                                alert.setCancelable(true);
 
-                            new SubcriteriosDao(activity).insereCriterioTemp(subcriterioBean);
-                            List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios();
-                            listasubcriterios.setVisibility(View.VISIBLE);
-                            listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+                                final AlertDialog dialog = alert.create();
+                                if (dialog.getWindow() != null) {
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                }
+                                dialog.show();
 
-                        } else {
-                            edtsub.setError("Informe o subcritério!");
-                            edtsub.requestFocus();
+                                btnsub.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        if (edtsub.getText().length() > 0) {
+
+                                            dialog.dismiss();
+
+                                            SubcriterioBean subcriterioBean = new SubcriterioBean();
+                                            subcriterioBean.setIdcriterio(criterios.get(position).getId());
+                                            subcriterioBean.setDescricao(edtsub.getText().toString());
+
+                                            new SubcriteriosDao(activity).insereCriterioTemp(subcriterioBean);
+                                            List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios();
+                                            listasubcriterios.setVisibility(View.VISIBLE);
+                                            listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+
+                                        } else {
+                                            edtsub.setError("Informe o subcritério!");
+                                            edtsub.requestFocus();
+                                        }
+                                    }
+                                });
+
+                                close.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                break;
+                            case R.id.editar:
+                                if (options.getVisibility() == View.VISIBLE) {
+                                    titulo.setVisibility(View.GONE);
+                                    edttitulo.setVisibility(View.VISIBLE);
+                                    edttitulo.setText(titulo.getText());
+                                    edttitulo.requestFocus();
+                                  // options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
+                                    save.setVisibility(View.VISIBLE);
+                                    options.setVisibility(View.GONE);
+                                }
+
+                                  //  options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
+
+                                break;
+                            case R.id.apagar:
+                                new CriterioDao(activity).deletaCriterio(criterios.get(position).getId());
+                                criterios.remove(position);
+                                TwoFragment.listCriterios.setAdapter(new CriteriosList(criterios, activity));
+                                break;
                         }
+                        return true;
                     }
                 });
-
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
+                popupMenu.show();
             }
         });
 
-        editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(titulo.getVisibility() == View.VISIBLE) {
-                    titulo.setVisibility(View.GONE);
-                    edttitulo.setVisibility(View.VISIBLE);
-                    edttitulo.setText(titulo.getText());
-                    edttitulo.requestFocus();
-                    editar.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
-                } else {
-                    edttitulo.setVisibility(View.GONE);
-                    titulo.setText(edttitulo.getText());
-                    criterios.get(position).setDescricao(edttitulo.getText().toString());
-                    titulo.setVisibility(View.VISIBLE);
-                    new CriterioDao(activity).atualizaCriterio(criterios.get(position));
-                    editar.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
-                }
-            }
-        });
-
-        apagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CriterioDao(activity).deletaCriterio(criterios.get(position).getId());
-                criterios.remove(position);
-                TwoFragment.listCriterios.setAdapter(new CriteriosList(criterios, activity));
-            }
-        });
 
         return v;
     }

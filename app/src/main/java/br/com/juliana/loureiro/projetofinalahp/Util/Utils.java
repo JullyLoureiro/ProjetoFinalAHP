@@ -168,7 +168,7 @@ public class Utils {
         return sdf.format(data.getTime());
     }
 
-    public static void calculacriterios(Activity activity) {
+    public static void calculacriteriosTemp(Activity activity) {
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         new SomaColunaDao(activity).somaColunas();
         List<ComparaCriterioBean> listaComparacao = new ComparaCriterioDao(activity).carregaComparacoes2();
@@ -208,6 +208,45 @@ public class Utils {
 
     }
 
+    public static void calculacriterios(Activity activity, int idobjetivo) {
+        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
+        new SomaColunaDao(activity).somaColunas2(idobjetivo);
+        List<ComparaCriterioBean> listaComparacao = new ComparaCriterioDao(activity).carregaComparacoes3(idobjetivo);
+
+        for (int i = 0; i < listaComparacao.size(); i++) {
+            float soma = new SomaColunaDao(activity).retornaSoma(listaComparacao.get(i).getIdcrit2());
+
+            MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
+            matrizCriterioNormalizadaBean.setIdcrit1(listaComparacao.get(i).getIdcrit1());
+            matrizCriterioNormalizadaBean.setIdcrit2(listaComparacao.get(i).getIdcrit2());
+
+            float importancia = listaComparacao.get(i).getImportancia() / soma;
+
+            matrizCriterioNormalizadaBean.setImportancia(importancia);
+            new MatrizCriterioNormalizadaDao(activity).insereMatrizNormalizada(matrizCriterioNormalizadaBean);
+
+        }
+
+        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
+        int  qtd = new CriterioDao(activity).retornaQtdCriterios2(idobjetivo);
+        List<PesoCriteriosBean> pesos = new PesoCriteriosDao(activity).somaLinhas(qtd);
+
+        for (int i = 0; i < pesos.size(); i++) {
+            List<ComparaCriterioBean> listaComp = new ComparaCriterioDao(activity).carregaComparacoes2(pesos.get(i).getIdcrit());
+            for (int j = 0; j < listaComp.size(); j++) {
+                float mult = pesos.get(i).getSoma() * listaComp.get(j).getImportancia();
+                new PesoCriteriosDao(activity).atualizaYMax(listaComp.get(j).getIdcrit1(), mult);
+            }
+        }
+
+        //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
+        List<PesoCriteriosBean> listaYMax = new PesoCriteriosDao(activity).carregaYMax();
+        for (int i = 0; i < listaYMax.size(); i++) {
+            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getSoma();
+            new PesoCriteriosDao(activity).atualizaTotalDivisao(listaYMax.get(i).getIdcrit(), div);
+        }
+
+    }
 
     public static void deletaTemp(Activity activity) {
         new ObjetivoDao(activity).deletaTemp();
