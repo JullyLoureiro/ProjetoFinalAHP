@@ -2,80 +2,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/colorTerc"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/rltpreferencia"
+        android:layout_margin="30dp"
+        android:elevation="10dp"
+       android:background="@drawable/shape_branco"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape_branco"
-        android:padding="10dp"
-        android:paddingTop="20dp"
-        android:visibility="visible">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txvtitulo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CRITÉRIOS"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            android:layout_height="600dp"
+            android:background="@drawable/shape_branco"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:visibility="visible">
 
-        <Button
-            android:id="@+id/criterio1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/shape_button"
-            android:text="CRITÉRIO 1"
-            android:textAlignment="center"
-            android:textColor="@color/branco"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txvtitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CRITÉRIOS"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/criterio2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/shape_button_cinza"
-            android:text="CRITÉRIO 2"
-            android:textAlignment="center"
-            android:textColor="@color/cinzaescuro"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/criterio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/shape_button"
+                android:text="CRITÉRIO 1"
+                android:textAlignment="center"
+                android:textColor="@color/branco"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/anterior"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/left_arrow" />
+            <Button
+                android:id="@+id/criterio2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button_cinza"
+                android:text="CRITÉRIO 2"
+                android:textAlignment="center"
+                android:textColor="@color/cinzaescuro"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/proximo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/rigth_arrow" />
+            <ImageView
+                android:id="@+id/anterior"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/left_arrow" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="5dp"
-            android:max="16"
-            android:progress="8"
-            android:rotation="270"
-            android:thumb="@drawable/one" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/proximo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/rigth_arrow" />
 
-    </RelativeLayout>
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="5dp"
+                android:max="16"
+                android:progress="8"
+                android:rotation="270"
+                android:thumb="@drawable/one" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <RelativeLayout
         android:id="@+id/rltpreferencia2"
@@ -126,6 +139,7 @@
                     android:id="@+id/anterior2"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/left_arrow" />
 
 
@@ -146,6 +160,7 @@
                     android:id="@+id/proximo2"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/rigth_arrow" />
 
             </RelativeLayout>
@@ -216,6 +231,7 @@
                 <ImageView
                     android:id="@+id/anterior3"
                     android:layout_width="55dp"
+                    android:visibility="gone"
                     android:layout_height="55dp"
                     app:srcCompat="@drawable/left_arrow" />
 
@@ -235,6 +251,7 @@
                 <ImageView
                     android:layout_alignParentEnd="true"
                     android:id="@+id/proximo3"
+                    android:visibility="gone"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     app:srcCompat="@drawable/rigth_arrow" />

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -55,7 +57,8 @@ import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 public class Preferencias extends AppCompatActivity {
     private Button criterio1, criterio2, alternativa1, alternativa2, subcriterio1, subcriterio2;
     private SeekBar seekBar, seekBar2, seekBar3;
-    private RelativeLayout rltpreferencia, rltpreferencia2, rltpreferencia3;
+    private RelativeLayout  rltpreferencia2, rltpreferencia3;
+    private CardView rltpreferencia;
     private ImageView anterior, proximo, anterior2, proximo2, anterior3, proximo3;
     private List<ComparaCriterioBean> listaComp;
     private List<ComparaAlternativaBean> listaCompAlt;
@@ -218,7 +221,8 @@ public class Preferencias extends AppCompatActivity {
             }
 
             public void onSwipeLeft() {
-                if ((i + 1) < listaCompSub.size()) {
+                if ((i + 1) < listaComp.size()) {
+                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
@@ -229,6 +233,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeRight() {
                 if (i > 0) {
+                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
@@ -250,6 +255,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeLeft() {
                 if ((i + 1) < listaCompAlt.size()) {
+                    rltpreferencia2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
@@ -265,6 +271,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeRight() {
                 if (i > 0) {
+                    rltpreferencia2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
@@ -291,6 +298,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeLeft() {
                 if ((i + 1) < listaCompSub.size()) {
+                    rltpreferencia3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
@@ -305,6 +313,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeRight() {
                 if (i > 0) {
+                    rltpreferencia3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
@@ -345,6 +354,30 @@ public class Preferencias extends AppCompatActivity {
         txvtitulo2.setText("Entre a alternativa " + alt1 + " e a alternativa " + alt2 +
                 ", qual possui maior relevância em relação ao critério " +
                 new CriterioDao(this).retornaDescricao(listaCompAlt.get(i).getIdcriterio()) + "?");
+
+         String sub1 ="";
+        String sub2 ="";
+        try{
+            sub1 = new SubcriteriosDao(this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1());
+            subcriterio1.setText(sub1);
+        }catch (Exception ignored) {
+
+        }
+
+        try {
+            sub2 = new SubcriteriosDao(this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2());
+            subcriterio2.setText(sub2);
+        }catch (Exception ignored) {
+
+        }
+
+        try {
+            txvtitulo3.setText("Entre o subcritério " + sub1 + " e o subcritério " + sub2 +
+                    ", qual possui maior relevância em relação ao critério " +
+                    new CriterioDao(this).retornaDescricao(listaCompSub.get(i).getIdcriterio()) + "?");
+        }catch (Exception ignored) {
+
+        }
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int importancia = 0;
