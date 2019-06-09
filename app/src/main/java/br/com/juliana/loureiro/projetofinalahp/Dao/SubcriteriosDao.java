@@ -104,6 +104,27 @@ public class SubcriteriosDao {
 
     }
 
+    public List<SubcriterioBean> carregaCriterios(int idcriterio) {
+        List<SubcriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA_temp + " where " + SubcriterioBean.IDCRITERIO + "=" + idcriterio, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    SubcriterioBean criterioBean = new SubcriterioBean();
+                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(SubcriterioBean.DESCRICAO)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
+
+                    lista.add(criterioBean);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
     public List<SubcriterioBean> carregaCriterios() {
         List<SubcriterioBean> lista = new ArrayList<>();
         try {

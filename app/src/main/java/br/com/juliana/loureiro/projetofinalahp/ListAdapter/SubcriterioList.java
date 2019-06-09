@@ -86,7 +86,8 @@ public class SubcriterioList extends BaseAdapter {
             public void onClick(View view) {
                 new SubcriteriosDao(activity).deletaSubCriterio(criterios.get(position).getId());
                 criterios.remove(position);
-                CriteriosList.listasubcriterios.setAdapter(new SubcriterioList(criterios, activity));
+                notifyDataSetChanged();
+
             }
         });
 

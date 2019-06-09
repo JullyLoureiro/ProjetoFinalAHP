@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -84,6 +85,10 @@ public class CriteriosList extends BaseAdapter {
         });
 
         listasubcriterios = v.findViewById(R.id.listsubcriterios);
+        final List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios(criterios.get(position).getId());
+        listasubcriterios.setVisibility(View.VISIBLE);
+        listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+        setListViewHeightBasedOnItems(listasubcriterios);
 
         titulo.setText(criterios.get(position).getDescricao());
 
@@ -130,9 +135,16 @@ public class CriteriosList extends BaseAdapter {
                                             subcriterioBean.setDescricao(edtsub.getText().toString());
 
                                             new SubcriteriosDao(activity).insereCriterioTemp(subcriterioBean);
-                                            List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios();
+                                            final List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios(criterios.get(position).getId());
                                             listasubcriterios.setVisibility(View.VISIBLE);
                                             listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+                                            setListViewHeightBasedOnItems(listasubcriterios);
+
+
+                                            List<CriterioBean> lista2 = new CriterioDao(activity).carregaCriterios();
+                                            TwoFragment.listCriterios.setAdapter(new CriteriosList(lista2, activity));
+
+                                            Utils.hideKeyboard(activity, edtsub);
 
                                         } else {
                                             edtsub.setError("Informe o subcritério!");
@@ -177,5 +189,40 @@ public class CriteriosList extends BaseAdapter {
 
 
         return v;
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            // Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight + totalPadding;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 }

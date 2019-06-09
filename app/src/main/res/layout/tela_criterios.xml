@@ -67,8 +67,9 @@
         <ListView
             android:id="@+id/listCriterios"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/lnrcriterio"
+            android:divider="@color/transparent"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp" />
 

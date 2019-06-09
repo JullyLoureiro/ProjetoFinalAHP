@@ -330,6 +330,7 @@ public class Preferencias extends AppCompatActivity {
     private void carregaDados() {
         listaComp = new ComparaCriterioDao(this).carregaComparacoes();
         listaCompAlt = new ComparaAlternativaDao(this).carregaComparacoes();
+        listaCompSub = new ComparaSubcriterioDao(this).carregaComparacoes();
 
         final String crit1 = new CriterioDao(this).retornaDescricao(listaComp.get(i).getIdcrit1());
         criterio1.setText(crit1);

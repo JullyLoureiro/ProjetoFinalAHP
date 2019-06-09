@@ -28,16 +28,20 @@ import java.util.List;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaSubcriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
@@ -77,8 +81,10 @@ public class TelaFuncaoAHP extends AppCompatActivity {
     }
 
     public void nextPreferencias(View v) {
+
+        //COMPARA CRITÉRIOS
         List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
-        //  matrizCrit = new float [listaCriterios.size()][listaCriterios.size()];
+
         for (int i = 0; i < listaCriterios.size(); i++) {
             for (int j = 0; j < listaCriterios.size(); j++) {
                 ComparaCriterioBean comparaCriterioBean = new ComparaCriterioBean();
@@ -94,6 +100,29 @@ public class TelaFuncaoAHP extends AppCompatActivity {
             }
         }
 
+        //COMPARA SUBCRITERIOS
+        for (int k = 0; k < listaCriterios.size(); k++) {
+            List<SubcriterioBean> listaSubCriterios = new SubcriteriosDao(this).carregaCriterios(listaCriterios.get(k).getId());
+
+            for (int i = 0; i < listaSubCriterios.size(); i++) {
+                for (int j = 0; j < listaSubCriterios.size(); j++) {
+                    ComparaSubCriterioBean comparaCriterioBean = new ComparaSubCriterioBean();
+                    comparaCriterioBean.setIdsubcrit1(listaSubCriterios.get(i).getId());
+                    comparaCriterioBean.setIdsubcrit2(listaSubCriterios.get(j).getId());
+                    comparaCriterioBean.setIdcriterio(listaCriterios.get(k).getId());
+                    if (i == j) {
+                        comparaCriterioBean.setImportancia(1);
+                    } else {
+                        comparaCriterioBean.setImportancia(0);
+                    }
+
+                    new ComparaSubcriterioDao(this).insereComparacoes(comparaCriterioBean);
+                }
+            }
+        }
+
+
+        //COMPARA ALTERNATIVAS
         List<AlternativaBean> listaAlternativas = new AlternativaDao(this).carregaAlternativas();
 
         for (int x = 0; x < listaCriterios.size(); x++) {
@@ -116,12 +145,14 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         }
 
 
+        //GRAVA OBJETIVO
         ObjetivoBean objetivoBean = new ObjetivoBean();
         objetivoBean.setTitulo(tituloobj);
         objetivoBean.setDescricao(descricaoobj);
         new ObjetivoDao(this).insereObjetivo(objetivoBean);
 
 
+        //VALIDA CAMPOS E VAI PARA OS JULGAMENTOS
         if(validaCampos()){
             Intent intent = new Intent(this, Preferencias.class);
             startActivity(intent);

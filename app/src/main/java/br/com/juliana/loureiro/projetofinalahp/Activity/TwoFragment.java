@@ -16,8 +16,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.ListAdapter.CriteriosList;
+import br.com.juliana.loureiro.projetofinalahp.ListAdapter.SubcriterioList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
@@ -48,6 +51,7 @@ public class TwoFragment extends Fragment {
         listCriterios = v.findViewById(R.id.listCriterios);
         List<CriterioBean> lista = new CriterioDao(activity).carregaCriterios();
         listCriterios.setAdapter(new CriteriosList(lista, activity));
+
         final EditText edtcriterio = v.findViewById(R.id.edtcriterio);
 
         ImageView help = v.findViewById(R.id.help);

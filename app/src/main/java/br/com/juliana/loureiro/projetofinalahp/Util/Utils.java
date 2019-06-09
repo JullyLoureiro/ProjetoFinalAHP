@@ -29,6 +29,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
+import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaSubcriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.CriterioDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.MatrizCriterioNormalizadaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
@@ -254,6 +255,7 @@ public class Utils {
         new AlternativaDao(activity).deletaTemp();
         new ComparaCriterioDao(activity).deletaTemp();
         new ComparaAlternativaDao(activity).deletaTemp();
+        new ComparaSubcriterioDao(activity).deletaTemp();
         new MatrizCriterioNormalizadaDao(activity).deleta();
         new MatrizCriterioNormalizadaDao(activity).deletaAlternativa();
         new PesoCriteriosDao(activity).deleta();

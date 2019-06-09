@@ -125,6 +125,17 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_COMPARACRITERIO_TEMP);
 
+        String CREATE_SUBCOMPARACRITERIOTEMP = "CREATE TABLE COMPARA_SUBCRITERIOSTEMP ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDCRITERIO NTEGER, " +
+                "IDSUBCRIT1 NTEGER, " +
+                "IDSUBCRIT2 INTEGER, " +
+                "IDOBJETIVO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SUBCOMPARACRITERIOTEMP);
+
         String CREATE_COMPARAALTERNATIVATEMP = "CREATE TABLE COMPARA_ALTERNATIVATEMP ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDALTERNATIVA1 INTEGER, " +

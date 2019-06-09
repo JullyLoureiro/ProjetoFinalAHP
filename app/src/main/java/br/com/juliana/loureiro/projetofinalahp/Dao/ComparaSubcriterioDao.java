@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
@@ -120,4 +123,64 @@ public class ComparaSubcriterioDao {
             e.printStackTrace();
         }
     }
+
+
+    public boolean insereComparacoes(ComparaSubCriterioBean comparaCriterioBean) {
+        try {
+
+            cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA + " WHERE "
+                    + ComparaSubCriterioBean.IDSUBCRIT1 + " = " + comparaCriterioBean.getIdsubcrit1() +
+                    " AND " + ComparaSubCriterioBean.IDSUBCRIT2 + " = " + comparaCriterioBean.getIdsubcrit2(), null);
+
+            if (cursor.getCount() <= 0) {
+                ContentValues valores;
+
+                db = banco.getWritableDatabase();
+                valores = new ContentValues();
+                valores.put(ComparaSubCriterioBean.IDSUBCRIT1, comparaCriterioBean.getIdsubcrit1());
+                valores.put(ComparaSubCriterioBean.IDSUBCRIT2, comparaCriterioBean.getIdsubcrit2());
+                valores.put(ComparaSubCriterioBean.IDCRITERIO, comparaCriterioBean.getIdcriterio());
+                valores.put(ComparaSubCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+                db.insert(ComparaSubCriterioBean.TABELA, null, valores);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
+    public void deletaTemp() {
+        db.execSQL("DELETE FROM " + ComparaSubCriterioBean.TABELA);
+    }
+
+    public List<ComparaSubCriterioBean> carregaComparacoes() {
+        List<ComparaSubCriterioBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA + " WHERE (" +
+                ComparaSubCriterioBean.IDSUBCRIT2 + " <> " + ComparaSubCriterioBean.IDSUBCRIT1 + ") AND " +
+                ComparaSubCriterioBean.IDSUBCRIT1 + " < " + ComparaSubCriterioBean.IDSUBCRIT2, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaSubCriterioBean comparaCriterioBean = new ComparaSubCriterioBean();
+                comparaCriterioBean.setIdsubcrit1(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
+                comparaCriterioBean.setIdsubcrit2(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT2)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaSubCriterioBean.IMPORTANCIA)));
+                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDCRITERIO)));
+                lista.add(comparaCriterioBean);
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        return lista;
+    }
+
 }

@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lnralternativa"
             android:layout_marginBottom="5dp"
+            android:divider="@color/transparent"
             android:layout_marginTop="20dp" />
 
     </RelativeLayout>
