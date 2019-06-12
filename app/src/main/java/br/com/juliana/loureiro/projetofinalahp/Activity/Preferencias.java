@@ -62,6 +62,7 @@ public class Preferencias extends AppCompatActivity {
     private List<ComparaCriterioBean> listaComp;
     private List<ComparaAlternativaBean> listaCompAlt;
     private List<ComparaSubCriterioBean> listaCompSub;
+    private CardView card;
     private TextView txvtitulo, txvtitulo2, txvtitulo3, txvinfo;
     int i = 0;
     int critImportancia = 1, altimportancia = 1, subImportancia = 1;
@@ -91,6 +92,8 @@ public class Preferencias extends AppCompatActivity {
         seekBar2 = findViewById(R.id.seekBar2);
         seekBar3 = findViewById(R.id.seekBar3);
 
+        card = findViewById(R.id.card);
+
         txvinfo =findViewById(R.id.txvinfo);
 
         rltpreferencia = findViewById(R.id.rltpreferencia);
@@ -116,7 +119,7 @@ public class Preferencias extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (i > 0) {
-                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
+                    card.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
                     txvinfo.setText(i+1 + "/" + listaComp.size());
                     criterio1.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()));
@@ -136,7 +139,7 @@ public class Preferencias extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if ((i + 1) < listaCompAlt.size()) {
-                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
+                    card.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     txvinfo.setText(i+1 + "/" + listaComp.size());
 
@@ -235,7 +238,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeLeft() {
                 if ((i + 1) < listaComp.size()) {
-                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
+                    card.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     txvtitulo.setText("Entre " + new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()) + " e  " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()) + ", qual possui maior relevância?");
@@ -249,7 +252,7 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeRight() {
                 if (i > 0) {
-                    rltpreferencia.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
+                    card.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
                     txvtitulo.setText("Entre " + new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit1()) + " e  " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()) + ", qual possui maior relevância?");
