@@ -39,7 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void declaraObjetos() {
         imgsplash = findViewById(R.id.imgsplash);
 
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        /*Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
         LinearLayout l = findViewById(R.id.lnr);
         l.clearAnimation();
@@ -48,8 +48,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         anim = AnimationUtils.loadAnimation(this, R.anim.translate);
         anim.reset();
         imgsplash.clearAnimation();
-        imgsplash.startAnimation(anim);
+        imgsplash.startAnimation(anim);*/
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                imgsplash.animate().rotationBy(360).withEndAction(this).setDuration(3000).setInterpolator(new LinearInterpolator()).start();
+            }
+        };
+
+        imgsplash.animate().rotationBy(360).withEndAction(runnable).setDuration(3000).setInterpolator(new LinearInterpolator()).start();
+        imgsplash.animate().rotationBy(2000);
     }
 
     private void exibirTelaPrincipal() {

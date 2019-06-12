@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:backgroundTint="@color/branco"
-    android:background="@drawable/shape_gradient"
+   android:background="@drawable/shape_gradiente_fundo"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_margin="10dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barchart"
-            android:layout_weight="1"
-
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_margin="10dp"
-            android:layout_height="match_parent">
-
-
-        </com.github.mikephil.charting.charts.BarChart>
-
-
-        <ListView
-            android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:visibility="gone"
-            android:background="@drawable/shape_lista"
-            android:id="@+id/listResultado"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:elevation="10dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barchart"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_height="400dp">
+
+
+                </com.github.mikephil.charting.charts.BarChart>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:elevation="10dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+                <ListView
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:visibility="visible"
+                    android:id="@+id/listResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </RelativeLayout>

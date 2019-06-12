@@ -46,6 +46,8 @@ import br.com.juliana.loureiro.projetofinalahp.Dao.ObjetivoDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SomaColunaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.PesoCriteriosDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.SubcriteriosDao;
+import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
+import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ResultadosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
@@ -176,7 +178,7 @@ public class Resultados extends AppCompatActivity {
     }
 
     private void geraTabela(List<PesoCriteriosBean> resultado){
-
+        listResultado.setAdapter(new ResultadosList(resultado, this));
     }
 
     private void geraGrafico(List<PesoCriteriosBean> resultado) {
@@ -226,9 +228,9 @@ public class Resultados extends AppCompatActivity {
         //chart.saveToGallery("mychart.jpg", 85);
         //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-        Utils.deletaTemp(this);
 
         salvaDados();
+        Utils.deletaTemp(this);
     }
 
     private void salvaDados() {
@@ -266,6 +268,8 @@ public class Resultados extends AppCompatActivity {
             new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
         }
 
+        List<ObjetivoBean> listaObjetivos = new ObjetivoDao(this).carregaObjetivos();
+        TelaPrincipal.listObjetivos.setAdapter(new ObjetivosList(listaObjetivos, this));
     }
 
     private ArrayList<IBarDataSet> getDataSet(List<PesoCriteriosBean> resultado) {

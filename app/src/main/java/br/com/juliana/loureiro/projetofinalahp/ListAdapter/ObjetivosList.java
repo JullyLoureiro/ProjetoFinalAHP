@@ -88,7 +88,7 @@ public class ObjetivosList extends BaseAdapter {
                 params.putInt("verResult", objetivos.get(position).getId());
                 intent.putExtras(params);
                 activity.startActivity(intent);
-                activity.finish();
+                //activity.finish();
 
             }
         });

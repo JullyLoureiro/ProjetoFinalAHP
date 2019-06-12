@@ -6,12 +6,24 @@
     android:layout_height="wrap_content">
 
    <LinearLayout
+       android:layout_margin="10dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="horizontal">
 
        <TextView
+           android:id="@+id/alternativa"
            android:text="Alternativas"
+           android:layout_weight="0.4"
+           android:textSize="16sp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+       <TextView
+           android:id="@+id/percentual"
+           android:text="Alternativas"
+           android:layout_weight="1"
+           android:textSize="16sp"
            android:layout_width="match_parent"
            android:layout_height="wrap_content" />
 
