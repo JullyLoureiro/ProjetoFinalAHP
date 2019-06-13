@@ -1,20 +1,28 @@
 package br.com.juliana.loureiro.projetofinalahp.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -26,8 +34,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
@@ -50,11 +61,21 @@ import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
 import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ResultadosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
+import br.com.juliana.loureiro.projetofinalahp.Util.TransparentProgressDialog;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 public class Resultados extends AppCompatActivity {
     private int idobjetivo;
     private ListView listResultado;
+    private List<PesoCriteriosBean> resultado;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +100,6 @@ public class Resultados extends AppCompatActivity {
         } else {
             calculaAlternativasTemp();
         }
-
 
 
     }
@@ -124,11 +144,11 @@ public class Resultados extends AppCompatActivity {
 
         }
 
-        List<PesoCriteriosBean> resultado = new PesoCriteriosDao(this).retornaResultado();
+        resultado = new PesoCriteriosDao(this).retornaResultado();
 
-        geraGrafico(resultado);
+        geraGrafico();
 
-        geraTabela(resultado);
+        geraTabela();
     }
 
     private void calculaAlternativasTemp() {
@@ -171,17 +191,17 @@ public class Resultados extends AppCompatActivity {
 
         }
 
-        List<PesoCriteriosBean> resultado = new PesoCriteriosDao(this).retornaResultado();
+        resultado = new PesoCriteriosDao(this).retornaResultado();
 
-        geraGrafico(resultado);
-        geraTabela(resultado);
+        geraGrafico();
+        geraTabela();
     }
 
-    private void geraTabela(List<PesoCriteriosBean> resultado){
+    private void geraTabela() {
         listResultado.setAdapter(new ResultadosList(resultado, this));
     }
 
-    private void geraGrafico(List<PesoCriteriosBean> resultado) {
+    private void geraGrafico() {
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < resultado.size(); i++) {
             entries.add(new BarEntry(i, (float) resultado.get(i).getPerc()));
@@ -305,7 +325,7 @@ public class Resultados extends AppCompatActivity {
         Utils.deletaTemp(this);
 
         //Intent intent = new Intent(this, TelaPrincipal.class);
-       // startActivity(intent);
+        // startActivity(intent);
         finish();
         super.onBackPressed();
     }
@@ -334,6 +354,116 @@ public class Resultados extends AppCompatActivity {
 
         Utils.calculacriterios(this, idobjetivo);
         calculaAlternativas(idobjetivo);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_resultados, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+    public void compartilharResultado(MenuItem item) {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            handler = new Handler();
+            TransparentProgressDialog pd = new TransparentProgressDialog(this, R.drawable.criterio, "Gerando arquivo...");
+            pd.show();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    gerarExcel();
+                    //todo: PDF
+                }
+            }).start();
+        }
+    }
+
+    public void gerarExcel() {
+        String csvFile = "resultados_" + idobjetivo + ".xls";
+
+        File directory = new File(Environment.getExternalStorageDirectory() + "/mobvendas/");
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        File file = new File(directory, csvFile);
+
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+        WritableWorkbook workbook;
+        try {
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableSheet sheet = workbook.createSheet("Resultados AHP", 0);
+
+            sheet.addCell(new Label(0, 0, "ALTERNATIVA"));
+            sheet.addCell(new Label(1, 0, "PERCENTUAL"));
+
+            for (int i = 0; i < resultado.size(); i++) {
+                sheet.addCell(new Label(0, i + 1, new AlternativaDao(this).retornaDescricao(resultado.get(i).getIdalternativa())));
+                sheet.addCell(new Label(1, i + 1, String.valueOf(resultado.get(i).getPerc())));
+            }
+
+            workbook.write();
+            try {
+                workbook.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    //todo: compartilhar
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Resultados.this, "Ocorreu uma falha ao gerar a planilha, tente novamente!", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        } catch (RowsExceededException e) {
+            e.printStackTrace();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Resultados.this, "Ocorreu uma falha ao gerar a planilha, tente novamente!", Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (WriteException e) {
+            e.printStackTrace();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Resultados.this, "Ocorreu uma falha ao gerar a planilha, tente novamente!", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            boolean showRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            //Usuario marcou para não ser incomodado com a requisição
+            if (!showRationale) {
+                Toast.makeText(this, "Dê permissão de armazanamento para continuar!", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            compartilharResultado(null);
+        }
+
     }
 
 }

@@ -25,4 +25,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation files('libs/poi-ooxml-3.17.jar')
+    implementation files('libs/poi-3.17.jar')
+    implementation files('libs/poi-ooxml-schemas-3.17.jar')
+    implementation files('libs/stax-api-1.0.1.jar')
+    implementation files('libs/xmlbeans-2.6.0.jar')
+    implementation files('libs/jxl.jar')
 }
