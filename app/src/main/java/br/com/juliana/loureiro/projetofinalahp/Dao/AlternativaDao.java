@@ -155,6 +155,21 @@ public class AlternativaDao {
         return "";
     }
 
+    public String retornaDescricao2(int id) {
+        try {
+            cursor = db.rawQuery("SELECT " + AlternativaBean.DESCRICAO + " FROM " + AlternativaBean.TABELA +
+                    " WHERE " + AlternativaBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public int retornaQtd(){
         try {
             cursor = db.rawQuery("SELECT * FROM " + AlternativaBean.TABELA_temp, null);

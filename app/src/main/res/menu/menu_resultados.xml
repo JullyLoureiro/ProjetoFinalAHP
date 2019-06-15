@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:icon="@drawable/edit_actionbar"
+        android:id="@+id/editar"
+        app:showAsAction="always"
+        android:onClick="editarObjetivo"
+        android:title="Compartilhar" />
+
+    <item
         android:icon="@drawable/share"
         android:id="@+id/compartilhar"
         app:showAsAction="always"
         android:onClick="compartilharResultado"
         android:title="Compartilhar" />
-
-
 
 </menu>
 

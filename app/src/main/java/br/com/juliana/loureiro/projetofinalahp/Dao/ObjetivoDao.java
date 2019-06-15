@@ -43,6 +43,26 @@ public class ObjetivoDao {
 
     }
 
+    public ObjetivoBean carregaObjetivo(int idobjetivo) {
+        ObjetivoBean objetivoBean = new ObjetivoBean();
+        try{
+            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA + " WHERE " + ObjetivoBean.ID +
+                     " = " + idobjetivo, null);
+
+            if(cursor.getCount()>0) {
+                cursor.moveToFirst();
+
+                objetivoBean.setData(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DATA)));
+                objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
+                objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
+            }
+
+        }catch (Exception ignored) {
+
+        }
+        return objetivoBean;
+    }
+
     public boolean insereObjetivo(ObjetivoBean objetivoBean) {
         try {
             ContentValues valores;

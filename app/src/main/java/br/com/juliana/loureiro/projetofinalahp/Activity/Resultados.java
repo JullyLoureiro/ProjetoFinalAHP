@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,16 +14,20 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
@@ -36,6 +41,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +54,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBea
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.BuildConfig;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaAlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.Dao.ComparaCriterioDao;
@@ -61,6 +68,7 @@ import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
 import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ResultadosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
+import br.com.juliana.loureiro.projetofinalahp.Util.OnSwip;
 import br.com.juliana.loureiro.projetofinalahp.Util.TransparentProgressDialog;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 import jxl.Workbook;
@@ -72,10 +80,14 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class Resultados extends AppCompatActivity {
-    private int idobjetivo;
+    private int idobjetivo = 0;
     private ListView listResultado;
     private List<PesoCriteriosBean> resultado;
     private Handler handler;
+    private TransparentProgressDialog pd;
+    private LinearLayout lnr;
+    private CardView cardlista, cardbarra, cardpizza;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +96,7 @@ public class Resultados extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listResultado = findViewById(R.id.listResultado);
+        declaraObjetos();
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -102,6 +114,54 @@ public class Resultados extends AppCompatActivity {
         }
 
 
+    }
+
+    private void declaraObjetos() {
+
+        listResultado = findViewById(R.id.listResultado);
+        lnr = findViewById(R.id.lnr);
+        cardlista = findViewById(R.id.cardlista);
+        cardbarra = findViewById(R.id.cardbarra);
+        cardpizza = findViewById(R.id.cardpizza);
+
+        lnr.setOnTouchListener(new OnSwip(this) {
+            public void onSwipeTop() {
+
+            }
+
+            public void onSwipeLeft() {
+                if(cardlista.getVisibility()== View.VISIBLE) {
+                    cardbarra.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_left));
+                    cardbarra.setVisibility(View.VISIBLE);
+                    cardlista.setVisibility(View.GONE);
+                    cardpizza.setVisibility(View.GONE);
+                }else if(cardbarra.getVisibility()== View.VISIBLE) {
+                    cardpizza.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_left));
+                    cardbarra.setVisibility(View.GONE);
+                    cardlista.setVisibility(View.GONE);
+                    cardpizza.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void onSwipeRight() {
+                if(cardbarra.getVisibility()== View.VISIBLE) {
+                    cardlista.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_right));
+                    cardbarra.setVisibility(View.GONE);
+                    cardlista.setVisibility(View.VISIBLE);
+                    cardpizza.setVisibility(View.GONE);
+                }else if(cardpizza.getVisibility()== View.VISIBLE) {
+                    cardbarra.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_right));
+                    cardbarra.setVisibility(View.VISIBLE);
+                    cardlista.setVisibility(View.GONE);
+                    cardpizza.setVisibility(View.GONE);
+                }
+            }
+
+            public void onSwipeBottom() {
+
+            }
+
+        });
     }
 
     private void calculaAlternativas(int idobjetivo) {
@@ -207,7 +267,7 @@ public class Resultados extends AppCompatActivity {
             entries.add(new BarEntry(i, (float) resultado.get(i).getPerc()));
         }
 
-        BarDataSet dataset = new BarDataSet(entries, "legenda");
+        BarDataSet dataset = new BarDataSet(entries, "");
 
         //BarChart chart = new BarChart(this);
         BarChart chart = findViewById(R.id.barchart);
@@ -249,7 +309,9 @@ public class Resultados extends AppCompatActivity {
         //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 
-        salvaDados();
+        if (idobjetivo == 0) {
+            salvaDados();
+        }
         Utils.deletaTemp(this);
     }
 
@@ -302,7 +364,7 @@ public class Resultados extends AppCompatActivity {
             BarEntry v1e1 = new BarEntry(i, (float) resultado.get(i).getPerc());
             valueSet1.add(v1e1);
             BarDataSet barDataSet1;
-            barDataSet1 = new BarDataSet(valueSet1, new AlternativaDao(this).retornaDescricao(resultado.get(i).getIdalternativa()));
+            barDataSet1 = new BarDataSet(valueSet1, new AlternativaDao(this).retornaDescricao2(resultado.get(i).getIdalternativa()));
             // barDataSet1.setColor(getResources().getColor(R.color.botaocielo));
             //barDataSet1.setValueFormatter(new FormatGraph());
             barDataSet1.setValueTextSize(15);
@@ -363,18 +425,32 @@ public class Resultados extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
     }
 
+    public void editarObjetivo(MenuItem item) {
+        Intent intent = new Intent(this, TelaFuncaoAHP.class);
+        Bundle params = new Bundle();
+        params.putInt("idobjetivo", idobjetivo);
+        intent.putExtras(params);
+        startActivity(intent);
+        finish();
+    }
+
     public void compartilharResultado(MenuItem item) {
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         } else {
             handler = new Handler();
-            TransparentProgressDialog pd = new TransparentProgressDialog(this, R.drawable.criterio, "Gerando arquivo...");
+            pd = new TransparentProgressDialog(this, R.drawable.loading, "Gerando arquivo...");
             pd.show();
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     gerarExcel();
                     //todo: PDF
                 }
@@ -385,13 +461,13 @@ public class Resultados extends AppCompatActivity {
     public void gerarExcel() {
         String csvFile = "resultados_" + idobjetivo + ".xls";
 
-        File directory = new File(Environment.getExternalStorageDirectory() + "/mobvendas/");
+        File directory = new File(Environment.getExternalStorageDirectory() + "/appAHP/");
 
         if (!directory.exists()) {
             directory.mkdirs();
         }
 
-        File file = new File(directory, csvFile);
+        final File file = new File(directory, csvFile);
 
         WorkbookSettings wbSettings = new WorkbookSettings();
         wbSettings.setLocale(new Locale("en", "EN"));
@@ -404,8 +480,8 @@ public class Resultados extends AppCompatActivity {
             sheet.addCell(new Label(1, 0, "PERCENTUAL"));
 
             for (int i = 0; i < resultado.size(); i++) {
-                sheet.addCell(new Label(0, i + 1, new AlternativaDao(this).retornaDescricao(resultado.get(i).getIdalternativa())));
-                sheet.addCell(new Label(1, i + 1, String.valueOf(resultado.get(i).getPerc())));
+                sheet.addCell(new Label(0, i + 1, new AlternativaDao(this).retornaDescricao2(resultado.get(i).getIdalternativa())));
+                sheet.addCell(new Label(1, i + 1, String.valueOf(new BigDecimal(resultado.get(i).getPerc()).setScale(2, BigDecimal.ROUND_HALF_UP))));
             }
 
             workbook.write();
@@ -417,7 +493,17 @@ public class Resultados extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    //todo: compartilhar
+                    pd.cancel();
+                    Intent intentShareFile = new Intent(Intent.ACTION_SEND_MULTIPLE);
+
+                    intentShareFile.setType("application/x-excel");
+                    Uri uri = Uri.fromFile(file);
+                    intentShareFile.putExtra(Intent.EXTRA_STREAM, uri);
+
+                    intentShareFile.putExtra(Intent.EXTRA_TEXT, "");
+
+                    startActivity(Intent.createChooser(intentShareFile, "Onde deseja compartilhar?"));
+
                 }
             });
         } catch (IOException e) {

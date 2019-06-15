@@ -1003,6 +1003,9 @@ public class Preferencias extends AppCompatActivity {
         return true;
     }
 
+    public void ajuda(MenuItem item){}
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -1153,6 +1156,12 @@ public class Preferencias extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new MatrizCriterioNormalizadaDao(activity).deleta();
+                new MatrizCriterioNormalizadaDao(activity).deletaAlternativa();
+                new PesoCriteriosDao(activity).deleta();
+                new PesoCriteriosDao(activity).deletaAlternativa();
+                new SomaColunaDao(activity).deleta();
+                new SomaColunaDao(activity).deletaAlternativa();
                 dialog.dismiss();
             }
         });

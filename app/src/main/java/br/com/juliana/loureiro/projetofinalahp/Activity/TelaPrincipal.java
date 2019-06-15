@@ -85,4 +85,9 @@ public class TelaPrincipal extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+    public void ajuda(MenuItem item) {
+        Intent intent = new Intent(this, Ajuda.class);
+        startActivity(intent);
+    }
 }

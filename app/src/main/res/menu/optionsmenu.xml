@@ -5,6 +5,7 @@
         android:icon="@drawable/question"
         android:id="@+id/ajuda"
         app:showAsAction="always"
+        android:onClick="ajuda"
         android:title="Ajuda" />
 
     <item
