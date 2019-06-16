@@ -245,10 +245,10 @@ public class Utils {
         }
 
         //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
-        List<PesoCriteriosBean> listaYMax = new PesoCriteriosDao(activity).carregaYMax();
+        List<PesoSubcriterioBean> listaYMax = new PesoCriteriosDao(activity).carregaYMaxSub();
         for (int i = 0; i < listaYMax.size(); i++) {
-            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getSoma();
-            new PesoCriteriosDao(activity).atualizaTotalDivisao(listaYMax.get(i).getIdcrit(), div);
+            float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getPeso();
+            new PesoCriteriosDao(activity).atualizaTotalDivisaoSub(listaYMax.get(i).getIdcrit(), div);
         }
 
     }

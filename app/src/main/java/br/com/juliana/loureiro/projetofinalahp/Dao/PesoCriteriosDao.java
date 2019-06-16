@@ -266,6 +266,19 @@ public class PesoCriteriosDao {
         }
     }
 
+    public void atualizaTotalDivisaoSub(int id, float totaldiv) {
+        try {
+            ContentValues content = new ContentValues();
+            content.put(PesoSubcriterioBean.TOTALDIVISAO, totaldiv);
+            String where = "IDSUBCRIT = ?";
+            String argumentos[] = {String.valueOf(id)};
+            db.update(PesoSubcriterioBean.TABELA, content, where, argumentos);
+        } catch (Exception ignored) {
+
+        }
+    }
+
+
     public void atualizaTotal(PesoCriteriosBean pesoCriteriosBean) {
         try {
             ContentValues content = new ContentValues();
@@ -301,6 +314,27 @@ public class PesoCriteriosDao {
                     pesoCriteriosBean.setYmax(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.YMAX)));
                     pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(PesoCriteriosBean.IDCRIT)));
                     pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA)));
+                    lista.add(pesoCriteriosBean);
+
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception ignored) {
+
+        }
+        return lista;
+    }
+
+    public List<PesoSubcriterioBean> carregaYMaxSub() {
+        List<PesoSubcriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + PesoSubcriterioBean.TABELA, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    PesoSubcriterioBean pesoCriteriosBean = new PesoSubcriterioBean();
+                    pesoCriteriosBean.setYmax(cursor.getFloat(cursor.getColumnIndex(PesoSubcriterioBean.YMAX)));
+                    pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(PesoSubcriterioBean.IDSUBCRIT)));
+                    pesoCriteriosBean.setPeso(cursor.getFloat(cursor.getColumnIndex(PesoSubcriterioBean.SOMA)));
                     lista.add(pesoCriteriosBean);
 
                 } while (cursor.moveToNext());
