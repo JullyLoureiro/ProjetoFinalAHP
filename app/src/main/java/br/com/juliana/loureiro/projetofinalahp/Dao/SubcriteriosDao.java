@@ -134,7 +134,7 @@ public class SubcriteriosDao {
                     SubcriterioBean criterioBean = new SubcriterioBean();
                     criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(SubcriterioBean.DESCRICAO)));
                     criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
-                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
+                    criterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
 
                     lista.add(criterioBean);
                 } while (cursor.moveToNext());
@@ -198,5 +198,15 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int retornaQtd(){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA_temp, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

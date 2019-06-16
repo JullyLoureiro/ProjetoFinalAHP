@@ -311,6 +311,44 @@ public class Resultados extends AppCompatActivity {
 
         if (idobjetivo == 0) {
             salvaDados();
+        } else {
+            ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo);
+            new ObjetivoDao(this).atualizaObjetivo(objetivoBean);
+
+            new ObjetivoDao(this).deletaVinculadosObjetivo(idobjetivo);
+
+            List<CriterioBean> criterios = new CriterioDao(this).carregaCriterios();
+            for (int i = 0; i < criterios.size(); i++) {
+                int idcriterio = new CriterioDao(this).insereCriterio2(criterios.get(i), idobjetivo);
+                new ComparaCriterioDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
+                new ComparaAlternativaDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
+            }
+
+
+            List<SubcriterioBean> subcriterios = new SubcriteriosDao(this).carregaCriterios();
+            for (int i = 0; i < subcriterios.size(); i++) {
+                new SubcriteriosDao(this).insereCriterio(subcriterios.get(i), idobjetivo);
+            }
+
+            List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas();
+            for (int i = 0; i < alternativas.size(); i++) {
+                int idalt = new AlternativaDao(this).insereAlternativa2(alternativas.get(i), idobjetivo);
+                new ComparaAlternativaDao(this).atualizaIdAlternativa(idalt, alternativas.get(i).getId());
+            }
+
+
+            List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
+            for (int i = 0; i < compcriterios.size(); i++) {
+                new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), idobjetivo);
+            }
+
+            List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
+            for (int i = 0; i < compalternativas.size(); i++) {
+                new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), idobjetivo);
+            }
+
+            List<ObjetivoBean> listaObjetivos = new ObjetivoDao(this).carregaObjetivos();
+            TelaPrincipal.listObjetivos.setAdapter(new ObjetivosList(listaObjetivos, this));
         }
         Utils.deletaTemp(this);
     }

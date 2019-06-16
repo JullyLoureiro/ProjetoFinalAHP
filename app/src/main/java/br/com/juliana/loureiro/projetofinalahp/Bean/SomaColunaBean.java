@@ -6,6 +6,7 @@ public class SomaColunaBean {
     public static String SOMA= "SOMA";
     public static String TABELA = "SOMA_COLUNA";
     public static String SOMA_COLUNA_ALTERNATIVA = "SOMA_COLUNA_ALTERNATIVA";
+    public static String SOMA_COLUNA_SUBCRITERIO = "SOMA_COLUNA_SUBCRITERIO";
 
     private int id;
     private int idcrit;

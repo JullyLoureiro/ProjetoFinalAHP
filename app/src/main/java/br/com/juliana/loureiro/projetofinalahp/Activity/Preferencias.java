@@ -55,15 +55,14 @@ import br.com.juliana.loureiro.projetofinalahp.Util.OnSwip;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class Preferencias extends AppCompatActivity {
-    private Button anterior, proximo, criterio1, criterio2, alternativa1, alternativa2, subcriterio1, subcriterio2;
+    private Button anterior, proximo,anterior2, proximo2, anterior3, proximo3, criterio1, criterio2, alternativa1, alternativa2, subcriterio1, subcriterio2;
     private SeekBar seekBar, seekBar2, seekBar3;
     private RelativeLayout rltpreferencia, rltpreferencia2, rltpreferencia3;
-    private ImageView anterior2, proximo2, anterior3, proximo3;
     private List<ComparaCriterioBean> listaComp;
     private List<ComparaAlternativaBean> listaCompAlt;
     private List<ComparaSubCriterioBean> listaCompSub;
-    private CardView card;
-    private TextView txvtitulo, txvtitulo2, txvtitulo3, txvinfo;
+    private CardView card, card2, card3;
+    private TextView txvtitulo, txvtitulo2, txvtitulo3, txvinfo, txvinfo2, txvinfo3;
     private int i = 0, critImportancia = 1, altimportancia = 1, subImportancia = 1;
     private int idobjetivo = 0;
 
@@ -103,8 +102,12 @@ public class Preferencias extends AppCompatActivity {
         seekBar3 = findViewById(R.id.seekBar3);
 
         card = findViewById(R.id.card);
+        card2 = findViewById(R.id.card2);
+        card3 = findViewById(R.id.card3);
 
-        txvinfo =findViewById(R.id.txvinfo);
+        txvinfo = findViewById(R.id.txvinfo);
+        txvinfo2 = findViewById(R.id.txvinfo2);
+        txvinfo3 = findViewById(R.id.txvinfo3);
 
         rltpreferencia = findViewById(R.id.rltpreferencia);
         rltpreferencia2 = findViewById(R.id.rltpreferencia2);
@@ -172,9 +175,10 @@ public class Preferencias extends AppCompatActivity {
             public void onClick(View v) {
                 if (i > 0) {
                     i--;
+                    txvinfo2.setText(i+1 + "/" + listaCompAlt.size());
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
-
+                    card2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
                     seekBar2.setProgress(imp);
 
@@ -191,6 +195,8 @@ public class Preferencias extends AppCompatActivity {
             public void onClick(View v) {
                 if ((i + 1) < listaCompAlt.size()) {
                     i++;
+                    txvinfo2.setText(i+1 + "/" + listaCompAlt.size());
+                    card2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
                     int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
@@ -209,9 +215,10 @@ public class Preferencias extends AppCompatActivity {
             public void onClick(View v) {
                 if (i > 0) {
                     i--;
+                    card3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
-
+                    txvinfo3.setText(i+1 + "/" + listaCompSub.size());
                     int imp = new ComparaSubcriterioDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
                     seekBar3.setProgress(imp);
 
@@ -228,6 +235,8 @@ public class Preferencias extends AppCompatActivity {
             public void onClick(View v) {
                 if ((i + 1) < listaCompSub.size()) {
                     i++;
+                    txvinfo3.setText(i+1 + "/" + listaCompSub.size());
+                    card3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
                     int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
@@ -287,11 +296,11 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeLeft() {
                 if ((i + 1) < listaCompAlt.size()) {
-                    rltpreferencia2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
+                    card2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
-
+                    txvinfo2.setText(i+1 + "/" + listaComp.size());
                     int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
                     seekBar2.setProgress(imp);
 
@@ -303,8 +312,9 @@ public class Preferencias extends AppCompatActivity {
 
             public void onSwipeRight() {
                 if (i > 0) {
-                    rltpreferencia2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
+                    card2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
+                    txvinfo2.setText(i+1 + "/" + listaComp.size());
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
 
@@ -332,6 +342,8 @@ public class Preferencias extends AppCompatActivity {
                 if ((i + 1) < listaCompSub.size()) {
                     rltpreferencia3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     i++;
+                    txvinfo3.setText(i+1 + "/" + listaCompSub.size());
+                    card3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_left));
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
                     int imp = new ComparaSubcriterioDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
@@ -347,6 +359,8 @@ public class Preferencias extends AppCompatActivity {
                 if (i > 0) {
                     rltpreferencia3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
+                    txvinfo3.setText(i+1 + "/" + listaCompSub.size());
+                    card3.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
 
@@ -378,6 +392,8 @@ public class Preferencias extends AppCompatActivity {
         String crit2 = new CriterioDao(this).retornaDescricao(listaComp.get(i).getIdcrit2());
         criterio2.setText(crit2);
         txvinfo.setText("1/" + listaComp.size());
+        txvinfo2.setText("1/" + listaCompAlt.size());
+        txvinfo3.setText("1/" + listaCompSub.size());
 
         final String alt1 = new AlternativaDao(this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1());
         String alt2 = new AlternativaDao(this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2());
@@ -1009,8 +1025,12 @@ public class Preferencias extends AppCompatActivity {
         seekBar2.setProgress(imp2);
 
 
-        int imp3 = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
-        seekBar2.setProgress(imp3);
+        try {
+            int imp3 = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
+            seekBar2.setProgress(imp3);
+        }catch (Exception ignored) {
+
+        }
 
     }
 
@@ -1034,6 +1054,7 @@ public class Preferencias extends AppCompatActivity {
                 if (rltpreferencia.getVisibility() == View.VISIBLE) {
                     calculaResultados();
                 } else if (rltpreferencia3.getVisibility() == View.VISIBLE) {
+                    calculaResultadosSubcriterios();
                     rltpreferencia2.setVisibility(View.VISIBLE);
                     rltpreferencia.setVisibility(View.GONE);
                     rltpreferencia3.setVisibility(View.GONE);
@@ -1061,6 +1082,80 @@ public class Preferencias extends AppCompatActivity {
     private void calculaResultados() {
 
         int qtd = new CriterioDao(this).retornaQtdCriterios();
+
+        Utils.calculacriteriosTemp(this);
+
+        //CÁLCULO DE INCONSISTÊNCIA
+        float YmaxMedia = new PesoCriteriosDao(this).calculaMedia();
+        float CI = (YmaxMedia - qtd) / (qtd - 1);
+
+        float CR, RI = 0;
+        //TABELA RI
+        switch (qtd) {
+            case 1:
+                RI = 0;
+                break;
+            case 2:
+                RI = 0;
+                break;
+            case 3:
+                RI = (float) 0.52;
+                break;
+            case 4:
+                RI = (float) 0.9;
+                break;
+            case 5:
+                RI = (float) 1.12;
+                break;
+            case 6:
+                RI = (float) 1.25;
+                break;
+            case 7:
+                RI = (float) 1.35;
+                break;
+            case 8:
+                RI = (float) 1.42;
+                break;
+            case 9:
+                RI = (float) 1.46;
+                break;
+            case 10:
+                RI = (float) 1.49;
+                break;
+            case 11:
+                RI = (float) 1.52;
+                break;
+            case 12:
+                RI = (float) 1.54;
+                break;
+            case 13:
+                RI = (float) 1.56;
+                break;
+            case 14:
+                RI = (float) 1.58;
+                break;
+            case 15:
+                RI = (float) 1.59;
+                break;
+            default:
+                break;
+        }
+
+        CR = CI / RI;
+        if (CR > 0.1) {
+            String msg = "Cálculo de consistência: " + String.valueOf(CR) + "\nVolte e revise seus julgamentos!";
+            alerta(this, msg, CR);
+        } else {
+            String msg = "Cálculo de consistência: " + String.valueOf(CR);
+            alerta(this, msg, CR);
+        }
+
+
+    }
+
+    private void calculaResultadosSubcriterios() {
+
+        int qtd = new SubcriteriosDao(this).retornaQtd();
 
         Utils.calculacriteriosTemp(this);
 

@@ -164,6 +164,15 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(SOMA_COLUNA_ALTERNATIVA);
 
+        String SOMA_COLUNA_SUBCRITERIO = "CREATE TABLE SOMA_COLUNA_SUBCRITERIO ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDSUBCRIT INTEGER, " +
+                "IDCRIT INTEGER, " +
+                "SOMA FLOAT " +
+                " )";
+
+        db.execSQL(SOMA_COLUNA_SUBCRITERIO);
+
         //PESO DOS CRITERIOS
         String CREATE_SOMALINHA = "CREATE TABLE PESO_CRITERIOS ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -186,6 +195,17 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_SOMALINHA_ALTERNATIVA);
 
+        String CREATE_SOMALINHA_SUBCRITERIO = "CREATE TABLE PESO_SUBCRITERIOS ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDSUBCRITERIO INTEGER, " +
+                "IDALTERNATIVA INTEGER, " +
+                "YMAX FLOAT, " +
+                "TOTAL FLOAT, " +
+                "PESO FLOAT " +
+                " )";
+
+        db.execSQL(CREATE_SOMALINHA_SUBCRITERIO);
+
         String CREATE_MATRIZCRITERIO_NORMALIZADA = "CREATE TABLE CRITERIO_NORMALIZADA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDCRIT1 INTEGER, " +
@@ -203,13 +223,15 @@ public class ConfigDB extends SQLiteOpenHelper {
                 " )";
         db.execSQL(CREATE_MATRIZALTERNARTIVA_NORMALIZADA);
 
-       /* db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla', '05/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '22/05/2019')");
-        db.execSQL("INSERT INTO OBJETIVOS (TITULO, DESCRICAO, DATA) VALUES ('Exemplo', 'Bla bla bla',  '26/05/2019')");*/
+        String CREATE_MATRIZSUBCRITERIO_NORMALIZADA = "CREATE TABLE SUBCRITERIO_NORMALIZADA ( " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "IDSUBCRITERIO1 INTEGER, " +
+                "IDSUBCRITERIO2 INTEGER, " +
+                "IDCRITERIO INTEGER, " +
+                "IMPORTANCIA FLOAT " +
+                " )";
+        db.execSQL(CREATE_MATRIZSUBCRITERIO_NORMALIZADA);
+
     }
 
     @Override

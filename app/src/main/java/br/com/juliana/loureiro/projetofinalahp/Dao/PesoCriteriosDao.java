@@ -11,9 +11,12 @@ import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizSubcriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.PesoSubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SomaColunaBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
@@ -67,6 +70,55 @@ public class PesoCriteriosDao {
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
                     pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT1)));
                     pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+                    pesos.add(pesoCriteriosBean);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } while (cursor.moveToNext());
+        }
+        return pesos;
+    }
+
+    public List<PesoSubcriterioBean> somaLinhasSubcriterios(float qtdcriterios) {
+        List<PesoSubcriterioBean> pesos = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT IDSUBCRIT1, SUM(IMPORTANCIA) AS SOMA FROM " + MatrizSubcriterioNormalizadaBean.TABELA +
+                " GROUP BY IDSUBCRIT1", null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                try {
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1));
+                    Cursor cursor2 = db.rawQuery("SELECT * FROM " + PesoSubcriterioBean.TABELA +
+                            " WHERE IDSUBCRIT = " + idcrit, null);
+
+                    if (cursor2.getCount() > 0) {
+                        ContentValues valores;
+
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put(PesoSubcriterioBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+
+                        String where = "IDSUBCRIT = ?";
+                        String[] argumentos = {String.valueOf(idcrit)};
+                        db.update(PesoSubcriterioBean.TABELA, valores, where, argumentos);
+                    } else {
+                        ContentValues valores;
+
+                        db = banco.getWritableDatabase();
+                        valores = new ContentValues();
+                        valores.put(PesoSubcriterioBean.IDSUBCRIT, cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
+                        valores.put(PesoSubcriterioBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
+
+                        db.insert(PesoSubcriterioBean.TABELA, null, valores);
+                    }
+
+
+                    PesoSubcriterioBean pesoCriteriosBean = new PesoSubcriterioBean();
+                    pesoCriteriosBean.setIdsubcrit(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
+                    pesoCriteriosBean.setPeso(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
                     pesos.add(pesoCriteriosBean);
 
                 } catch (Exception e) {
@@ -160,6 +212,27 @@ public class PesoCriteriosDao {
 
         }
     }
+
+    public void atualizaYMaxSubcriterio(int id, float ymax) {
+        try {
+            cursor = db.rawQuery("SELECT YMAX FROM " + PesoSubcriterioBean.TABELA + " WHERE " + PesoSubcriterioBean.IDSUBCRIT +
+                    " = " + id, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                ymax = ymax + cursor.getFloat(cursor.getColumnIndex(PesoSubcriterioBean.YMAX));
+            }
+
+            ContentValues content = new ContentValues();
+            content.put(PesoSubcriterioBean.YMAX, ymax);
+            String where = "IDSUBCRIT = ?";
+            String argumentos[] = {String.valueOf(id)};
+            db.update(PesoSubcriterioBean.TABELA, content, where, argumentos);
+        } catch (Exception ignored) {
+
+        }
+    }
+
 
     public void atualizaYMaxAlternativa(int id, double ymax) {
         try {

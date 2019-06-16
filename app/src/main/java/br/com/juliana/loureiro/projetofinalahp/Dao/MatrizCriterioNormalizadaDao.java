@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizSubcriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SomaColunaBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
@@ -53,6 +54,40 @@ public class MatrizCriterioNormalizadaDao {
         }
         return false;
     }
+
+    public boolean insereMatrizNormalizadaSubcriterio(MatrizSubcriterioNormalizadaBean matrizCriterioNormalizadaBean) {
+        try {
+
+            cursor = db.rawQuery("SELECT * FROM " + MatrizSubcriterioNormalizadaBean.TABELA + " WHERE "
+                    + MatrizSubcriterioNormalizadaBean.IDSUBCRIT1 + " = " + matrizCriterioNormalizadaBean.getIdsubcrit1() +
+                    " AND " + MatrizSubcriterioNormalizadaBean.IDSUBCRIT2 + " = " + matrizCriterioNormalizadaBean.getIdsubcrit2(), null);
+
+            if (cursor.getCount() <= 0) {
+                ContentValues valores;
+
+                db = banco.getWritableDatabase();
+                valores = new ContentValues();
+                valores.put(MatrizSubcriterioNormalizadaBean.IDSUBCRIT1, matrizCriterioNormalizadaBean.getIdsubcrit1());
+                valores.put(MatrizSubcriterioNormalizadaBean.IDSUBCRIT2, matrizCriterioNormalizadaBean.getIdsubcrit2());
+                valores.put(MatrizSubcriterioNormalizadaBean.IDCRITERIO, matrizCriterioNormalizadaBean.getIdcriterio());
+                valores.put(MatrizSubcriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
+                db.insert(MatrizSubcriterioNormalizadaBean.TABELA, null, valores);
+                return true;
+            } else {
+                ContentValues valores = new ContentValues();
+                valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
+                String where = "IDSUBCRIT1 = ? AND IDSUBCRIT2 = ?";
+                String argumentos2[] = {String.valueOf(matrizCriterioNormalizadaBean.getIdsubcrit1()), String.valueOf(matrizCriterioNormalizadaBean.getIdsubcrit2())};
+                db.update(MatrizSubcriterioNormalizadaBean.TABELA, valores, where, argumentos2);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
 
     public boolean insereMatrizNormalizadaAlternativa(MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean) {
         try {

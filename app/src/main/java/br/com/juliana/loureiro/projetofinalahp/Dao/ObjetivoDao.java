@@ -13,8 +13,10 @@ import java.util.List;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
@@ -46,11 +48,11 @@ public class ObjetivoDao {
 
     public ObjetivoBean carregaObjetivo(int idobjetivo) {
         ObjetivoBean objetivoBean = new ObjetivoBean();
-        try{
+        try {
             cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA + " WHERE " + ObjetivoBean.ID +
-                     " = " + idobjetivo, null);
+                    " = " + idobjetivo, null);
 
-            if(cursor.getCount()>0) {
+            if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
 
                 objetivoBean.setData(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DATA)));
@@ -58,7 +60,27 @@ public class ObjetivoDao {
                 objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
             }
 
-        }catch (Exception ignored) {
+        } catch (Exception ignored) {
+
+        }
+        return objetivoBean;
+    }
+
+    public ObjetivoBean carregaObjetivoTemp(int idobjetivo) {
+        ObjetivoBean objetivoBean = new ObjetivoBean();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + ObjetivoBean.TABELA_TEMP + " WHERE " + ObjetivoBean.ID +
+                    " = " + idobjetivo, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                objetivoBean.setData(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DATA)));
+                objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
+                objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
+            }
+
+        } catch (Exception ignored) {
 
         }
         return objetivoBean;
@@ -75,7 +97,7 @@ public class ObjetivoDao {
 
             db.insert(ObjetivoBean.TABELA_TEMP, null, valores);
             return true;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
 
@@ -112,8 +134,10 @@ public class ObjetivoDao {
         try {
             db.execSQL("DELETE FROM  " + ObjetivoBean.TABELA + " WHERE ID = " + id);
             db.execSQL("DELETE FROM  " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + SubcriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
             db.execSQL("DELETE FROM  " + AlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
             db.execSQL("DELETE FROM  " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaSubCriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
             db.execSQL("DELETE FROM  " + ComparaAlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
             return true;
         } catch (Exception e) {
@@ -123,6 +147,21 @@ public class ObjetivoDao {
         }
         return false;
 
+    }
+
+    public void deletaVinculadosObjetivo(int id) {
+        try {
+            db.execSQL("DELETE FROM  " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + SubcriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + AlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaCriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaSubCriterioBean.TABELA + " WHERE IDOBJETIVO = " + id);
+            db.execSQL("DELETE FROM  " + ComparaAlternativaBean.TABELA + " WHERE IDOBJETIVO = " + id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<ObjetivoBean> carregaObjetivos() {
@@ -155,14 +194,27 @@ public class ObjetivoDao {
                 cursor.moveToFirst();
 
 
-                    objetivoBean.setId(cursor.getInt(cursor.getColumnIndex(ObjetivoBean.ID)));
-                    objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
-                    objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
+                objetivoBean.setId(cursor.getInt(cursor.getColumnIndex(ObjetivoBean.ID)));
+                objetivoBean.setDescricao(cursor.getString(cursor.getColumnIndex(ObjetivoBean.DESCRICAO)));
+                objetivoBean.setTitulo(cursor.getString(cursor.getColumnIndex(ObjetivoBean.TITULO)));
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return objetivoBean;
+    }
+
+    public void atualizaObjetivo(ObjetivoBean objetivoBean) {
+        try {
+            ContentValues content = new ContentValues();
+            content.put(ObjetivoBean.DESCRICAO, objetivoBean.getDescricao());
+            content.put(ObjetivoBean.TITULO, objetivoBean.getTitulo());
+            String where = "ID = ?";
+            String argumentos[] = {String.valueOf(objetivoBean.getId())};
+            db.update(ObjetivoBean.TABELA, content, where, argumentos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
