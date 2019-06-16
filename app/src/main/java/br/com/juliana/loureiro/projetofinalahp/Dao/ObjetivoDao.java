@@ -3,6 +3,7 @@ package br.com.juliana.loureiro.projetofinalahp.Dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ListView;
 
@@ -74,7 +75,10 @@ public class ObjetivoDao {
 
             db.insert(ObjetivoBean.TABELA_TEMP, null, valores);
             return true;
+        }catch (SQLException e) {
+            e.printStackTrace();
         } catch (Exception e) {
+
             e.printStackTrace();
         } finally {
             db.close();

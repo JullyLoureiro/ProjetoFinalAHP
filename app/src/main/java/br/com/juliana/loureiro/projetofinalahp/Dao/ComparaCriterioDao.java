@@ -86,6 +86,28 @@ public class ComparaCriterioDao {
         return false;
     }
 
+    public boolean insereComparacoesTemp(ComparaCriterioBean comparaCriterioBean, int id) {
+        try {
+
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(ComparaCriterioBean.IDCRIT1, comparaCriterioBean.getIdcrit1());
+            valores.put(ComparaCriterioBean.IDCRIT2, comparaCriterioBean.getIdcrit2());
+            valores.put(ComparaCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+            valores.put("IDOBJETIVO", id);
+            db.insert(ComparaCriterioBean.TABELA_temp, null, valores);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
     public List<ComparaCriterioBean> carregaComparacoes() {
         List<ComparaCriterioBean> lista = new ArrayList<>();
 

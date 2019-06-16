@@ -60,6 +60,8 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Utils.deletaTemp(this);
+
         Intent intent = getIntent();
         if (intent != null) {
             Bundle params = intent.getExtras();
@@ -73,7 +75,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         }
 
         declaraObjetos();
-        Utils.deletaTemp(this);
+
 
     }
 
@@ -247,33 +249,37 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivo(idobjetivo);
         new ObjetivoDao(this).insereObjetivo(objetivoBean);
 
+        List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesObjetivo(idobjetivo);
+        for (int i = 0; i < compcriterios.size(); i++) {
+            new ComparaCriterioDao(this).insereComparacoesTemp(compcriterios.get(i), idobjetivo);
+        }
+
+        List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesObjetivo(idobjetivo);
+        for (int i = 0; i < compalternativas.size(); i++) {
+            new ComparaAlternativaDao(this).insereComparacoesTemp(compalternativas.get(i), idobjetivo);
+        }
+
         List<CriterioBean> criterios = new CriterioDao(this).carregaCriteriosObjetivo(idobjetivo);
         for (int i = 0; i < criterios.size(); i++) {
-            new CriterioDao(this).insereCriterio(criterios.get(i), idobjetivo);
+            int id = new CriterioDao(this).insereCriterio(criterios.get(i), idobjetivo);
+            new ComparaCriterioDao(this).atualizaIdCriterio(id, criterios.get(i).getId());
+            new ComparaAlternativaDao(this).atualizaIdCriterio(id, criterios.get(i).getId());
         }
 
 
-        /*List<SubcriterioBean> subcriterios = new SubcriteriosDao(this).carregaCriterios();
+        List<SubcriterioBean> subcriterios = new SubcriteriosDao(this).carregaCriterio(idobjetivo);
         for (int i = 0; i < subcriterios.size(); i++) {
-            new SubcriteriosDao(this).insereCriterio(subcriterios.get(i), id);
+            new SubcriteriosDao(this).insereCriterio2(subcriterios.get(i), idobjetivo);
         }
 
-        List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas();
+        List<AlternativaBean> alternativas = new AlternativaDao(this).carregaAlternativas(idobjetivo);
         for (int i = 0; i < alternativas.size(); i++) {
-            int idalt = new AlternativaDao(this).insereAlternativa2(alternativas.get(i), id);
-            new ComparaAlternativaDao(this).atualizaIdAlternativa(idalt, alternativas.get(i).getId());
+            int id = new AlternativaDao(this).insereAlternativaTemp(alternativas.get(i), idobjetivo);
+             new ComparaAlternativaDao(this).atualizaIdAlternativa(id, alternativas.get(i).getId());
         }
 
 
-        List<ComparaCriterioBean> compcriterios = new ComparaCriterioDao(this).carregaComparacoesTemp();
-        for (int i = 0; i < compcriterios.size(); i++) {
-            new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), id);
-        }
 
-        List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
-        for (int i = 0; i < compalternativas.size(); i++) {
-            new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
-        }*/
     }
 
 }

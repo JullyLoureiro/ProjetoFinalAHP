@@ -64,8 +64,8 @@ public class Preferencias extends AppCompatActivity {
     private List<ComparaSubCriterioBean> listaCompSub;
     private CardView card;
     private TextView txvtitulo, txvtitulo2, txvtitulo3, txvinfo;
-    int i = 0;
-    int critImportancia = 1, altimportancia = 1, subImportancia = 1;
+    private int i = 0, critImportancia = 1, altimportancia = 1, subImportancia = 1;
+    private int idobjetivo = 0;
 
 
     @Override
@@ -74,6 +74,16 @@ public class Preferencias extends AppCompatActivity {
         setContentView(R.layout.activity_preferencias);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle params = intent.getExtras();
+            if (params != null) {
+                if (params.getInt("idobjetivo", 0) != 0) {
+                    idobjetivo = params.getInt("idobjetivo");
+                }
+            }
+        }
 
         declaraObjetos();
     }
@@ -324,7 +334,7 @@ public class Preferencias extends AppCompatActivity {
                     i++;
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
-                    int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
+                    int imp = new ComparaSubcriterioDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
                     seekBar2.setProgress(imp);
 
                     txvtitulo2.setText("Entre " + subcriterio1.getText().toString() + " e " + subcriterio2.getText().toString() +
@@ -991,6 +1001,17 @@ public class Preferencias extends AppCompatActivity {
             }
         });
 
+
+        int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
+        seekBar.setProgress(imp);
+
+        int imp2 = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
+        seekBar2.setProgress(imp2);
+
+
+        int imp3 = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
+        seekBar2.setProgress(imp3);
+
     }
 
     @Override
@@ -1022,6 +1043,9 @@ public class Preferencias extends AppCompatActivity {
                     i = 0;
                 } else {
                     Intent intent = new Intent(Preferencias.this, Resultados.class);
+                    Bundle params = new Bundle();
+                    params.putInt("verResult", idobjetivo);
+                    intent.putExtras(params);
                     startActivity(intent);
                     finish();
                 }

@@ -77,6 +77,28 @@ public class ComparaAlternativaDao {
         return false;
     }
 
+    public boolean insereComparacoesTemp (ComparaAlternativaBean comparaAlternativaBean, int id) {
+        try {
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(ComparaAlternativaBean.IDALTERNATIVA1, comparaAlternativaBean.getIdalternativa1());
+            valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
+            valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
+            valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+            valores.put("IDOBJETIVO", id);
+            db.insert(ComparaAlternativaBean.TABELA_temp, null, valores);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
     public List<ComparaAlternativaBean> carregaComparacoes() {
         List<ComparaAlternativaBean> lista = new ArrayList<>();
 

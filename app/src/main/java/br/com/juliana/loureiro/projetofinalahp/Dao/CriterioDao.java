@@ -43,7 +43,7 @@ public class CriterioDao {
 
     }
 
-    public boolean insereCriterio(CriterioBean criterioBean, int id) {
+    public int insereCriterio(CriterioBean criterioBean, int id) {
         try {
             ContentValues valores;
 
@@ -52,13 +52,13 @@ public class CriterioDao {
             valores.put(CriterioBean.DESCRICAO, criterioBean.getDescricao());
             valores.put(CriterioBean.IDOBJETIVO, id);
             db.insert(CriterioBean.TABELA_temp, null, valores);
-            return true;
+            return Utils.returnLastId(db);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             db.close();
         }
-        return false;
+        return 0;
 
     }
 

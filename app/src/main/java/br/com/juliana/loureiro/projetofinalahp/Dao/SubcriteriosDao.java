@@ -78,6 +78,26 @@ public class SubcriteriosDao {
 
     }
 
+    public boolean insereCriterio2(SubcriterioBean criterioBean, int id) {
+        try {
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(SubcriterioBean.DESCRICAO, criterioBean.getDescricao());
+            valores.put(SubcriterioBean.IDOBJETIVO, id);
+            valores.put(SubcriterioBean.IDCRITERIO, criterioBean.getIdcriterio());
+            db.insert(SubcriterioBean.TABELA_temp, null, valores);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+
+    }
+
     public boolean deletaSubCriterio(int id) {
         try {
             db.execSQL("DELETE FROM " + SubcriterioBean.TABELA_temp + " WHERE ID = " + id);
@@ -145,6 +165,28 @@ public class SubcriteriosDao {
         }
         return lista;
     }
+
+    public List<SubcriterioBean> carregaCriterio(int idobjetivo) {
+        List<SubcriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA + " WHERE " + SubcriterioBean.IDOBJETIVO + "=" + idobjetivo, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    SubcriterioBean criterioBean = new SubcriterioBean();
+                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(SubcriterioBean.DESCRICAO)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
+                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
+
+                    lista.add(criterioBean);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 
     public void atualizaCriterio(SubcriterioBean criterioBean) {
         try {
