@@ -18,12 +18,9 @@
             android:label="@string/app_name" />
         <activity
             android:theme="@style/AppTheme2"
-            android:name=".Activity.Tutorial"
+            android:name=".Activity.Saudacao"
             android:label="@string/app_name" />
 
-        <activity
-            android:name=".Activity.Ajuda"
-            android:label="@string/app_name" />
         <activity
             android:name=".Activity.SplashScreenActivity"
             android:label="@string/app_name"
@@ -35,12 +32,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.TelaFuncaoAHP" />
-        <activity android:name=".Activity.SobreAHP"
-            android:label="Sobre AHP"></activity>
+        <activity
+            android:theme="@style/AppTheme2"
+            android:name=".Activity.SobreAHP"></activity>
         <activity android:name=".Activity.Preferencias"
             android:label="Preferências"></activity>
         <activity android:name=".Activity.Resultados"
             android:label="Resultados"></activity>
+        <activity
+            android:theme="@style/AppTheme2"
+            android:name=".Activity.Tutorial" />
     </application>
 
 </manifest>

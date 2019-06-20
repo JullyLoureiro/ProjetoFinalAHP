@@ -3,13 +3,8 @@ package br.com.juliana.loureiro.projetofinalahp.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -63,7 +58,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void exibirTelaPrincipal() {
         Intent intent = new Intent(SplashScreenActivity.this,
-                Tutorial.class);
+                Saudacao.class);
         startActivity(intent);
         finish();
     }

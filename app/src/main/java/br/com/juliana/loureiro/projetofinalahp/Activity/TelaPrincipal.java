@@ -87,7 +87,7 @@ public class TelaPrincipal extends AppCompatActivity {
     }
 
     public void ajuda(MenuItem item) {
-        Intent intent = new Intent(this, Ajuda.class);
+        Intent intent = new Intent(this, Tutorial.class);
         startActivity(intent);
     }
 }
