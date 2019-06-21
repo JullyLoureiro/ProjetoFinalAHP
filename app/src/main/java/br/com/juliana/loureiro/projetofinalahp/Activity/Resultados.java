@@ -105,6 +105,8 @@ public class Resultados extends AppCompatActivity {
                 if (params.getInt("verResult", 0) != 0) {
                     idobjetivo = params.getInt("verResult", 0);
                     calculaCriterios();
+                } else {
+                    calculaAlternativasTemp();
                 }
             } else {
                 calculaAlternativasTemp();
@@ -204,7 +206,7 @@ public class Resultados extends AppCompatActivity {
 
         }
 
-        resultado = new PesoCriteriosDao(this).retornaResultado();
+        resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
 
         geraGrafico();
 
@@ -251,7 +253,7 @@ public class Resultados extends AppCompatActivity {
 
         }
 
-        resultado = new PesoCriteriosDao(this).retornaResultado();
+        resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
 
         geraGrafico();
         geraTabela();
@@ -311,7 +313,7 @@ public class Resultados extends AppCompatActivity {
 
         if (idobjetivo == 0) {
             salvaDados();
-        } else {
+        } /*else {
             ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo);
             new ObjetivoDao(this).atualizaObjetivo(objetivoBean);
 
@@ -349,7 +351,7 @@ public class Resultados extends AppCompatActivity {
 
             List<ObjetivoBean> listaObjetivos = new ObjetivoDao(this).carregaObjetivos();
             TelaPrincipal.listObjetivos.setAdapter(new ObjetivosList(listaObjetivos, this));
-        }
+        }*/
         Utils.deletaTemp(this);
     }
 

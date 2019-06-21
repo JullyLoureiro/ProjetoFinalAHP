@@ -12,12 +12,21 @@ public class PesoCriteriosBean {
     public static String PESO_ALTERNATIVAS = "PESO_ALTERNATIVAS";
 
     private int id;
+    private int idobjetivo;
     private int idcrit;
     private float peso;
     private float ymax;
     private float totaldivisao;
     private double perc;
     private Integer idalternativa;
+
+    public int getIdobjetivo() {
+        return idobjetivo;
+    }
+
+    public void setIdobjetivo(int idobjetivo) {
+        this.idobjetivo = idobjetivo;
+    }
 
     public double getPerc() {
         return perc;

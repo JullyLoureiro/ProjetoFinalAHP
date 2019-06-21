@@ -387,7 +387,7 @@ public class PesoCriteriosDao {
         db.execSQL("DELETE FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS);
     }
 
-    public List<PesoCriteriosBean> retornaResultado() {
+    public List<PesoCriteriosBean> retornaResultado(int idobjetivo) {
         List<PesoCriteriosBean> lista = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT IDALTERNATIVA, SUM(TOTAL * 100) AS PERC FROM PESO_ALTERNATIVAS GROUP BY IDALTERNATIVA", null);
@@ -396,6 +396,7 @@ public class PesoCriteriosDao {
 
                 do {
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setIdobjetivo(idobjetivo);
                     pesoCriteriosBean.setPerc(cursor.getDouble(cursor.getColumnIndex("PERC")));
                     pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA")));
                     lista.add(pesoCriteriosBean);
