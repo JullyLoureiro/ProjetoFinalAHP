@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
@@ -387,10 +388,25 @@ public class PesoCriteriosDao {
         db.execSQL("DELETE FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS);
     }
 
+    public String retornaDescricaoAlternativa(int id) {
+        try {
+            Cursor cursor = db.rawQuery("SELECT " + AlternativaBean.DESCRICAO + " FROM " + AlternativaBean.TABELA +
+                    " WHERE " + AlternativaBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public List<PesoCriteriosBean> retornaResultado(int idobjetivo) {
         List<PesoCriteriosBean> lista = new ArrayList<>();
         try {
-            cursor = db.rawQuery("SELECT IDALTERNATIVA, SUM(TOTAL * 100) AS PERC FROM PESO_ALTERNATIVAS GROUP BY IDALTERNATIVA", null);
+            cursor = db.rawQuery("SELECT IDALTERNATIVA, SUM(TOTAL * 100) AS PERC FROM PESO_ALTERNATIVAS  GROUP BY IDALTERNATIVA ORDER BY PERC DESC", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
 
@@ -399,6 +415,7 @@ public class PesoCriteriosDao {
                     pesoCriteriosBean.setIdobjetivo(idobjetivo);
                     pesoCriteriosBean.setPerc(cursor.getDouble(cursor.getColumnIndex("PERC")));
                     pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA")));
+                    pesoCriteriosBean.setAlternativa(retornaDescricaoAlternativa(pesoCriteriosBean.getIdalternativa()));
                     lista.add(pesoCriteriosBean);
                 } while (cursor.moveToNext());
 

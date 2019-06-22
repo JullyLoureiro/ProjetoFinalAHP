@@ -3,8 +3,12 @@ package br.com.juliana.loureiro.projetofinalahp.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +16,7 @@ import br.com.juliana.loureiro.projetofinalahp.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private ImageView imgsplash;
+    private TextView txvsplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +32,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 exibirTelaPrincipal();
             }
-        }, 2000);
+        }, 3000);
 
     }
 
     private void declaraObjetos() {
         imgsplash = findViewById(R.id.imgsplash);
+        txvsplash = findViewById(R.id.txvsplash);
 
-        /*Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
         LinearLayout l = findViewById(R.id.lnr);
         l.clearAnimation();
@@ -43,17 +49,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         anim = AnimationUtils.loadAnimation(this, R.anim.translate);
         anim.reset();
         imgsplash.clearAnimation();
-        imgsplash.startAnimation(anim);*/
+        imgsplash.startAnimation(anim);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                imgsplash.animate().rotationBy(360).withEndAction(this).setDuration(3000).setInterpolator(new LinearInterpolator()).start();
-            }
-        };
+        txvsplash.clearAnimation();
+        txvsplash.startAnimation(anim);
 
-        imgsplash.animate().rotationBy(360).withEndAction(runnable).setDuration(3000).setInterpolator(new LinearInterpolator()).start();
-        imgsplash.animate().rotationBy(2000);
     }
 
     private void exibirTelaPrincipal() {

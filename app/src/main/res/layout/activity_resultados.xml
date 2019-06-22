@@ -4,17 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_gradiente_fundo">
+    android:background="@color/cinza2">
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="RESULTADO"
-        android:textAlignment="center"
-        android:textColor="@color/colorTerc"
-        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/lnr"
@@ -25,16 +16,34 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardlista"
+            android:visibility="visible"
             android:elevation="10dp"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/listResultado"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="sfsdfsdf"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTerc"
+                    android:textSize="25sp" />
+
+                <ListView
+                    android:id="@+id/listResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp" />
+
+            </LinearLayout>
+
 
         </androidx.cardview.widget.CardView>
 
@@ -45,16 +54,33 @@
             android:elevation="10dp"
             android:visibility="gone">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barchart"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:visibility="visible">
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/titulo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/pretofosco"
+                    android:textSize="25sp" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
 
-            </com.github.mikephil.charting.charts.BarChart>
+                </com.github.mikephil.charting.charts.BarChart>
+
+            </LinearLayout>
+
+
 
         </androidx.cardview.widget.CardView>
 
@@ -64,6 +90,29 @@
             android:id="@+id/cardpizza"
             android:elevation="10dp"
             android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titulo3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTerc"
+                    android:textSize="25sp" />
+
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/piechart"
+                    android:layout_margin="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
 
 
         </androidx.cardview.widget.CardView>

@@ -30,14 +30,24 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,6 +78,7 @@ import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ObjetivosList;
 import br.com.juliana.loureiro.projetofinalahp.ListAdapter.ResultadosList;
 import br.com.juliana.loureiro.projetofinalahp.R;
 import br.com.juliana.loureiro.projetofinalahp.Util.FormatGraph;
+import br.com.juliana.loureiro.projetofinalahp.Util.FormatterGrah;
 import br.com.juliana.loureiro.projetofinalahp.Util.OnSwip;
 import br.com.juliana.loureiro.projetofinalahp.Util.TransparentProgressDialog;
 import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
@@ -86,6 +97,7 @@ public class Resultados extends AppCompatActivity {
     private Handler handler;
     private TransparentProgressDialog pd;
     private LinearLayout lnr;
+    private TextView titulo, titulo2, titulo3;
     private CardView cardlista, cardbarra, cardpizza;
 
 
@@ -104,6 +116,10 @@ public class Resultados extends AppCompatActivity {
             if (params != null) {
                 if (params.getInt("verResult", 0) != 0) {
                     idobjetivo = params.getInt("verResult", 0);
+                    titulo.setText(new ObjetivoDao(this).carregaObjetivo(idobjetivo).getTitulo().toUpperCase());
+                    titulo2.setText(new ObjetivoDao(this).carregaObjetivo(idobjetivo).getTitulo().toUpperCase());
+                    titulo3.setText(new ObjetivoDao(this).carregaObjetivo(idobjetivo).getTitulo().toUpperCase());
+
                     calculaCriterios();
                 } else {
                     calculaAlternativasTemp();
@@ -122,48 +138,12 @@ public class Resultados extends AppCompatActivity {
 
         listResultado = findViewById(R.id.listResultado);
         lnr = findViewById(R.id.lnr);
+        titulo = findViewById(R.id.titulo);
+        titulo2 = findViewById(R.id.titulo2);
+        titulo3 = findViewById(R.id.titulo3);
         cardlista = findViewById(R.id.cardlista);
         cardbarra = findViewById(R.id.cardbarra);
         cardpizza = findViewById(R.id.cardpizza);
-
-        lnr.setOnTouchListener(new OnSwip(this) {
-            public void onSwipeTop() {
-
-            }
-
-            public void onSwipeLeft() {
-                if(cardlista.getVisibility()== View.VISIBLE) {
-                    cardbarra.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_left));
-                    cardbarra.setVisibility(View.VISIBLE);
-                    cardlista.setVisibility(View.GONE);
-                    cardpizza.setVisibility(View.GONE);
-                }else if(cardbarra.getVisibility()== View.VISIBLE) {
-                    cardpizza.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_left));
-                    cardbarra.setVisibility(View.GONE);
-                    cardlista.setVisibility(View.GONE);
-                    cardpizza.setVisibility(View.VISIBLE);
-                }
-            }
-
-            public void onSwipeRight() {
-                if(cardbarra.getVisibility()== View.VISIBLE) {
-                    cardlista.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_right));
-                    cardbarra.setVisibility(View.GONE);
-                    cardlista.setVisibility(View.VISIBLE);
-                    cardpizza.setVisibility(View.GONE);
-                }else if(cardpizza.getVisibility()== View.VISIBLE) {
-                    cardbarra.startAnimation(AnimationUtils.loadAnimation(Resultados.this, R.anim.slide_out_right));
-                    cardbarra.setVisibility(View.VISIBLE);
-                    cardlista.setVisibility(View.GONE);
-                    cardpizza.setVisibility(View.GONE);
-                }
-            }
-
-            public void onSwipeBottom() {
-
-            }
-
-        });
     }
 
     private void calculaAlternativas(int idobjetivo) {
@@ -208,12 +188,16 @@ public class Resultados extends AppCompatActivity {
 
         resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
 
-        geraGrafico();
-
+        carregaGrafico();
+        geraGraphPie();
         geraTabela();
     }
 
     private void calculaAlternativasTemp() {
+        titulo.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
+        titulo2.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
+        titulo3.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
+
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
         for (int i = 0; i < listaCriterios.size(); i++) {
@@ -255,8 +239,13 @@ public class Resultados extends AppCompatActivity {
 
         resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
 
-        geraGrafico();
+        if (idobjetivo == 0) {
+            salvaDados();
+        }
+
+        Utils.deletaTemp(this);
         geraTabela();
+
     }
 
     private void geraTabela() {
@@ -353,6 +342,138 @@ public class Resultados extends AppCompatActivity {
             TelaPrincipal.listObjetivos.setAdapter(new ObjetivosList(listaObjetivos, this));
         }*/
         Utils.deletaTemp(this);
+    }
+
+    private void carregaGrafico() {
+        BarChart chart = findViewById(R.id.barchart);
+        chart.clear();
+        chart.clearAnimation();
+        chart.clearAllViewportJobs();
+
+        BarData data = new BarData(getDataSet());
+        chart.setData(data);
+        chart.invalidate();
+
+        Description d = new Description();
+        d.setText("");
+        chart.setDrawGridBackground(false);
+        chart.setDescription(d);
+
+        chart.animateXY(1000, 1000);
+        chart.setDrawBarShadow(false);
+        chart.setDrawGridBackground(false);
+        chart.setFitBars(false);
+        chart.setHighlightFullBarEnabled(false);
+        chart.getLegend().setEnabled(false);
+
+        final ArrayList<String> xAxisLabel = new ArrayList<>();
+        for (int i = 0; i < resultado.size(); i++) {
+            if (resultado.get(i).getAlternativa().length() > 20) {
+                xAxisLabel.add(resultado.get(i).getAlternativa().substring(0, 19).concat("..."));
+            } else {
+                xAxisLabel.add(resultado.get(i).getAlternativa());
+            }
+        }
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisMinimum(1);
+        leftAxis.setDrawLabels(true);
+
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawLabels(false);
+
+        chart.setVisibleXRangeMaximum(2); // allow 20 values to be displayed at once on the x-axis, not more
+        chart.moveViewToX(-1);
+
+        Legend l = chart.getLegend();
+
+
+    }
+
+    private ArrayList<IBarDataSet> getDataSet() {
+        ArrayList<IBarDataSet> dataSets;
+        dataSets = new ArrayList<>();
+
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+
+        for (int i = 0; i < resultado.size(); i++) {
+            BigDecimal v = new BigDecimal(resultado.get(i).getPerc()).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BarEntry v1e1 = new BarEntry(i, (float) v.doubleValue());
+            valueSet1.add(v1e1);
+            BarDataSet barDataSet1;
+            barDataSet1 = new BarDataSet(valueSet1, "");
+            barDataSet1.setColor(getResources().getColor(R.color.bg_screen3));
+            //barDataSet1.setValueFormatter(new FormatterGrah());
+            barDataSet1.setValueTextSize(17);
+            dataSets.add(barDataSet1);
+        }
+
+        return dataSets;
+    }
+
+    private void geraGraphPie() {
+        PieChart pieChart = findViewById(R.id.piechart);
+        pieChart.clear();
+        pieChart.clearAnimation();
+        pieChart.clearAllViewportJobs();
+
+        Description d = new Description();
+        d.setText("");
+        pieChart.setDescription(d);
+
+        List<PieEntry> lista2 = new ArrayList<>();
+
+
+        for(int i =0; i< resultado.size(); i++) {
+            BigDecimal v = new BigDecimal(resultado.get(i).getPerc()).setScale(2, BigDecimal.ROUND_HALF_UP);
+            lista2.add(new PieEntry((float)v.doubleValue(),resultado.get(i).getAlternativa()));
+        }
+
+
+        PieDataSet dataSet = new PieDataSet(lista2, "");
+
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueFormatter(new IValueFormatter2());
+
+        PieData data = new PieData(dataSet);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(30);
+
+        pieChart.setData(data);
+
+        int[] VORDIPLOM_COLORS = {
+                Color.rgb(240,216,111),
+                Color.rgb(88,213,230),
+                Color.rgb(205,140,240),
+                Color.rgb(53,235,120),
+                Color.rgb(245,113,142)
+
+        };
+
+        dataSet.setColors(VORDIPLOM_COLORS);
+
+        pieChart.animateXY(1000, 1000);
+
+        Legend l = pieChart.getLegend();
+        l.setTextSize(20f);
+        l.setDrawInside(false);
+        l.setTextColor(Color.BLACK);
+        l.setEnabled(false);
+
+        pieChart.setHoleRadius(20);
+        pieChart.setTransparentCircleRadius(25);
+
+        pieChart.invalidate();
+
     }
 
     private void salvaDados() {
@@ -465,6 +586,16 @@ public class Resultados extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
     }
 
+    public class IValueFormatter2 extends ValueFormatter {
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return "";
+
+        }
+    }
+
+
     public void editarObjetivo(MenuItem item) {
         Intent intent = new Intent(this, TelaFuncaoAHP.class);
         Bundle params = new Bundle();
@@ -472,6 +603,27 @@ public class Resultados extends AppCompatActivity {
         intent.putExtras(params);
         startActivity(intent);
         finish();
+    }
+
+    public void mudarVisualizacao(MenuItem item) {
+        if(cardlista.getVisibility()==View.VISIBLE) {
+            item.setIcon(ActivityCompat.getDrawable(this, R.drawable.pie));
+            cardlista.setVisibility(View.GONE);
+            cardbarra.setVisibility(View.VISIBLE);
+            cardpizza.setVisibility(View.GONE);
+            carregaGrafico();
+        } else if(cardbarra.getVisibility()==View.VISIBLE) {
+            item.setIcon(ActivityCompat.getDrawable(this, R.drawable.list));
+            cardlista.setVisibility(View.GONE);
+            cardbarra.setVisibility(View.GONE);
+            cardpizza.setVisibility(View.VISIBLE);
+           geraGraphPie();
+        } else {
+            item.setIcon(ActivityCompat.getDrawable(this, R.drawable.graph));
+            cardlista.setVisibility(View.VISIBLE);
+            cardbarra.setVisibility(View.GONE);
+            cardpizza.setVisibility(View.GONE);
+        }
     }
 
     public void compartilharResultado(MenuItem item) {

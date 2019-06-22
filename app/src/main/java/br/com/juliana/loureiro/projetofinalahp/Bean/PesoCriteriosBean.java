@@ -19,6 +19,23 @@ public class PesoCriteriosBean {
     private float totaldivisao;
     private double perc;
     private Integer idalternativa;
+    private String alternativa;
+
+    public String getAlternativa() {
+        return alternativa;
+    }
+
+    public void setAlternativa(String alternativa) {
+        this.alternativa = alternativa;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
 
     public int getIdobjetivo() {
         return idobjetivo;
