@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -47,6 +48,11 @@ public class Utils {
     public static void hideKeyboard(Context context, View editText) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    public static void ahowKeyboard(Context context, View editText) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public static void alerta(final Activity activity, String mensag) {
@@ -133,7 +139,9 @@ public class Utils {
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-        dialog.show();
+        if (!activity.isFinishing()) {
+            dialog.show();
+        }
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,7 +200,7 @@ public class Utils {
         }
 
         //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
-        int  qtd = new CriterioDao(activity).retornaQtdCriterios();
+        int qtd = new CriterioDao(activity).retornaQtdCriterios();
         List<PesoCriteriosBean> pesos = new PesoCriteriosDao(activity).somaLinhas(qtd);
 
         for (int i = 0; i < pesos.size(); i++) {
@@ -233,7 +241,7 @@ public class Utils {
         }
 
         //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
-        int  qtd = new SubcriteriosDao(activity).retornaQtd();
+        int qtd = new SubcriteriosDao(activity).retornaQtd();
         List<PesoSubcriterioBean> pesos = new PesoCriteriosDao(activity).somaLinhasSubcriterios(qtd);
 
         for (int i = 0; i < pesos.size(); i++) {
@@ -273,7 +281,7 @@ public class Utils {
         }
 
         //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
-        int  qtd = new CriterioDao(activity).retornaQtdCriterios2(idobjetivo);
+        int qtd = new CriterioDao(activity).retornaQtdCriterios2(idobjetivo);
         List<PesoCriteriosBean> pesos = new PesoCriteriosDao(activity).somaLinhas(qtd);
 
         for (int i = 0; i < pesos.size(); i++) {

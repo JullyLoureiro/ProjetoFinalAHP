@@ -54,11 +54,8 @@ public class ResultadosList extends BaseAdapter {
             alternativa.setTextColor(activity.getResources().getColor(R.color.cinzaescuro));
         }
 
-        if(resultados.get(position).getIdobjetivo()==0) {
-            alternativa.setText((position+1) + ") " + new AlternativaDao(activity).retornaDescricao(resultados.get(position).getIdalternativa()));
-        } else {
-            alternativa.setText((position+1) + ") " + new AlternativaDao(activity).retornaDescricao2(resultados.get(position).getIdalternativa()));
-        }
+        alternativa.setText((position+1) + ") " + resultados.get(position).getAlternativa());
+
 
         percentual.setText(new BigDecimal(resultados.get(position).getPerc()).setScale(2, BigDecimal.ROUND_HALF_UP)+ "%");
 

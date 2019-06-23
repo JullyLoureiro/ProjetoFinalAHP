@@ -225,8 +225,8 @@ public class ConfigDB extends SQLiteOpenHelper {
 
         String CREATE_MATRIZSUBCRITERIO_NORMALIZADA = "CREATE TABLE SUBCRITERIO_NORMALIZADA ( " +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "IDSUBCRITERIO1 INTEGER, " +
-                "IDSUBCRITERIO2 INTEGER, " +
+                "IDSUBCRIT1 INTEGER, " +
+                "IDSUBCRIT2 INTEGER, " +
                 "IDCRITERIO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";

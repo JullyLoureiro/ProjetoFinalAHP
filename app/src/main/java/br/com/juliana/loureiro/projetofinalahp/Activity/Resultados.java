@@ -546,8 +546,8 @@ public class Resultados extends AppCompatActivity {
     public void onBackPressed() {
         Utils.deletaTemp(this);
 
-        //Intent intent = new Intent(this, TelaPrincipal.class);
-        // startActivity(intent);
+        Intent intent = new Intent(this, TelaPrincipal.class);
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }

@@ -6,7 +6,7 @@ public class MatrizSubcriterioNormalizadaBean {
     public static String IDSUBCRIT2 = "IDSUBCRIT2";
     public static String IMPORTANCIA = "IMPORTANCIA";
     public static String IDCRITERIO = "IDCRITERIO";
-    public static String TABELA = "SUBRITERIO_NORMALIZADA";
+    public static String TABELA = "SUBCRITERIO_NORMALIZADA";
 
     private int id;
     private int idsubcrit1;

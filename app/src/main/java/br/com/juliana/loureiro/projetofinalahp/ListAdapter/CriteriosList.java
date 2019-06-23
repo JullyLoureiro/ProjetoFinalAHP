@@ -2,6 +2,7 @@ package br.com.juliana.loureiro.projetofinalahp.ListAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,7 +67,7 @@ public class CriteriosList extends BaseAdapter {
 
         final TextView titulo = v.findViewById(R.id.titulo);
         final EditText edttitulo = v.findViewById(R.id.edttitulo);
-       //final ImageView editar = v.findViewById(R.id.editar);
+        //final ImageView editar = v.findViewById(R.id.editar);
         final ImageView apagar = v.findViewById(R.id.apagar);
         final ImageView add = v.findViewById(R.id.add);
         final ImageView options = v.findViewById(R.id.options);
@@ -87,8 +89,10 @@ public class CriteriosList extends BaseAdapter {
         listasubcriterios = v.findViewById(R.id.listsubcriterios);
         final List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios(criterios.get(position).getId());
         listasubcriterios.setVisibility(View.VISIBLE);
+
         listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
         setListViewHeightBasedOnItems(listasubcriterios);
+
 
         titulo.setText(criterios.get(position).getDescricao());
 
@@ -166,12 +170,12 @@ public class CriteriosList extends BaseAdapter {
                                     edttitulo.setVisibility(View.VISIBLE);
                                     edttitulo.setText(titulo.getText());
                                     edttitulo.requestFocus();
-                                  // options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
+                                    // options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
                                     save.setVisibility(View.VISIBLE);
                                     options.setVisibility(View.GONE);
                                 }
 
-                                  //  options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
+                                //  options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
 
                                 break;
                             case R.id.apagar:
@@ -203,7 +207,7 @@ public class CriteriosList extends BaseAdapter {
             for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
                 View item = listAdapter.getView(itemPos, null, listView);
                 float px = 500 * (listView.getResources().getDisplayMetrics().density);
-                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                item.measure(View.MeasureSpec.makeMeasureSpec((int) px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 totalItemsHeight += item.getMeasuredHeight();
             }
 

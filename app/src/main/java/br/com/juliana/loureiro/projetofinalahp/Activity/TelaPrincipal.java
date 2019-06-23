@@ -90,4 +90,12 @@ public class TelaPrincipal extends AppCompatActivity {
         Intent intent = new Intent(this, Tutorial.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        System.exit(0);
+
+    }
 }
