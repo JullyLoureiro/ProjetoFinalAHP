@@ -300,7 +300,7 @@ public class Preferencias extends AppCompatActivity {
                     i++;
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
-                    txvinfo2.setText(i+1 + "/" + listaComp.size());
+                    txvinfo2.setText(i+1 + "/" + listaCompAlt.size());
                     int imp = new ComparaAlternativaDao(Preferencias.this).retornaImportancia(listaCompAlt.get(i).getIdalternativa1(), listaCompAlt.get(i).getIdalternativa2(), listaCompAlt.get(i).getIdcriterio());
                     seekBar2.setProgress(imp);
 
@@ -314,7 +314,7 @@ public class Preferencias extends AppCompatActivity {
                 if (i > 0) {
                     card2.startAnimation(AnimationUtils.loadAnimation(Preferencias.this, R.anim.slide_out_right));
                     i--;
-                    txvinfo2.setText(i+1 + "/" + listaComp.size());
+                    txvinfo2.setText(i+1 + "/" + listaCompAlt.size());
                     alternativa1.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa1()));
                     alternativa2.setText(new AlternativaDao(Preferencias.this).retornaDescricao(listaCompAlt.get(i).getIdalternativa2()));
 
