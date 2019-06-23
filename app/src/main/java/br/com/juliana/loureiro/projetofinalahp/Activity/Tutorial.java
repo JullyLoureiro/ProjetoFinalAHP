@@ -52,7 +52,14 @@ public class Tutorial extends AppCompatActivity {
                 R.layout.tutorial_1,
                 R.layout.tutorial_2,
                 R.layout.tutorial_3,
-                R.layout.tutorial_4};
+                R.layout.tutorial_4,
+                R.layout.tutorial_5,
+                R.layout.tutorial_6,
+                R.layout.tutorial_7,
+                R.layout.tutorial_8,
+                R.layout.tutorial_9,
+                R.layout.tutorial_10,
+                R.layout.tutorial_11};
 
         // making notification bar transparent
         changeStatusBarColor();
@@ -72,7 +79,21 @@ public class Tutorial extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-                    //launchHomeScreen();
+                   Intent intent = new Intent(Tutorial.this, TelaFuncaoAHP.class);
+                   startActivity(intent);
+                   finish();
+                }
+            }
+        });
+
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(-1);
+                if (current > 1) {
+                    viewPager.setCurrentItem(current);
                 }
             }
         });
