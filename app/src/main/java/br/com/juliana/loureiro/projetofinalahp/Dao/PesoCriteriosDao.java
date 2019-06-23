@@ -403,6 +403,21 @@ public class PesoCriteriosDao {
         return "";
     }
 
+    public String retornaDescricaoAlternativaTemp(int id) {
+        try {
+            Cursor cursor = db.rawQuery("SELECT " + AlternativaBean.DESCRICAO + " FROM " + AlternativaBean.TABELA_temp +
+                    " WHERE " + AlternativaBean.ID + " = " + id, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public List<PesoCriteriosBean> retornaResultado(int idobjetivo) {
         List<PesoCriteriosBean> lista = new ArrayList<>();
         try {
@@ -416,6 +431,29 @@ public class PesoCriteriosDao {
                     pesoCriteriosBean.setPerc(cursor.getDouble(cursor.getColumnIndex("PERC")));
                     pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA")));
                     pesoCriteriosBean.setAlternativa(retornaDescricaoAlternativa(pesoCriteriosBean.getIdalternativa()));
+                    lista.add(pesoCriteriosBean);
+                } while (cursor.moveToNext());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<PesoCriteriosBean> retornaResultadoTemp(int idobjetivo) {
+        List<PesoCriteriosBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT IDALTERNATIVA, SUM(TOTAL * 100) AS PERC FROM PESO_ALTERNATIVAS  GROUP BY IDALTERNATIVA ORDER BY PERC DESC", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                do {
+                    PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
+                    pesoCriteriosBean.setIdobjetivo(idobjetivo);
+                    pesoCriteriosBean.setPerc(cursor.getDouble(cursor.getColumnIndex("PERC")));
+                    pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA")));
+                    pesoCriteriosBean.setAlternativa(retornaDescricaoAlternativaTemp(pesoCriteriosBean.getIdalternativa()));
                     lista.add(pesoCriteriosBean);
                 } while (cursor.moveToNext());
 

@@ -237,7 +237,7 @@ public class Resultados extends AppCompatActivity {
 
         }
 
-        resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
+        resultado = new PesoCriteriosDao(this).retornaResultadoTemp(idobjetivo);
 
         if (idobjetivo == 0) {
             salvaDados();
@@ -451,12 +451,11 @@ public class Resultados extends AppCompatActivity {
         pieChart.setData(data);
 
         int[] VORDIPLOM_COLORS = {
-                Color.rgb(240,216,111),
-                Color.rgb(88,213,230),
-                Color.rgb(205,140,240),
-                Color.rgb(53,235,120),
-                Color.rgb(245,113,142)
-
+                Color.rgb(205,58,87),
+                Color.rgb(39,186,209),
+                Color.rgb(239,202,54),
+                Color.rgb(134,19,192),
+                Color.rgb(55,168,96)
         };
 
         dataSet.setColors(VORDIPLOM_COLORS);
