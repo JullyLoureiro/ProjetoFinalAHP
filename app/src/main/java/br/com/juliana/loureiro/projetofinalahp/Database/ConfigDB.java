@@ -109,6 +109,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IDALTERNATIVA1 INTEGER, " +
                 "IDALTERNATIVA2 INTEGER, " +
                 "IDCRITERIO INTEGER, " +
+                "IDSUBCRITERIO INTEGER, " +
                 "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
@@ -141,6 +142,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IDALTERNATIVA1 INTEGER, " +
                 "IDALTERNATIVA2 INTEGER, " +
                 "IDCRITERIO INTEGER, " +
+                "IDSUBCRITERIO INTEGER, " +
                 "IDOBJETIVO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";

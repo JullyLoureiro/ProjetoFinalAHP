@@ -37,6 +37,7 @@ import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizSubcriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.PesoCriteriosBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
@@ -1140,7 +1141,7 @@ public class Preferencias extends AppCompatActivity {
 
         CR = CI / RI;
         if (qtd > 2) {
-            if (CR > 0.1) {
+            if (CR > 0.1 || CR < 0) {
                 String msg = "Cálculo de consistência: " + String.valueOf(CR) + "\nVolte e revise seus julgamentos!";
                 alerta(this, msg, CR);
             } else {
@@ -1229,10 +1230,10 @@ public class Preferencias extends AppCompatActivity {
         if (qtd > 2) {
             if (CR > 0.1 || CR < 0) {
                 String msg = "Cálculo de consistência: " + String.valueOf(CR) + "\nVolte e revise seus julgamentos!";
-                alerta(this, msg, CR);
+                alertaSUB(this, msg, CR);
             } else {
                 String msg = "Cálculo de consistência: " + String.valueOf(CR);
-                alerta(this, msg, CR);
+                alertaSUB(this, msg, CR);
             }
         } else {
             if (new SubcriteriosDao(Preferencias.this).carregaCriterios().isEmpty()) {
@@ -1302,10 +1303,67 @@ public class Preferencias extends AppCompatActivity {
             public void onClick(View v) {
                 new MatrizCriterioNormalizadaDao(activity).deleta();
                 new MatrizCriterioNormalizadaDao(activity).deletaAlternativa();
+                new MatrizCriterioNormalizadaDao(activity).deletaSubcriterio();
                 new PesoCriteriosDao(activity).deleta();
                 new PesoCriteriosDao(activity).deletaAlternativa();
+                new PesoCriteriosDao(activity).deletaSubcriterio();
                 new SomaColunaDao(activity).deleta();
                 new SomaColunaDao(activity).deletaAlternativa();
+                new SomaColunaDao(activity).deletaSubcriterio();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void alertaSUB(final Activity activity, String mensag, final float cr) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.alertdialog, null);
+
+        TextView mensagem = alertLayout.findViewById(R.id.txtmensagem);
+        mensagem.setText(mensag);
+        Button yes = alertLayout.findViewById(R.id.yes);
+        ImageView close = alertLayout.findViewById(R.id.close);
+
+        if (cr > 0.1) {
+            yes.setVisibility(View.GONE);
+        }
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(true);
+
+        final AlertDialog dialog = alert.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        dialog.show();
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cr > 0.1) {
+                    dialog.dismiss();
+                } else {
+                    dialog.dismiss();
+
+                    rltpreferencia2.setVisibility(View.VISIBLE);
+
+                    rltpreferencia.setVisibility(View.GONE);
+                    rltpreferencia3.setVisibility(View.GONE);
+                    altimportancia = 1;
+                    critImportancia = 1;
+                    subImportancia = 1;
+                    i = 0;
+                }
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MatrizCriterioNormalizadaDao(activity).deletaSubcriterio();
+                new PesoCriteriosDao(activity).deletaSubcriterio();
+                new SomaColunaDao(activity).deletaSubcriterio();
                 dialog.dismiss();
             }
         });

@@ -121,7 +121,7 @@ public class ComparaSubcriterioDao {
             } else {
                 content.put(ComparaSubCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
             }
-            where = "IDCRIT2 = ? AND IDCRIT1 = ? AND IDCRITERIO = ?";
+            where = "IDSUBCRIT2 = ? AND IDSUBCRIT1 = ? AND IDCRITERIO = ?";
             String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdsubcrit1()), String.valueOf(comparaCriterioBean.getIdsubcrit2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
             db.update(ComparaSubCriterioBean.TABELA, content, where, argumentos2);
         } catch (Exception e) {

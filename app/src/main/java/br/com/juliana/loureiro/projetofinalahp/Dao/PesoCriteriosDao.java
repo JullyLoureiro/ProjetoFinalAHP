@@ -98,17 +98,21 @@ public class PesoCriteriosDao {
                     if (cursor2.getCount() > 0) {
                         ContentValues valores;
 
-                        db = banco.getWritableDatabase();
+                      //  db = banco.getWritableDatabase();
                         valores = new ContentValues();
                         valores.put(PesoSubcriterioBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
 
-                        String where = "IDSUBCRIT = ?";
+                        String where = "IDSUBCRITERIO = ?";
                         String[] argumentos = {String.valueOf(idcrit)};
                         db.update(PesoSubcriterioBean.TABELA, valores, where, argumentos);
                     } else {
                         ContentValues valores;
 
-                        SQLiteDatabase db = banco.getWritableDatabase();
+                       // SQLiteDatabase db = banco.getWritableDatabase();
+
+                        /*db.execSQL("INSERT INTO PESO_SUBCRITERIOS (IDSUBCRIT, PESO) VALUES ("+cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1))
+                                +", "+ (cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios)+")");*/
+
                         valores = new ContentValues();
                         valores.put(PesoSubcriterioBean.IDSUBCRIT, cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
                         valores.put(PesoSubcriterioBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
@@ -248,7 +252,7 @@ public class PesoCriteriosDao {
 
             ContentValues content = new ContentValues();
             content.put(PesoSubcriterioBean.YMAX, ymax);
-            String where = "IDSUBCRIT = ?";
+            String where = "IDSUBCRITERIO = ?";
             String argumentos[] = {String.valueOf(id)};
             db.update(PesoSubcriterioBean.TABELA, content, where, argumentos);
         } catch (Exception ignored) {
@@ -303,11 +307,11 @@ public class PesoCriteriosDao {
         try {
             ContentValues content = new ContentValues();
             content.put(PesoSubcriterioBean.TOTALDIVISAO, totaldiv);
-            String where = "IDSUBCRIT = ?";
+            String where = "IDSUBCRITERIO = ?";
             String argumentos[] = {String.valueOf(id)};
             db.update(PesoSubcriterioBean.TABELA, content, where, argumentos);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         db.close();
     }
@@ -437,7 +441,7 @@ public class PesoCriteriosDao {
 
     public float calculaMediaSub() {
         try {
-            cursor = db.rawQuery("SELECT AVG(TOTALDIVISAO) AS MEDIA FROM PESO_SUBCRITERIOS", null);
+            cursor = db.rawQuery("SELECT AVG(TOTAL) AS MEDIA FROM PESO_SUBCRITERIOS", null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 return cursor.getFloat(cursor.getColumnIndex("MEDIA"));
@@ -460,6 +464,10 @@ public class PesoCriteriosDao {
 
     public void deletaAlternativa() {
         db.execSQL("DELETE FROM " + PesoCriteriosBean.PESO_ALTERNATIVAS);
+    }
+
+    public void deletaSubcriterio() {
+        db.execSQL("DELETE FROM " + PesoSubcriterioBean.TABELA);
     }
 
     public String retornaDescricaoAlternativa(int id) {

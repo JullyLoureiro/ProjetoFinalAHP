@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.SubcriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
 public class ComparaAlternativaDao {
@@ -43,9 +44,25 @@ public class ComparaAlternativaDao {
                 valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
                 valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
                 valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+                valores.put(ComparaAlternativaBean.IDSUBCRITERIO, comparaAlternativaBean.getIdsubcriterio());
                 valores.put(ComparaAlternativaBean.IDOBJETIVO, comparaAlternativaBean.getIdobjetivo());
                 db.insert(ComparaAlternativaBean.TABELA_temp, null, valores);
                 return true;
+            } else {
+                if(comparaAlternativaBean.getIdsubcriterio()!=0){
+                    ContentValues valores;
+
+                    db = banco.getWritableDatabase();
+                    valores = new ContentValues();
+                    valores.put(ComparaAlternativaBean.IDALTERNATIVA1, comparaAlternativaBean.getIdalternativa1());
+                    valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
+                    valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
+                    valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+                    valores.put(ComparaAlternativaBean.IDSUBCRITERIO, comparaAlternativaBean.getIdsubcriterio());
+                    valores.put(ComparaAlternativaBean.IDOBJETIVO, comparaAlternativaBean.getIdobjetivo());
+                    db.insert(ComparaAlternativaBean.TABELA_temp, null, valores);
+                    return true;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,15 +129,15 @@ public class ComparaAlternativaDao {
             cursor.moveToFirst();
 
             do {
-
-                ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
-                comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
-                comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
-                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
-                comparaCriterioBean.setImportancia(cursor.getDouble(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
-                comparaCriterioBean.setIdobjetivo(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDOBJETIVO)));
-                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
-                lista.add(comparaCriterioBean);
+                    ComparaAlternativaBean comparaCriterioBean = new ComparaAlternativaBean();
+                    comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
+                    comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
+                    comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
+                    comparaCriterioBean.setImportancia(cursor.getDouble(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
+                    comparaCriterioBean.setIdobjetivo(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDOBJETIVO)));
+                    comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                    comparaCriterioBean.setIdsubcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
+                    lista.add(comparaCriterioBean);
 
 
             } while (cursor.moveToNext());

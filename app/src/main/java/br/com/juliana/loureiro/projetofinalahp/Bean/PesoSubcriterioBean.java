@@ -3,10 +3,10 @@ package br.com.juliana.loureiro.projetofinalahp.Bean;
 public class PesoSubcriterioBean {
     public static String ID = "ID";
     public static String IDCRIT = "IDCRIT";
-    public static String IDSUBCRIT = "IDSUBCRIT";
+    public static String IDSUBCRIT = "IDSUBCRITERIO";
     public static String SOMA= "PESO";
     public static String YMAX= "YMAX";
-    public static String TOTALDIVISAO= "TOTALDIVISAO";
+    public static String TOTALDIVISAO= "TOTAL";
     public static String TOTAL= "TOTAL";
     public static String TABELA = "PESO_SUBCRITERIOS";
 

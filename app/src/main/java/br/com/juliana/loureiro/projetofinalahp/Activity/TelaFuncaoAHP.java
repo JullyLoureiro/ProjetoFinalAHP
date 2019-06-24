@@ -122,11 +122,8 @@ public class TelaFuncaoAHP extends AppCompatActivity {
                     comparaCriterioBean.setIdsubcrit1(listaSubCriterios.get(i).getId());
                     comparaCriterioBean.setIdsubcrit2(listaSubCriterios.get(j).getId());
                     comparaCriterioBean.setIdcriterio(listaCriterios.get(k).getId());
-                   // if (i == j) {
-                        comparaCriterioBean.setImportancia(1);
-                    //} else {
-                    //    comparaCriterioBean.setImportancia(0);
-                   // }
+                    comparaCriterioBean.setImportancia(1);
+
 
                     new ComparaSubcriterioDao(this).insereComparacoes(comparaCriterioBean);
                 }
@@ -137,13 +134,16 @@ public class TelaFuncaoAHP extends AppCompatActivity {
         //COMPARA ALTERNATIVAS
         List<AlternativaBean> listaAlternativas = new AlternativaDao(this).carregaAlternativas();
 
-        for (int x = 0; x < listaCriterios.size(); x++) {
+        List<CriterioBean> listaCriterios2 = new CriterioDao(this).carregaCriteriosSub();
+
+        for (int x = 0; x < listaCriterios2.size(); x++) {
             for (int i = 0; i < listaAlternativas.size(); i++) {
                 for (int j = 0; j < listaAlternativas.size(); j++) {
                     ComparaAlternativaBean alternativaBean = new ComparaAlternativaBean();
                     alternativaBean.setIdalternativa1(listaAlternativas.get(i).getId());
                     alternativaBean.setIdalternativa2(listaAlternativas.get(j).getId());
-                    alternativaBean.setIdcriterio(listaCriterios.get(x).getId());
+                    alternativaBean.setIdcriterio(listaCriterios2.get(x).getId());
+                    alternativaBean.setIdsubcriterio(listaCriterios2.get(x).getIdsubcriterio());
                     alternativaBean.setIdobjetivo(0);
                     if (i == j) {
                         alternativaBean.setImportancia(1);

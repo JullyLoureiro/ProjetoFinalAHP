@@ -135,6 +135,52 @@ public class CriterioDao {
         return lista;
     }
 
+    public List<CriterioBean> carregaCriteriosSub() {
+        List<CriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(CriterioBean.ID));
+
+
+                    Cursor c = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA_temp + " WHERE " + SubcriterioBean.IDCRITERIO +
+                            "=" + idcrit, null);
+
+                    if(c.getCount()>0) {
+                        c.moveToFirst();
+
+                        do{
+                            CriterioBean criterioBean = new CriterioBean();
+                            criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                            criterioBean.setId(idcrit);
+                            criterioBean.setIdsubcriterio(c.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
+                            lista.add(criterioBean);
+                        }while (c.moveToNext());
+                    } else {
+                        CriterioBean criterioBean = new CriterioBean();
+                        criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                        criterioBean.setId(idcrit);
+                        criterioBean.setIdsubcriterio(0);
+                        lista.add(criterioBean);
+                    }
+
+
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+        return lista;
+    }
+
     public List<CriterioBean> carregaCriteriosObjetivo(int idobjetivo) {
         List<CriterioBean> lista = new ArrayList<>();
         try {

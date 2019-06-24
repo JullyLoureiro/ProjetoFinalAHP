@@ -9,8 +9,17 @@ public class CriterioBean {
     public static String TABELA_temp = "CRITERIOS_TEMP";
 
     private int id;
+    private int idsubcriterio;
     private String descricao;
     private int idobjetivo;
+
+    public int getIdsubcriterio() {
+        return idsubcriterio;
+    }
+
+    public void setIdsubcriterio(int idsubcriterio) {
+        this.idsubcriterio = idsubcriterio;
+    }
 
     public int getIdobjetivo() {
         return idobjetivo;

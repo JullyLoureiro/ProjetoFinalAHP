@@ -137,7 +137,7 @@ public class SomaColunaDao {
                     try {
                         int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT2));
 
-                        Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.TABELA +
+                        Cursor cursor2 = db.rawQuery("SELECT *  FROM " + SomaColunaBean.SOMA_COLUNA_SUBCRITERIO +
                                 " WHERE  IDCRIT = " + idcrit, null);
 
                         db = banco.getWritableDatabase();
@@ -311,5 +311,9 @@ public class SomaColunaDao {
 
     public void deletaAlternativa() {
         db.execSQL("DELETE FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA);
+    }
+
+    public void deletaSubcriterio() {
+        db.execSQL("DELETE FROM " + SomaColunaBean.SOMA_COLUNA_SUBCRITERIO);
     }
 }

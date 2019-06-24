@@ -6,6 +6,7 @@ public class ComparaAlternativaBean {
     public static String IDALTERNATIVA2 = "IDALTERNATIVA2";
     public static String IDOBJETIVO = "IDOBJETIVO";
     public static String IDCRITERIO = "IDCRITERIO";
+    public static String IDSUBCRITERIO = "IDSUBCRITERIO";
     public static String IMPORTANCIA = "IMPORTANCIA";
     public static String TABELA = "COMPARA_ALTERNATIVA";
     public static String TABELA_temp = "COMPARA_ALTERNATIVATEMP";
@@ -15,7 +16,16 @@ public class ComparaAlternativaBean {
     private Integer idalternativa2;
     private Integer idobjetivo;
     private Integer idcriterio;
+    private Integer idsubcriterio;
     private double importancia;
+
+    public Integer getIdsubcriterio() {
+        return idsubcriterio;
+    }
+
+    public void setIdsubcriterio(Integer idsubcriterio) {
+        this.idsubcriterio = idsubcriterio;
+    }
 
     public Integer getId() {
         return id;

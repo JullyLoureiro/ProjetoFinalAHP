@@ -313,6 +313,7 @@ public class Utils {
         new MatrizCriterioNormalizadaDao(activity).deletaSubcriterio();
         new PesoCriteriosDao(activity).deleta();
         new PesoCriteriosDao(activity).deletaAlternativa();
+        new PesoCriteriosDao(activity).deletaSubcriterio();
         new SomaColunaDao(activity).deleta();
         new SomaColunaDao(activity).deletaAlternativa();
         new SubcriteriosDao(activity).deletaTemp();
