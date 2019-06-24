@@ -93,6 +93,11 @@ public class ComparaSubcriterioDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 1;
     }
 
@@ -105,8 +110,8 @@ public class ComparaSubcriterioDao {
             } else {
                 content.put(ComparaSubCriterioBean.IMPORTANCIA, (1 / comparaCriterioBean.getImportancia()));
             }
-            String where = "IDSUBCRIT1 = ? AND IDSUBCRIT2 = ?";
-            String argumentos[] = {String.valueOf(comparaCriterioBean.getIdsubcrit1()), String.valueOf(comparaCriterioBean.getIdsubcrit2())};
+            String where = "IDSUBCRIT1 = ? AND IDSUBCRIT2 = ? AND IDCRITERIO = ?";
+            String argumentos[] = {String.valueOf(comparaCriterioBean.getIdsubcrit1()), String.valueOf(comparaCriterioBean.getIdsubcrit2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
             db.update(ComparaSubCriterioBean.TABELA, content, where, argumentos);
 
 
@@ -116,12 +121,13 @@ public class ComparaSubcriterioDao {
             } else {
                 content.put(ComparaSubCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
             }
-            where = "IDCRIT2 = ? AND IDCRIT1 = ?";
-            String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdsubcrit1()), String.valueOf(comparaCriterioBean.getIdsubcrit2())};
+            where = "IDCRIT2 = ? AND IDCRIT1 = ? AND IDCRITERIO = ?";
+            String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdsubcrit1()), String.valueOf(comparaCriterioBean.getIdsubcrit2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
             db.update(ComparaSubCriterioBean.TABELA, content, where, argumentos2);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
     }
 
 
@@ -130,7 +136,8 @@ public class ComparaSubcriterioDao {
 
             cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA + " WHERE "
                     + ComparaSubCriterioBean.IDSUBCRIT1 + " = " + comparaCriterioBean.getIdsubcrit1() +
-                    " AND " + ComparaSubCriterioBean.IDSUBCRIT2 + " = " + comparaCriterioBean.getIdsubcrit2(), null);
+                    " AND " + ComparaSubCriterioBean.IDSUBCRIT2 + " = " + comparaCriterioBean.getIdsubcrit2()
+                    + " AND IDCRITERIO = " + comparaCriterioBean.getIdcriterio(), null);
 
             if (cursor.getCount() <= 0) {
                 ContentValues valores;
@@ -147,6 +154,9 @@ public class ComparaSubcriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(cursor!=null) {
+                cursor.close();
+            }
             db.close();
         }
         return false;
@@ -179,7 +189,10 @@ public class ComparaSubcriterioDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -204,7 +217,10 @@ public class ComparaSubcriterioDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -228,7 +244,10 @@ public class ComparaSubcriterioDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }

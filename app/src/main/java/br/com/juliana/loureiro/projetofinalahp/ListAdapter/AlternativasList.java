@@ -2,15 +2,20 @@ package br.com.juliana.loureiro.projetofinalahp.ListAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import java.util.List;
@@ -20,6 +25,7 @@ import br.com.juliana.loureiro.projetofinalahp.Activity.ThreeFragment;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Dao.AlternativaDao;
 import br.com.juliana.loureiro.projetofinalahp.R;
+import br.com.juliana.loureiro.projetofinalahp.Util.Utils;
 
 public class AlternativasList extends BaseAdapter {
     private final List<AlternativaBean> alternativaBeans;
@@ -57,7 +63,7 @@ public class AlternativasList extends BaseAdapter {
         final ImageView options = v.findViewById(R.id.options);
         final ImageView save = v.findViewById(R.id.save);
 
-        save.setOnClickListener(new View.OnClickListener() {
+        /*save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edttitulo.setVisibility(View.GONE);
@@ -68,7 +74,7 @@ public class AlternativasList extends BaseAdapter {
                 save.setVisibility(View.GONE);
                 options.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         titulo.setText(alternativaBeans.get(position).getDescricao());
 
@@ -86,13 +92,57 @@ public class AlternativasList extends BaseAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.editar:
-                                titulo.setVisibility(View.GONE);
+                                /*titulo.setVisibility(View.GONE);
                                 edttitulo.setVisibility(View.VISIBLE);
                                 edttitulo.setText(titulo.getText());
                                 edttitulo.requestFocus();
-                               // editar.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
                                 save.setVisibility(View.VISIBLE);
-                                options.setVisibility(View.GONE);
+                                options.setVisibility(View.GONE);*/
+
+
+                                LayoutInflater inflater2 = activity.getLayoutInflater();
+                                @SuppressLint("ViewHolder") View alertLayout2 = inflater2.inflate(R.layout.layoutddsubcriterio, null);
+
+                                Button btnsub2 = alertLayout2.findViewById(R.id.btnsub);
+                                ImageView close2= alertLayout2.findViewById(R.id.close);
+
+                                final EditText edtsub2 = alertLayout2.findViewById(R.id.edtsub);
+                                edtsub2.setText(titulo.getText());
+                                edtsub2.requestFocus();
+
+                                AlertDialog.Builder alert2 = new AlertDialog.Builder(activity);
+                                alert2.setView(alertLayout2);
+                                alert2.setCancelable(true);
+
+                                final AlertDialog dialog2 = alert2.create();
+                                if (dialog2.getWindow() != null) {
+                                    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                }
+                                dialog2.show();
+
+
+                                btnsub2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog2.dismiss();
+
+                                        titulo.setText(edtsub2.getText());
+                                        alternativaBeans.get(position).setDescricao(edtsub2.getText().toString());
+                                        titulo.setVisibility(View.VISIBLE);
+                                        new AlternativaDao(activity).atualizaAlternativa(alternativaBeans.get(position));
+
+                                        Utils.hideKeyboard(activity, edtsub2);
+                                    }
+                                });
+
+                                close2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog2.dismiss();
+                                    }
+                                });
+
+
                                 break;
                             case R.id.apagar:
                                 new AlternativaDao(activity).deletaAlternativa(alternativaBeans.get(position).getId());

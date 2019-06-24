@@ -266,6 +266,8 @@ public class Preferencias extends AppCompatActivity {
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
                     int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
                     seekBar.setProgress(imp);
+
+
                 }
             }
 
@@ -280,6 +282,7 @@ public class Preferencias extends AppCompatActivity {
                     criterio2.setText(new CriterioDao(Preferencias.this).retornaDescricao(listaComp.get(i).getIdcrit2()));
                     int imp = new ComparaCriterioDao(Preferencias.this).retornaImportancia(listaComp.get(i).getIdcrit1(), listaComp.get(i).getIdcrit2());
                     seekBar.setProgress(imp);
+
                 }
             }
 
@@ -347,9 +350,9 @@ public class Preferencias extends AppCompatActivity {
                     subcriterio1.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit1()));
                     subcriterio2.setText(new SubcriteriosDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdsubcrit2()));
                     int imp = new ComparaSubcriterioDao(Preferencias.this).retornaImportancia(listaCompSub.get(i).getIdsubcrit1(), listaCompSub.get(i).getIdsubcrit2(), listaCompSub.get(i).getIdcriterio());
-                    seekBar2.setProgress(imp);
+                    seekBar3.setProgress(imp);
 
-                    txvtitulo2.setText("Entre " + subcriterio1.getText().toString() + " e " + subcriterio2.getText().toString() +
+                    txvtitulo3.setText("Entre " + subcriterio1.getText().toString() + " e " + subcriterio2.getText().toString() +
                             ", qual possui maior relevância em relação ao critério " +
                             new CriterioDao(Preferencias.this).retornaDescricao(listaCompSub.get(i).getIdcriterio()) + "?");
                 }
@@ -1056,13 +1059,6 @@ public class Preferencias extends AppCompatActivity {
                     calculaResultados();
                 } else if (rltpreferencia3.getVisibility() == View.VISIBLE) {
                     calculaResultadosSubcriterios();
-                    rltpreferencia2.setVisibility(View.VISIBLE);
-                    rltpreferencia.setVisibility(View.GONE);
-                    rltpreferencia3.setVisibility(View.GONE);
-                    altimportancia = 1;
-                    critImportancia = 1;
-                    subImportancia = 1;
-                    i = 0;
                 } else {
                     Intent intent = new Intent(Preferencias.this, Resultados.class);
                     Bundle params = new Bundle();
@@ -1174,7 +1170,7 @@ public class Preferencias extends AppCompatActivity {
         Utils.calculaSubcriteriosTemp(this);
 
         //CÁLCULO DE INCONSISTÊNCIA
-        float YmaxMedia = new PesoCriteriosDao(this).calculaMedia();
+        float YmaxMedia = new PesoCriteriosDao(this).calculaMediaSub();
         float CI = (YmaxMedia - qtd) / (qtd - 1);
 
         float CR, RI = 0;
@@ -1231,7 +1227,7 @@ public class Preferencias extends AppCompatActivity {
 
         CR = CI / RI;
         if (qtd > 2) {
-            if (CR > 0.1) {
+            if (CR > 0.1 || CR < 0) {
                 String msg = "Cálculo de consistência: " + String.valueOf(CR) + "\nVolte e revise seus julgamentos!";
                 alerta(this, msg, CR);
             } else {
@@ -1241,6 +1237,8 @@ public class Preferencias extends AppCompatActivity {
         } else {
             if (new SubcriteriosDao(Preferencias.this).carregaCriterios().isEmpty()) {
                 rltpreferencia2.setVisibility(View.VISIBLE);
+                rltpreferencia3.setVisibility(View.GONE);
+
             } else {
                 rltpreferencia3.setVisibility(View.VISIBLE);
             }

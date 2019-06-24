@@ -59,6 +59,9 @@ public class ComparaCriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(cursor!=null) {
+                cursor.close();
+            }
             db.close();
         }
         return false;
@@ -129,7 +132,10 @@ public class ComparaCriterioDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -154,7 +160,10 @@ public class ComparaCriterioDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -177,7 +186,10 @@ public class ComparaCriterioDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -207,6 +219,7 @@ public class ComparaCriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
     }
 
     public List<ComparaCriterioBean> carregaComparacoes(int crit2) {
@@ -228,7 +241,10 @@ public class ComparaCriterioDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -252,7 +268,10 @@ public class ComparaCriterioDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -280,7 +299,10 @@ public class ComparaCriterioDao {
         }catch (Exception ignored) {
 
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -307,7 +329,10 @@ public class ComparaCriterioDao {
         }catch (Exception ignored) {
 
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -378,6 +403,11 @@ public class ComparaCriterioDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 1;
     }
 
@@ -390,5 +420,6 @@ public class ComparaCriterioDao {
         }catch (Exception ignored) {
 
         }
+        db.close();
     }
 }

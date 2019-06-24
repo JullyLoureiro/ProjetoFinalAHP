@@ -73,7 +73,7 @@ public class CriteriosList extends BaseAdapter {
         final ImageView options = v.findViewById(R.id.options);
         final ImageView save = v.findViewById(R.id.save);
 
-        save.setOnClickListener(new View.OnClickListener() {
+        /*save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edttitulo.setVisibility(View.GONE);
@@ -84,7 +84,7 @@ public class CriteriosList extends BaseAdapter {
                 save.setVisibility(View.GONE);
                 options.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         listasubcriterios = v.findViewById(R.id.listsubcriterios);
         final List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios(criterios.get(position).getId());
@@ -165,17 +165,56 @@ public class CriteriosList extends BaseAdapter {
                                 });
                                 break;
                             case R.id.editar:
-                                if (options.getVisibility() == View.VISIBLE) {
+                                LayoutInflater inflater2 = activity.getLayoutInflater();
+                                @SuppressLint("ViewHolder") View alertLayout2 = inflater2.inflate(R.layout.layoutddsubcriterio, null);
+
+                                Button btnsub2 = alertLayout2.findViewById(R.id.btnsub);
+                                ImageView close2= alertLayout2.findViewById(R.id.close);
+
+                                final EditText edtsub2 = alertLayout2.findViewById(R.id.edtsub);
+                                edtsub2.setText(titulo.getText());
+                                edtsub2.requestFocus();
+
+                                AlertDialog.Builder alert2 = new AlertDialog.Builder(activity);
+                                alert2.setView(alertLayout2);
+                                alert2.setCancelable(true);
+
+                                final AlertDialog dialog2 = alert2.create();
+                                if (dialog2.getWindow() != null) {
+                                    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                }
+                                dialog2.show();
+
+
+                                btnsub2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog2.dismiss();
+
+                                        titulo.setText(edtsub2.getText());
+                                        criterios.get(position).setDescricao(edtsub2.getText().toString());
+                                        new CriterioDao(activity).atualizaCriterio(criterios.get(position));
+                                        Utils.hideKeyboard(activity, edtsub2);
+                                    }
+                                });
+
+                                close2.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog2.dismiss();
+                                    }
+                                });
+
+
+                                /*if (options.getVisibility() == View.VISIBLE) {
                                     titulo.setVisibility(View.GONE);
                                     edttitulo.setVisibility(View.VISIBLE);
                                     edttitulo.setText(titulo.getText());
                                     edttitulo.requestFocus();
-                                    // options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.checked));
                                     save.setVisibility(View.VISIBLE);
                                     options.setVisibility(View.GONE);
                                 }
-
-                                //  options.setImageDrawable(ActivityCompat.getDrawable(activity, R.drawable.pencil));
+                                */
 
                                 break;
                             case R.id.apagar:

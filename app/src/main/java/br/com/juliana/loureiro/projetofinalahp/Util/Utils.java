@@ -245,7 +245,7 @@ public class Utils {
         List<PesoSubcriterioBean> pesos = new PesoCriteriosDao(activity).somaLinhasSubcriterios(qtd);
 
         for (int i = 0; i < pesos.size(); i++) {
-            List<ComparaSubCriterioBean> listaComp = new ComparaSubcriterioDao(activity).carregaComparacoes(pesos.get(i).getIdcrit());
+            List<ComparaSubCriterioBean> listaComp = new ComparaSubcriterioDao(activity).carregaComparacoes(pesos.get(i).getIdsubcrit());
             for (int j = 0; j < listaComp.size(); j++) {
                 float mult = pesos.get(i).getPeso() * listaComp.get(j).getImportancia();
                 new PesoCriteriosDao(activity).atualizaYMaxSubcriterio(listaComp.get(j).getIdsubcrit1(), mult);
@@ -310,6 +310,7 @@ public class Utils {
         new ComparaSubcriterioDao(activity).deletaTemp();
         new MatrizCriterioNormalizadaDao(activity).deleta();
         new MatrizCriterioNormalizadaDao(activity).deletaAlternativa();
+        new MatrizCriterioNormalizadaDao(activity).deletaSubcriterio();
         new PesoCriteriosDao(activity).deleta();
         new PesoCriteriosDao(activity).deletaAlternativa();
         new SomaColunaDao(activity).deleta();

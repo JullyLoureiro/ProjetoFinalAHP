@@ -70,6 +70,11 @@ public class SomaColunaDao {
         }catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void somaColunas2(int idobjetivo) {
@@ -115,6 +120,11 @@ public class SomaColunaDao {
         }catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void somaColunas3() {
@@ -162,6 +172,11 @@ public class SomaColunaDao {
         }catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void somaColunasAlternativas(int idcriterio) {
@@ -191,6 +206,10 @@ public class SomaColunaDao {
         }catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void somaColunasAlternativas2(int idcriterio, int idobjetivo) {
@@ -219,6 +238,11 @@ public class SomaColunaDao {
         }catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public float retornaSoma(int id) {
@@ -233,6 +257,11 @@ public class SomaColunaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return 0;
     }
 
@@ -248,6 +277,11 @@ public class SomaColunaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return 0;
     }
 
@@ -263,6 +297,11 @@ public class SomaColunaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return 0;
     }
 

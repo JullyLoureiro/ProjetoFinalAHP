@@ -63,6 +63,10 @@ public class ObjetivoDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return objetivoBean;
     }
 
@@ -83,6 +87,10 @@ public class ObjetivoDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return objetivoBean;
     }
 
@@ -183,6 +191,10 @@ public class ObjetivoDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -202,6 +214,10 @@ public class ObjetivoDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return objetivoBean;
     }
 

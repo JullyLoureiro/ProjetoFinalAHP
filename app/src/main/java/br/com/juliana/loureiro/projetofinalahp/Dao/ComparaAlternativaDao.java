@@ -50,6 +50,9 @@ public class ComparaAlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(cursor!=null) {
+                cursor.close();
+            }
             db.close();
         }
         return false;
@@ -123,7 +126,10 @@ public class ComparaAlternativaDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -154,6 +160,8 @@ public class ComparaAlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        db.close();
     }
 
     public void deletaTemp() {
@@ -181,6 +189,10 @@ public class ComparaAlternativaDao {
             } while (cursor.moveToNext());
         }
 
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -207,7 +219,10 @@ public class ComparaAlternativaDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -232,7 +247,10 @@ public class ComparaAlternativaDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -257,7 +275,10 @@ public class ComparaAlternativaDao {
 
             } while (cursor.moveToNext());
         }
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
 
         return lista;
     }
@@ -281,7 +302,10 @@ public class ComparaAlternativaDao {
             } while (cursor.moveToNext());
         }
 
-
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -354,6 +378,11 @@ public class ComparaAlternativaDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 1;
     }
 
@@ -366,6 +395,8 @@ public class ComparaAlternativaDao {
         }catch (Exception ignored) {
 
         }
+
+        db.close();
     }
 
     public void atualizaIdCriterio(int novoid, int antigoid) {
@@ -375,5 +406,6 @@ public class ComparaAlternativaDao {
         }catch (Exception ignored) {
 
         }
+        db.close();
     }
 }

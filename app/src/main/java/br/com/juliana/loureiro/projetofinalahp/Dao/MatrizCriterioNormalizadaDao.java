@@ -83,6 +83,9 @@ public class MatrizCriterioNormalizadaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(cursor!=null) {
+                cursor.close();
+            }
             db.close();
         }
         return false;
@@ -112,6 +115,9 @@ public class MatrizCriterioNormalizadaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if(cursor!=null) {
+                cursor.close();
+            }
             db.close();
         }
         return false;
@@ -119,9 +125,16 @@ public class MatrizCriterioNormalizadaDao {
 
     public void deleta() {
         db.execSQL("DELETE FROM " + MatrizCriterioNormalizadaBean.TABELA);
+        db.close();
     }
 
     public void deletaAlternativa() {
         db.execSQL("DELETE FROM ALTERNATIVA_NORMALIZADA");
+        db.close();
+    }
+
+    public void deletaSubcriterio() {
+        db.execSQL("DELETE FROM SUBCRITERIO_NORMALIZADA");
+        db.close();
     }
 }

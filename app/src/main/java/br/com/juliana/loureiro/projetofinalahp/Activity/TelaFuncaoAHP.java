@@ -122,11 +122,11 @@ public class TelaFuncaoAHP extends AppCompatActivity {
                     comparaCriterioBean.setIdsubcrit1(listaSubCriterios.get(i).getId());
                     comparaCriterioBean.setIdsubcrit2(listaSubCriterios.get(j).getId());
                     comparaCriterioBean.setIdcriterio(listaCriterios.get(k).getId());
-                    if (i == j) {
+                   // if (i == j) {
                         comparaCriterioBean.setImportancia(1);
-                    } else {
-                        comparaCriterioBean.setImportancia(0);
-                    }
+                    //} else {
+                    //    comparaCriterioBean.setImportancia(0);
+                   // }
 
                     new ComparaSubcriterioDao(this).insereComparacoes(comparaCriterioBean);
                 }

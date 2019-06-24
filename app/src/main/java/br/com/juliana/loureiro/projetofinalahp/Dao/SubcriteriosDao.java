@@ -36,6 +36,11 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return "";
     }
 
@@ -120,6 +125,8 @@ public class SubcriteriosDao {
         } finally {
             db.close();
         }
+
+
         return false;
 
     }
@@ -142,6 +149,11 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return lista;
     }
 
@@ -163,6 +175,12 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return lista;
     }
 
@@ -184,6 +202,11 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return lista;
     }
 
@@ -198,6 +221,8 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        db.close();
     }
 
     public int retornaQtd(){
@@ -207,6 +232,12 @@ public class SubcriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 0;
     }
 }

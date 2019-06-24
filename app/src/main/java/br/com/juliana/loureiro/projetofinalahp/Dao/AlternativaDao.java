@@ -124,6 +124,11 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -144,6 +149,11 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -157,6 +167,7 @@ public class AlternativaDao {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
     }
 
     public String retornaDescricao(int id) {
@@ -171,6 +182,12 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return "";
     }
 
@@ -186,6 +203,11 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return "";
     }
 
@@ -196,6 +218,12 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 0;
     }
 
@@ -206,6 +234,12 @@ public class AlternativaDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 0;
     }
 }

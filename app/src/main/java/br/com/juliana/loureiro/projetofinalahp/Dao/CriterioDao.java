@@ -127,6 +127,11 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -147,6 +152,11 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -167,6 +177,11 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -182,6 +197,11 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return "";
     }
 
@@ -195,6 +215,7 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
     }
 
     public int retornaQtdCriterios(){
@@ -204,6 +225,7 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
         return 0;
     }
 
@@ -214,6 +236,7 @@ public class CriterioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        db.close();
         return 0;
     }
 }

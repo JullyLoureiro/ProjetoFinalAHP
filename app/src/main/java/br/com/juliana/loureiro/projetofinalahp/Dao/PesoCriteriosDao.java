@@ -93,7 +93,7 @@ public class PesoCriteriosDao {
                 try {
                     int idcrit = cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1));
                     Cursor cursor2 = db.rawQuery("SELECT * FROM " + PesoSubcriterioBean.TABELA +
-                            " WHERE IDSUBCRIT = " + idcrit, null);
+                            " WHERE IDSUBCRITERIO = " + idcrit, null);
 
                     if (cursor2.getCount() > 0) {
                         ContentValues valores;
@@ -108,7 +108,7 @@ public class PesoCriteriosDao {
                     } else {
                         ContentValues valores;
 
-                        db = banco.getWritableDatabase();
+                        SQLiteDatabase db = banco.getWritableDatabase();
                         valores = new ContentValues();
                         valores.put(PesoSubcriterioBean.IDSUBCRIT, cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
                         valores.put(PesoSubcriterioBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
@@ -122,12 +122,18 @@ public class PesoCriteriosDao {
                     pesoCriteriosBean.setPeso(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
                     pesos.add(pesoCriteriosBean);
 
+                }catch (SQLException e){
+                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             } while (cursor.moveToNext());
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return pesos;
     }
 
@@ -161,6 +167,10 @@ public class PesoCriteriosDao {
 
             } while (cursor.moveToNext());
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return pesos;
     }
 
@@ -176,6 +186,10 @@ public class PesoCriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return 0;
     }
 
@@ -191,6 +205,10 @@ public class PesoCriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return 0;
     }
 
@@ -212,6 +230,10 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void atualizaYMaxSubcriterio(int id, float ymax) {
@@ -232,6 +254,10 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
 
@@ -253,6 +279,10 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
     }
 
     public void atualizaTotalDivisao(int id, float totaldiv) {
@@ -265,6 +295,8 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+
+        db.close();
     }
 
     public void atualizaTotalDivisaoSub(int id, float totaldiv) {
@@ -277,6 +309,7 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        db.close();
     }
 
 
@@ -290,6 +323,7 @@ public class PesoCriteriosDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        db.close();
     }
 
     public void atualizaTotalDivisaoAlternativa(int id, float totaldiv) {
@@ -302,6 +336,7 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        db.close();
     }
 
     public List<PesoCriteriosBean> carregaYMax() {
@@ -322,6 +357,10 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -343,6 +382,10 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -364,6 +407,12 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return lista;
     }
 
@@ -377,6 +426,31 @@ public class PesoCriteriosDao {
         } catch (Exception ignored) {
 
         }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
+        return 0;
+    }
+
+    public float calculaMediaSub() {
+        try {
+            cursor = db.rawQuery("SELECT AVG(TOTALDIVISAO) AS MEDIA FROM PESO_SUBCRITERIOS", null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getFloat(cursor.getColumnIndex("MEDIA"));
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
         return 0;
     }
 
@@ -397,9 +471,14 @@ public class PesoCriteriosDao {
                 return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
 
             }
+            if(cursor!=null) {
+                cursor.close();
+            }
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return "";
     }
 
@@ -412,6 +491,10 @@ public class PesoCriteriosDao {
                 return cursor.getString(cursor.getColumnIndex(AlternativaBean.DESCRICAO));
 
             }
+            if(cursor!=null) {
+                cursor.close();
+            }
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -438,6 +521,10 @@ public class PesoCriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
@@ -461,6 +548,10 @@ public class PesoCriteriosDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
         return lista;
     }
 
