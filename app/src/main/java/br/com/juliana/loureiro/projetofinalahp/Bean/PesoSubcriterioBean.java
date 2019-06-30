@@ -7,6 +7,7 @@ public class PesoSubcriterioBean {
     public static String SOMA= "PESO";
     public static String YMAX= "YMAX";
     public static String TOTALDIVISAO= "TOTAL";
+    public static String PESOMULTIPLICADO= "PESOMULTIPLICADO";
     public static String TOTAL= "TOTAL";
     public static String TABELA = "PESO_SUBCRITERIOS";
 
@@ -18,6 +19,15 @@ public class PesoSubcriterioBean {
     private float totaldivisao;
     private double perc;
     private Integer idsubcrit;
+    private float pesomultiplicado;
+
+    public float getPesomultiplicado() {
+        return pesomultiplicado;
+    }
+
+    public void setPesomultiplicado(float pesomultiplicado) {
+        this.pesomultiplicado = pesomultiplicado;
+    }
 
     public int getId() {
         return id;

@@ -194,7 +194,9 @@ public class CriteriosList extends BaseAdapter {
                                         titulo.setText(edtsub2.getText());
                                         criterios.get(position).setDescricao(edtsub2.getText().toString());
                                         new CriterioDao(activity).atualizaCriterio(criterios.get(position));
-                                        Utils.hideKeyboard(activity, edtsub2);
+
+                                        List<CriterioBean> lista = new CriterioDao(activity).carregaCriterios();
+                                        TwoFragment.listCriterios.setAdapter(new CriteriosList(lista, activity));
                                     }
                                 });
 

@@ -258,8 +258,8 @@ public class Utils {
             float pesocrit = new PesoCriteriosDao(activity).carregaPesoCrit(listaYMax.get(0).getIdcrit());
             for (int i = 0; i < listaYMax.size(); i++) {
                 float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getPeso();
-                float peso = pesocrit * div;
-                new PesoCriteriosDao(activity).atualizaTotalDivisaoSub(listaYMax.get(i).getIdcrit(), peso);
+                float peso = pesocrit * listaYMax.get(i).getPeso();
+                new PesoCriteriosDao(activity).atualizaTotalDivisaoSub(listaYMax.get(i).getIdcrit(), div, peso);
             }
         }catch (Exception ignored) {
 
@@ -322,6 +322,7 @@ public class Utils {
         new PesoCriteriosDao(activity).deletaSubcriterio();
         new SomaColunaDao(activity).deleta();
         new SomaColunaDao(activity).deletaAlternativa();
+        new SomaColunaDao(activity).deletaSubcriterio();
         new SubcriteriosDao(activity).deletaTemp();
     }
 }

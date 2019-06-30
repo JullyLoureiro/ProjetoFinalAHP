@@ -85,6 +85,7 @@ public class ComparaAlternativaDao {
                 valores.put(ComparaAlternativaBean.IDALTERNATIVA2, comparaAlternativaBean.getIdalternativa2());
                 valores.put(ComparaAlternativaBean.IMPORTANCIA, comparaAlternativaBean.getImportancia());
                 valores.put(ComparaAlternativaBean.IDCRITERIO, comparaAlternativaBean.getIdcriterio());
+                valores.put(ComparaAlternativaBean.IDSUBCRITERIO, comparaAlternativaBean.getIdsubcriterio());
                 valores.put("IDOBJETIVO", id);
                 db.insert(ComparaAlternativaBean.TABELA, null, valores);
                 return true;
@@ -313,6 +314,7 @@ public class ComparaAlternativaDao {
                 comparaCriterioBean.setIdalternativa1(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
                 comparaCriterioBean.setIdalternativa2(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA2)));
                 comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                comparaCriterioBean.setIdsubcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
                 comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
                 comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
                 lista.add(comparaCriterioBean);
@@ -327,19 +329,32 @@ public class ComparaAlternativaDao {
         return lista;
     }
 
-    public int retornaImportancia(int id1, int id2, int idcrit) {
+    public int retornaImportancia(ComparaAlternativaBean comparaAlternativaBean) {
         try {
-            cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
-                    + " = " + id1 + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + id2 + " AND " + ComparaAlternativaBean.IDCRITERIO +
-                    " = " + idcrit, null);
+            if(comparaAlternativaBean.getIdsubcriterio()==0) {
+                cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
+                        + " = " + comparaAlternativaBean.getIdalternativa1() + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + comparaAlternativaBean.getIdalternativa2() + " AND " + ComparaAlternativaBean.IDCRITERIO +
+                        " = " + comparaAlternativaBean.getIdcriterio(), null);
 
+            } else {
+                cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
+                        + " = " + comparaAlternativaBean.getIdalternativa1() + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + comparaAlternativaBean.getIdalternativa2() + " AND " + ComparaAlternativaBean.IDSUBCRITERIO +
+                        " = " + comparaAlternativaBean.getIdsubcriterio(), null);
+            }
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 double importancia = cursor.getDouble(cursor.getColumnIndex("IMPORTANCIA"));
                 if (importancia < 1) {
-                    cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
-                            + " = " + id2 + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + id1 + " AND " + ComparaAlternativaBean.IDCRITERIO +
-                            " = " + idcrit, null);
+                    if(comparaAlternativaBean.getIdsubcriterio()==0) {
+                        cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
+                                + " = " + comparaAlternativaBean.getIdalternativa2() + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + comparaAlternativaBean.getIdalternativa1() + " AND " + ComparaAlternativaBean.IDCRITERIO +
+                                " = " + comparaAlternativaBean.getIdcriterio(), null);
+                    } else {
+                        cursor = db.rawQuery("SELECT IMPORTANCIA FROM " + ComparaAlternativaBean.TABELA_temp + " WHERE " + ComparaAlternativaBean.IDALTERNATIVA1
+                                + " = " + comparaAlternativaBean.getIdalternativa2() + " AND " + ComparaAlternativaBean.IDALTERNATIVA2 + " = " + comparaAlternativaBean.getIdalternativa1() + " AND " + ComparaAlternativaBean.IDCRITERIO +
+                                " = " + comparaAlternativaBean.getIdsubcriterio(), null);
+                    }
+
                     if (cursor.getCount() > 0) {
                         cursor.moveToFirst();
                         double importancia2 = cursor.getDouble(cursor.getColumnIndex("IMPORTANCIA"));

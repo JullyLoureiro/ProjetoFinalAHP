@@ -199,13 +199,19 @@ public class PesoCriteriosDao {
         return 0;
     }
 
-    public float retornaPeso(int id) {
+    public float retornaPeso(PesoCriteriosBean peso) {
         try {
-            cursor = db.rawQuery("SELECT " + PesoCriteriosBean.SOMA + " FROM " + PesoCriteriosBean.TABELA +
-                    " WHERE " + PesoCriteriosBean.IDCRIT + " = " + id, null);
+            if(peso.getIdsubcrit()==0) {
+                cursor = db.rawQuery("SELECT " + PesoCriteriosBean.SOMA + " FROM " + PesoCriteriosBean.TABELA +
+                        " WHERE " + PesoCriteriosBean.IDCRIT + " = " + peso.getIdcrit(), null);
+            } else {
+                cursor = db.rawQuery("SELECT " + PesoSubcriterioBean.PESOMULTIPLICADO + " AS PESO FROM " + PesoSubcriterioBean.TABELA +
+                        " WHERE IDSUBCRITERIO = " + peso.getIdsubcrit(), null);
+            }
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                return cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA));
+                float pesovl = cursor.getFloat(cursor.getColumnIndex(PesoCriteriosBean.SOMA));
+                return pesovl;
 
             }
         } catch (Exception e) {
@@ -305,10 +311,11 @@ public class PesoCriteriosDao {
         db.close();
     }
 
-    public void atualizaTotalDivisaoSub(int id, float totaldiv) {
+    public void atualizaTotalDivisaoSub(int id, float totaldiv, float peso) {
         try {
             ContentValues content = new ContentValues();
             content.put(PesoSubcriterioBean.TOTALDIVISAO, totaldiv);
+            content.put(PesoSubcriterioBean.PESOMULTIPLICADO, peso);
             String where = "IDSUBCRITERIO = ?";
             String argumentos[] = {String.valueOf(id)};
             db.update(PesoSubcriterioBean.TABELA, content, where, argumentos);
@@ -462,10 +469,10 @@ public class PesoCriteriosDao {
 
     public float carregaPesoCrit(int idcrit) {
         try {
-            cursor = db.rawQuery("SELECT TOTALDIVISAO FROM PESO_SUBCRITERIOS WHERE IDCRIT = " + idcrit, null);
+            cursor = db.rawQuery("SELECT PESO FROM PESO_CRITERIOS WHERE IDCRIT = " + idcrit, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                return cursor.getFloat(cursor.getColumnIndex("TOTALDIVISAO"));
+                return cursor.getFloat(cursor.getColumnIndex("PESO"));
             }
         } catch (Exception ignored) {
 

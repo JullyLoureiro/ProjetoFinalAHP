@@ -130,8 +130,8 @@ public class AlternativasList extends BaseAdapter {
                                         alternativaBeans.get(position).setDescricao(edtsub2.getText().toString());
                                         titulo.setVisibility(View.VISIBLE);
                                         new AlternativaDao(activity).atualizaAlternativa(alternativaBeans.get(position));
-
-                                        Utils.hideKeyboard(activity, edtsub2);
+                                        List<AlternativaBean> lista = new AlternativaDao(activity).carregaAlternativas();
+                                        ThreeFragment.listAlternativas.setAdapter(new AlternativasList(lista, activity));
                                     }
                                 });
 

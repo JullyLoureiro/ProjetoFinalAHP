@@ -92,6 +92,10 @@ public class SubcriterioList extends BaseAdapter {
                         titulo.setText(edtsub.getText());
                         criterios.get(position).setDescricao(edtsub.getText().toString());
                         new SubcriteriosDao(activity).atualizaCriterio(criterios.get(position));
+                        final List<SubcriterioBean> lista = new SubcriteriosDao(activity).carregaCriterios(criterios.get(position).getId());
+                        CriteriosList.listasubcriterios.setAdapter(new SubcriterioList(lista, activity));
+
+
                         dialog.dismiss();
                     }
                 });

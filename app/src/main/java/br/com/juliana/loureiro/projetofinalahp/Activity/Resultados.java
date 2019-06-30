@@ -99,7 +99,7 @@ public class Resultados extends AppCompatActivity {
     private LinearLayout lnr;
     private TextView titulo, titulo2, titulo3;
     private CardView cardlista, cardbarra, cardpizza;
-
+    private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +122,39 @@ public class Resultados extends AppCompatActivity {
 
                     calculaCriterios();
                 } else {
+                    try {
+                        ObjetivoBean o = new ObjetivoDao(this).carregaObjetivosTemp();
+                        titulo.setText(o.getTitulo().toUpperCase());
+                        titulo2.setText(o.getTitulo().toUpperCase());
+                        titulo3.setText(o.getTitulo().toUpperCase());
+                    }catch (Exception ignored) {
+                    }
+
+
                     calculaAlternativasTemp();
                 }
             } else {
+                try {
+                    ObjetivoBean o = new ObjetivoDao(this).carregaObjetivosTemp();
+                    titulo.setText(o.getTitulo().toUpperCase());
+                    titulo2.setText(o.getTitulo().toUpperCase());
+                    titulo3.setText(o.getTitulo().toUpperCase());
+                }catch (Exception ignored) {
+                }
+
+
                 calculaAlternativasTemp();
             }
         } else {
+            try {
+                ObjetivoBean o = new ObjetivoDao(this).carregaObjetivosTemp();
+                titulo.setText(o.getTitulo().toUpperCase());
+                titulo2.setText(o.getTitulo().toUpperCase());
+                titulo3.setText(o.getTitulo().toUpperCase());
+            }catch (Exception ignored) {
+            }
+
+
             calculaAlternativasTemp();
         }
 
@@ -179,7 +206,7 @@ public class Resultados extends AppCompatActivity {
         List<PesoCriteriosBean> pesosAlternativas = new PesoCriteriosDao(this).somaLinhasAlternativa(qtdAlt);
 
         for (int i = 0; i < pesosAlternativas.size(); i++) {
-            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i).getIdcrit());
+            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i));
 
 
             double multi = pesocriterio * pesosAlternativas.get(i).getSoma();
@@ -231,7 +258,7 @@ public class Resultados extends AppCompatActivity {
         List<PesoCriteriosBean> pesosAlternativas = new PesoCriteriosDao(this).somaLinhasAlternativa(qtdAlt);
 
         for (int i = 0; i < pesosAlternativas.size(); i++) {
-            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i).getIdcrit());
+            double pesocriterio = new PesoCriteriosDao(this).retornaPeso(pesosAlternativas.get(i));
 
 
             double multi = pesocriterio * pesosAlternativas.get(i).getSoma();
@@ -270,7 +297,6 @@ public class Resultados extends AppCompatActivity {
         chart.setDrawGridBackground(false);
         chart.setFitBars(false);
         chart.setHighlightFullBarEnabled(false);
-
         //setContentView(chart);
 
         BarData data = new BarData(dataset);
@@ -424,7 +450,7 @@ public class Resultados extends AppCompatActivity {
     }
 
     private void geraGraphPie() {
-        PieChart pieChart = findViewById(R.id.piechart);
+        pieChart = findViewById(R.id.piechart);
         pieChart.clear();
         pieChart.clearAnimation();
         pieChart.clearAllViewportJobs();
@@ -436,9 +462,9 @@ public class Resultados extends AppCompatActivity {
         List<PieEntry> lista2 = new ArrayList<>();
 
 
-        for(int i =0; i< resultado.size(); i++) {
+        for (int i = 0; i < resultado.size(); i++) {
             BigDecimal v = new BigDecimal(resultado.get(i).getPerc()).setScale(2, BigDecimal.ROUND_HALF_UP);
-            lista2.add(new PieEntry((float)v.doubleValue(),resultado.get(i).getAlternativa()));
+            lista2.add(new PieEntry((float) v.doubleValue(), resultado.get(i).getAlternativa()));
         }
 
 
@@ -454,11 +480,11 @@ public class Resultados extends AppCompatActivity {
         pieChart.setData(data);
 
         int[] VORDIPLOM_COLORS = {
-                Color.rgb(205,58,87),
-                Color.rgb(39,186,209),
-                Color.rgb(239,202,54),
-                Color.rgb(134,19,192),
-                Color.rgb(55,168,96)
+                Color.rgb(205, 58, 87),
+                Color.rgb(39, 186, 209),
+                Color.rgb(239, 202, 54),
+                Color.rgb(134, 19, 192),
+                Color.rgb(55, 168, 96)
         };
 
         dataSet.setColors(VORDIPLOM_COLORS);
@@ -475,6 +501,7 @@ public class Resultados extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(25);
 
         pieChart.invalidate();
+
 
     }
 
@@ -608,18 +635,18 @@ public class Resultados extends AppCompatActivity {
     }
 
     public void mudarVisualizacao(MenuItem item) {
-        if(cardlista.getVisibility()==View.VISIBLE) {
+        if (cardlista.getVisibility() == View.VISIBLE) {
             item.setIcon(ActivityCompat.getDrawable(this, R.drawable.pie));
             cardlista.setVisibility(View.GONE);
             cardbarra.setVisibility(View.VISIBLE);
             cardpizza.setVisibility(View.GONE);
             carregaGrafico();
-        } else if(cardbarra.getVisibility()==View.VISIBLE) {
+        } else if (cardbarra.getVisibility() == View.VISIBLE) {
             item.setIcon(ActivityCompat.getDrawable(this, R.drawable.list));
             cardlista.setVisibility(View.GONE);
             cardbarra.setVisibility(View.GONE);
             cardpizza.setVisibility(View.VISIBLE);
-           geraGraphPie();
+            geraGraphPie();
         } else {
             item.setIcon(ActivityCompat.getDrawable(this, R.drawable.graph));
             cardlista.setVisibility(View.VISIBLE);
@@ -653,6 +680,8 @@ public class Resultados extends AppCompatActivity {
     }
 
     public void gerarExcel() {
+        //pieChart.saveToPath(Environment.getExternalStorageDirectory() + "/appAHP/", "grafico");
+
         String csvFile = "resultados_" + idobjetivo + ".xls";
 
         File directory = new File(Environment.getExternalStorageDirectory() + "/appAHP/");

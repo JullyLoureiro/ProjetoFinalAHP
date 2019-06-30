@@ -203,6 +203,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IDSUBCRITERIO INTEGER, " +
                 "IDALTERNATIVA INTEGER, " +
                 "YMAX FLOAT, " +
+                "PESOMULTIPLICADO FLOAT, " +
                 "TOTAL FLOAT, " +
                 "PESO FLOAT " +
                 " )";
