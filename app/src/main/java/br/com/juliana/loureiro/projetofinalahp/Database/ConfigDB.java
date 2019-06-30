@@ -190,6 +190,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDALTERNATIVA INTEGER, " +
                 "IDCRITERIO INTEGER, " +
+                "IDSUBCRITERIO INTEGER, " +
                 "YMAX FLOAT, " +
                 "TOTAL FLOAT, " +
                 "PESO FLOAT " +
@@ -221,6 +222,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "IDALTERNATIVA1 INTEGER, " +
                 "IDALTERNATIVA2 INTEGER, " +
                 "IDCRITERIO INTEGER, " +
+                "IDSUBCRITERIO INTEGER, " +
                 "IMPORTANCIA FLOAT " +
                 " )";
         db.execSQL(CREATE_MATRIZALTERNARTIVA_NORMALIZADA);

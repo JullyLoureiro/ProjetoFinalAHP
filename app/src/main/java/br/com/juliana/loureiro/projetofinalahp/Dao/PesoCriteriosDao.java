@@ -144,7 +144,7 @@ public class PesoCriteriosDao {
     public List<PesoCriteriosBean> somaLinhasAlternativa(float qtdcriterios) {
         List<PesoCriteriosBean> pesos = new ArrayList<>();
 
-        cursor = db.rawQuery("SELECT IDALTERNATIVA1, IDCRITERIO, SUM(IMPORTANCIA) AS SOMA FROM ALTERNATIVA_NORMALIZADA  GROUP BY IDALTERNATIVA1, IDCRITERIO", null);
+        cursor = db.rawQuery("SELECT IDALTERNATIVA1, IDSUBCRITERIO,  IDCRITERIO, SUM(IMPORTANCIA) AS SOMA FROM ALTERNATIVA_NORMALIZADA  GROUP BY IDALTERNATIVA1, IDSUBCRITERIO, IDCRITERIO", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -155,12 +155,14 @@ public class PesoCriteriosDao {
                     valores = new ContentValues();
                     valores.put(PesoCriteriosBean.IDALTERNATIVA, cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
                     valores.put("IDCRITERIO", cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                    valores.put("IDSUBCRITERIO", cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
                     valores.put(PesoCriteriosBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
 
                     db.insert(PesoCriteriosBean.PESO_ALTERNATIVAS, null, valores);
 
                     PesoCriteriosBean pesoCriteriosBean = new PesoCriteriosBean();
                     pesoCriteriosBean.setIdcrit(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                    pesoCriteriosBean.setIdsubcrit(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
                     pesoCriteriosBean.setIdalternativa(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDALTERNATIVA1)));
                     pesoCriteriosBean.setSoma(cursor.getFloat(cursor.getColumnIndex("SOMA")) / qtdcriterios);
                     pesos.add(pesoCriteriosBean);
@@ -445,6 +447,25 @@ public class PesoCriteriosDao {
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 return cursor.getFloat(cursor.getColumnIndex("MEDIA"));
+            }
+        } catch (Exception ignored) {
+
+        }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
+        return 0;
+    }
+
+    public float carregaPesoCrit(int idcrit) {
+        try {
+            cursor = db.rawQuery("SELECT TOTALDIVISAO FROM PESO_SUBCRITERIOS WHERE IDCRIT = " + idcrit, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getFloat(cursor.getColumnIndex("TOTALDIVISAO"));
             }
         } catch (Exception ignored) {
 

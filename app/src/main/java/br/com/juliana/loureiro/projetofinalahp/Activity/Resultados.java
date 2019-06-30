@@ -156,12 +156,14 @@ public class Resultados extends AppCompatActivity {
         List<ComparaAlternativaBean> listaComparacao = new ComparaAlternativaDao(this).carregaComparacoes3(idobjetivo);
 
         for (int i = 0; i < listaComparacao.size(); i++) {
-            float soma = new SomaColunaDao(this).retornaSomaAlternativa(listaComparacao.get(i).getIdalternativa2(), listaComparacao.get(i).getIdcriterio());
+            float soma = new SomaColunaDao(this).retornaSomaAlternativa(listaComparacao.get(i));
 
             MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
             matrizCriterioNormalizadaBean.setIdalternativa1(listaComparacao.get(i).getIdalternativa1());
             matrizCriterioNormalizadaBean.setIdalternativa2(listaComparacao.get(i).getIdalternativa2());
             matrizCriterioNormalizadaBean.setIdcriterio(listaComparacao.get(i).getIdcriterio());
+            matrizCriterioNormalizadaBean.setIdsubcriterio(listaComparacao.get(i).getIdsubcriterio());
+            matrizCriterioNormalizadaBean.setIdsubcriterio(listaComparacao.get(i).getIdsubcriterio());
 
             double imp = listaComparacao.get(i).getImportancia();
 
@@ -199,20 +201,21 @@ public class Resultados extends AppCompatActivity {
         titulo3.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
 
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
-        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriterios();
+        List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriteriosComSub();
         for (int i = 0; i < listaCriterios.size(); i++) {
-            new SomaColunaDao(this).somaColunasAlternativas(listaCriterios.get(i).getId());
+            new SomaColunaDao(this).somaColunasAlternativas(listaCriterios.get(i));
         }
 
         List<ComparaAlternativaBean> listaComparacao = new ComparaAlternativaDao(this).carregaComparacoes2();
 
         for (int i = 0; i < listaComparacao.size(); i++) {
-            float soma = new SomaColunaDao(this).retornaSomaAlternativa(listaComparacao.get(i).getIdalternativa2(), listaComparacao.get(i).getIdcriterio());
+            float soma = new SomaColunaDao(this).retornaSomaAlternativa(listaComparacao.get(i));
 
             MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizCriterioNormalizadaBean();
             matrizCriterioNormalizadaBean.setIdalternativa1(listaComparacao.get(i).getIdalternativa1());
             matrizCriterioNormalizadaBean.setIdalternativa2(listaComparacao.get(i).getIdalternativa2());
             matrizCriterioNormalizadaBean.setIdcriterio(listaComparacao.get(i).getIdcriterio());
+            matrizCriterioNormalizadaBean.setIdsubcriterio(listaComparacao.get(i).getIdsubcriterio());
 
             double imp = listaComparacao.get(i).getImportancia();
 

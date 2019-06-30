@@ -94,11 +94,17 @@ public class MatrizCriterioNormalizadaDao {
 
     public boolean insereMatrizNormalizadaAlternativa(MatrizCriterioNormalizadaBean matrizCriterioNormalizadaBean) {
         try {
-
-            cursor = db.rawQuery("SELECT * FROM ALTERNATIVA_NORMALIZADA WHERE "
-                    + MatrizCriterioNormalizadaBean.IDALTERNATIVA1 + " = " + matrizCriterioNormalizadaBean.getIdcrit1() +
-                    " AND " + MatrizCriterioNormalizadaBean.IDALTERNATIVA2 + " = " + matrizCriterioNormalizadaBean.getIdcrit2()
-                    + " AND " + MatrizCriterioNormalizadaBean.IDCRITERIO + " = " + matrizCriterioNormalizadaBean.getIdcriterio(), null);
+            if(matrizCriterioNormalizadaBean.getIdsubcriterio()==0) {
+                cursor = db.rawQuery("SELECT * FROM ALTERNATIVA_NORMALIZADA WHERE "
+                        + MatrizCriterioNormalizadaBean.IDALTERNATIVA1 + " = " + matrizCriterioNormalizadaBean.getIdcrit1() +
+                        " AND " + MatrizCriterioNormalizadaBean.IDALTERNATIVA2 + " = " + matrizCriterioNormalizadaBean.getIdcrit2()
+                        + " AND " + MatrizCriterioNormalizadaBean.IDCRITERIO + " = " + matrizCriterioNormalizadaBean.getIdcriterio(), null);
+            }else{
+                cursor = db.rawQuery("SELECT * FROM ALTERNATIVA_NORMALIZADA WHERE "
+                        + MatrizCriterioNormalizadaBean.IDALTERNATIVA1 + " = " + matrizCriterioNormalizadaBean.getIdcrit1() +
+                        " AND " + MatrizCriterioNormalizadaBean.IDALTERNATIVA2 + " = " + matrizCriterioNormalizadaBean.getIdcrit2()
+                        + " AND " + MatrizCriterioNormalizadaBean.IDSUBCRITERIO + " = " + matrizCriterioNormalizadaBean.getIdsubcriterio(), null);
+            }
 
             if (cursor.getCount() <= 0) {
                 ContentValues valores;
@@ -108,6 +114,7 @@ public class MatrizCriterioNormalizadaDao {
                 valores.put(MatrizCriterioNormalizadaBean.IDALTERNATIVA1, matrizCriterioNormalizadaBean.getIdalternativa1());
                 valores.put(MatrizCriterioNormalizadaBean.IDALTERNATIVA2, matrizCriterioNormalizadaBean.getIdalternativa2());
                 valores.put(MatrizCriterioNormalizadaBean.IDCRITERIO, matrizCriterioNormalizadaBean.getIdcriterio());
+                valores.put(MatrizCriterioNormalizadaBean.IDSUBCRITERIO, matrizCriterioNormalizadaBean.getIdsubcriterio());
                 valores.put(MatrizCriterioNormalizadaBean.IMPORTANCIA, matrizCriterioNormalizadaBean.getImportancia());
                 db.insert("ALTERNATIVA_NORMALIZADA", null, valores);
                 return true;

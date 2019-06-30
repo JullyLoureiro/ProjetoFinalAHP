@@ -12,6 +12,15 @@ public class CriterioBean {
     private int idsubcriterio;
     private String descricao;
     private int idobjetivo;
+    private boolean temsub;
+
+    public boolean isTemsub() {
+        return temsub;
+    }
+
+    public void setTemsub(boolean temsub) {
+        this.temsub = temsub;
+    }
 
     public int getIdsubcriterio() {
         return idsubcriterio;

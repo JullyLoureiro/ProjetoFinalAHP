@@ -163,7 +163,6 @@ public class ComparaAlternativaDao {
                     String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
             db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos);
 
-
             content = new ContentValues();
             if (altimport == 1) {
                 content.put(ComparaAlternativaBean.IMPORTANCIA, (1 / comparaCriterioBean.getImportancia()));
@@ -200,6 +199,7 @@ public class ComparaAlternativaDao {
                 comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
                 comparaCriterioBean.setImportancia(cursor.getDouble(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
                 comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                comparaCriterioBean.setIdsubcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
                 lista.add(comparaCriterioBean);
 
 
@@ -230,6 +230,7 @@ public class ComparaAlternativaDao {
                 comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.ID)));
                 comparaCriterioBean.setImportancia(cursor.getDouble(cursor.getColumnIndex(ComparaAlternativaBean.IMPORTANCIA)));
                 comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDCRITERIO)));
+                comparaCriterioBean.setIdsubcriterio(cursor.getInt(cursor.getColumnIndex(ComparaAlternativaBean.IDSUBCRITERIO)));
                 lista.add(comparaCriterioBean);
 
 

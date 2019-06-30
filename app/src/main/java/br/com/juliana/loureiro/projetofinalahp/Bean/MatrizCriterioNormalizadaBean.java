@@ -8,6 +8,7 @@ public class MatrizCriterioNormalizadaBean {
     public static String IDALTERNATIVA1 = "IDALTERNATIVA1";
     public static String IDALTERNATIVA2 = "IDALTERNATIVA2";
     public static String IDCRITERIO = "IDCRITERIO";
+    public static String IDSUBCRITERIO = "IDSUBCRITERIO";
     public static String TABELA = "CRITERIO_NORMALIZADA";
 
     private int id;
@@ -17,6 +18,15 @@ public class MatrizCriterioNormalizadaBean {
     private Integer idalternativa1;
     private Integer idalternativa2;
     private Integer idcriterio;
+    private Integer idsubcriterio;
+
+    public Integer getIdsubcriterio() {
+        return idsubcriterio;
+    }
+
+    public void setIdsubcriterio(Integer idsubcriterio) {
+        this.idsubcriterio = idsubcriterio;
+    }
 
     public Integer getIdalternativa1() {
         return idalternativa1;

@@ -14,12 +14,22 @@ public class PesoCriteriosBean {
     private int id;
     private int idobjetivo;
     private int idcrit;
+    private int idsubcrit;
     private float peso;
     private float ymax;
     private float totaldivisao;
     private double perc;
     private Integer idalternativa;
     private String alternativa;
+
+
+    public int getIdsubcrit() {
+        return idsubcrit;
+    }
+
+    public void setIdsubcrit(int idsubcrit) {
+        this.idsubcrit = idsubcrit;
+    }
 
     public String getAlternativa() {
         return alternativa;

@@ -73,7 +73,7 @@ public class CriterioDao {
             db.insert(CriterioBean.TABELA, null, valores);
 
             return Utils.returnLastId(db);
-           // return true;
+            // return true;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -99,7 +99,7 @@ public class CriterioDao {
 
     public boolean deletaTemp() {
         try {
-            db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp );
+            db.execSQL("DELETE FROM " + CriterioBean.TABELA_temp);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,7 +128,53 @@ public class CriterioDao {
             e.printStackTrace();
         }
 
-        if(cursor!=null) {
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<CriterioBean> carregaCriteriosComSub() {
+        List<CriterioBean> lista = new ArrayList<>();
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(CriterioBean.ID));
+
+
+                    Cursor c = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA_temp + " WHERE " + SubcriterioBean.IDCRITERIO +
+                            "=" + idcrit, null);
+
+                    CriterioBean criterioBean;
+
+                    if(c.getCount()>0){
+                        c.moveToFirst();
+                        do{
+                            criterioBean = new CriterioBean();
+                            criterioBean.setDescricao(c.getString(c.getColumnIndex(SubcriterioBean.DESCRICAO)));
+                            criterioBean.setId(c.getInt(c.getColumnIndex(SubcriterioBean.ID)));
+                            criterioBean.setTemsub(true);
+                            lista.add(criterioBean);
+                        }while (c.moveToNext());
+                    } else {
+                        criterioBean = new CriterioBean();
+                        criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                        criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
+                        criterioBean.setTemsub(false);
+                        lista.add(criterioBean);
+                    }
+
+
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (cursor != null) {
             cursor.close();
         }
         db.close();
@@ -149,16 +195,16 @@ public class CriterioDao {
                     Cursor c = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA_temp + " WHERE " + SubcriterioBean.IDCRITERIO +
                             "=" + idcrit, null);
 
-                    if(c.getCount()>0) {
+                    if (c.getCount() > 0) {
                         c.moveToFirst();
 
-                        do{
+                        do {
                             CriterioBean criterioBean = new CriterioBean();
                             criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
                             criterioBean.setId(idcrit);
                             criterioBean.setIdsubcriterio(c.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
                             lista.add(criterioBean);
-                        }while (c.moveToNext());
+                        } while (c.moveToNext());
                     } else {
                         CriterioBean criterioBean = new CriterioBean();
                         criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
@@ -174,7 +220,7 @@ public class CriterioDao {
             e.printStackTrace();
         }
 
-        if(cursor!=null) {
+        if (cursor != null) {
             cursor.close();
         }
         db.close();
@@ -199,7 +245,7 @@ public class CriterioDao {
             e.printStackTrace();
         }
 
-        if(cursor!=null) {
+        if (cursor != null) {
             cursor.close();
         }
         db.close();
@@ -224,7 +270,7 @@ public class CriterioDao {
             e.printStackTrace();
         }
 
-        if(cursor!=null) {
+        if (cursor != null) {
             cursor.close();
         }
         db.close();
@@ -244,7 +290,7 @@ public class CriterioDao {
             e.printStackTrace();
         }
 
-        if(cursor!=null) {
+        if (cursor != null) {
             cursor.close();
         }
         db.close();
@@ -264,10 +310,10 @@ public class CriterioDao {
         db.close();
     }
 
-    public int retornaQtdCriterios(){
+    public int retornaQtdCriterios() {
         try {
             cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA_temp, null);
-           return cursor.getCount();
+            return cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -275,9 +321,9 @@ public class CriterioDao {
         return 0;
     }
 
-    public int retornaQtdCriterios2(int idobjetivo){
+    public int retornaQtdCriterios2(int idobjetivo) {
         try {
-            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA +  " WHERE IDOBJETIVO = " + idobjetivo, null);
+            cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + idobjetivo, null);
             return cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.SomaColunaBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
@@ -179,11 +180,16 @@ public class SomaColunaDao {
         db.close();
     }
 
-    public void somaColunasAlternativas(int idcriterio) {
+    public void somaColunasAlternativas(CriterioBean criterio) {
 
         try {
-            cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP " +
-                    "WHERE IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
+            if(criterio.isTemsub()) {
+                cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP " +
+                        "WHERE IDSUBCRITERIO = " + criterio.getId() + " GROUP BY IDALTERNATIVA2 ", null);
+            } else {
+                cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVATEMP " +
+                        "WHERE IDCRITERIO = " + criterio.getId() + " GROUP BY IDALTERNATIVA2 ", null);
+            }
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -193,7 +199,7 @@ public class SomaColunaDao {
                         db = banco.getWritableDatabase();
                         valores = new ContentValues();
                         valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
-                        valores.put("IDCRIT", idcriterio);
+                        valores.put("IDCRIT", criterio.getId());
                         valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
                         db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
@@ -285,10 +291,16 @@ public class SomaColunaDao {
         return 0;
     }
 
-    public float retornaSomaAlternativa(int id, int idcrit) {
+    public float retornaSomaAlternativa(ComparaAlternativaBean compalt) {
         try {
-            cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
-                    " WHERE IDALT = " + id + " AND IDCRIT = " + idcrit, null);
+            if(compalt.getIdsubcriterio()==0) {
+                cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
+                        " WHERE IDALT = " + compalt.getIdalternativa2() + " AND IDCRIT = " + compalt.getIdcriterio(), null);
+            } else {
+                cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
+                        " WHERE IDALT = " + compalt.getIdalternativa2() + " AND IDCRIT = " + compalt.getIdsubcriterio(), null);
+            }
+
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 return cursor.getFloat(cursor.getColumnIndex(SomaColunaBean.SOMA));
