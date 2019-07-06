@@ -330,9 +330,16 @@ public class PesoCriteriosDao {
         try {
             ContentValues content = new ContentValues();
             content.put(PesoCriteriosBean.TOTAL, pesoCriteriosBean.getTotaldivisao());
-            String where = "IDCRITERIO = ? AND IDALTERNATIVA = ?";
-            String argumentos[] = {String.valueOf(pesoCriteriosBean.getIdcrit()), String.valueOf(pesoCriteriosBean.getIdalternativa())};
-            db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
+            if(pesoCriteriosBean.getIdsubcrit()==0) {
+                String where = "IDCRITERIO = ? AND IDALTERNATIVA = ?";
+                String argumentos[] = {String.valueOf(pesoCriteriosBean.getIdcrit()), String.valueOf(pesoCriteriosBean.getIdalternativa())};
+                db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
+            } else {
+                String where = "IDCRITERIO = ? AND IDALTERNATIVA = ? AND IDSUBCRITERIO = ?";
+                String argumentos[] = {String.valueOf(pesoCriteriosBean.getIdcrit()), String.valueOf(pesoCriteriosBean.getIdalternativa()), String.valueOf(pesoCriteriosBean.getIdsubcrit())};
+                db.update(PesoCriteriosBean.PESO_ALTERNATIVAS, content, where, argumentos);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

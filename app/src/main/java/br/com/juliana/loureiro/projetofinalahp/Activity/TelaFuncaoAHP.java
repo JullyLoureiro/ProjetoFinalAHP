@@ -178,12 +178,12 @@ public class TelaFuncaoAHP extends AppCompatActivity {
             return false;
         }
 
-        if(new CriterioDao(this).carregaCriterios().isEmpty()){
+        if(new CriterioDao(this).carregaCriterios().size()<2){
             Toast.makeText(this, "Inclua critérios!", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if(new AlternativaDao(this).carregaAlternativas().isEmpty()){
+        if(new AlternativaDao(this).carregaAlternativas().size()<2){
             Toast.makeText(this, "Inclua suas alternativas!", Toast.LENGTH_LONG).show();
             return false;
         }

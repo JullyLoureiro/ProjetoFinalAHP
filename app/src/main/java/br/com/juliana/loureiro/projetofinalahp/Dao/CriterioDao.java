@@ -231,14 +231,37 @@ public class CriterioDao {
         List<CriterioBean> lista = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT * FROM " + CriterioBean.TABELA + " WHERE IDOBJETIVO = " + idobjetivo, null);
-            if (cursor.getCount() > 0) {
+            {
                 cursor.moveToFirst();
                 do {
-                    CriterioBean criterioBean = new CriterioBean();
-                    criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
-                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(CriterioBean.ID)));
 
-                    lista.add(criterioBean);
+                    int idcrit = cursor.getInt(cursor.getColumnIndex(CriterioBean.ID));
+
+
+                    Cursor c = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA + " WHERE " + SubcriterioBean.IDCRITERIO +
+                            "=" + idcrit, null);
+
+                    if (c.getCount() > 0) {
+                        c.moveToFirst();
+
+                        do {
+                            CriterioBean criterioBean = new CriterioBean();
+                            criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                            criterioBean.setId(idcrit);
+                            criterioBean.setTemsub(true);
+                            criterioBean.setIdsubcriterio(c.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
+                            lista.add(criterioBean);
+                        } while (c.moveToNext());
+                    } else {
+                        CriterioBean criterioBean = new CriterioBean();
+                        criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(CriterioBean.DESCRICAO)));
+                        criterioBean.setId(idcrit);
+                        criterioBean.setTemsub(false);
+                        criterioBean.setIdsubcriterio(0);
+                        lista.add(criterioBean);
+                    }
+
+
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {

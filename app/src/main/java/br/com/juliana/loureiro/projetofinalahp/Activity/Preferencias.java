@@ -1380,7 +1380,7 @@ public class Preferencias extends AppCompatActivity {
                 } else {
                     dialog.dismiss();
 
-                    rltpreferencia2.setVisibility(View.VISIBLE);
+                    lnrcontinuar.setVisibility(View.VISIBLE);
 
                     rltpreferencia.setVisibility(View.GONE);
                     rltpreferencia3.setVisibility(View.GONE);
@@ -1406,5 +1406,6 @@ public class Preferencias extends AppCompatActivity {
     public void comecar(View v ) {
         rltpreferencia2.setVisibility(View.VISIBLE);
         rltpreferencia3.setVisibility(View.GONE);
+        lnrcontinuar.setVisibility(View.GONE);
     }
 }

@@ -167,7 +167,7 @@ public class SubcriteriosDao {
                     SubcriterioBean criterioBean = new SubcriterioBean();
                     criterioBean.setDescricao(cursor.getString(cursor.getColumnIndex(SubcriterioBean.DESCRICAO)));
                     criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.ID)));
-                    criterioBean.setId(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
+                    criterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(SubcriterioBean.IDCRITERIO)));
 
                     lista.add(criterioBean);
                 } while (cursor.moveToNext());
@@ -239,5 +239,15 @@ public class SubcriteriosDao {
         db.close();
 
         return 0;
+    }
+
+    public void atualizaIdCriterio(int novoid, int antigoid) {
+        try{
+            db.execSQL("UPDATE " + SubcriterioBean.TABELA_temp + " SET " + SubcriterioBean.IDCRITERIO + " = "+ novoid +
+                    " WHERE IDCRITERIO = " + antigoid);
+        }catch (Exception ignored) {
+
+        }
+        db.close();
     }
 }

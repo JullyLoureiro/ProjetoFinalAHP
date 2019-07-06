@@ -161,6 +161,7 @@ public class ConfigDB extends SQLiteOpenHelper {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "IDALT INTEGER, " +
                 "IDCRIT INTEGER, " +
+                "IDSUBCRIT INTEGER, " +
                 "SOMA FLOAT " +
                 " )";
 

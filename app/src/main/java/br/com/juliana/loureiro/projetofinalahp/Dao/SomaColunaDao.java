@@ -199,7 +199,12 @@ public class SomaColunaDao {
                         db = banco.getWritableDatabase();
                         valores = new ContentValues();
                         valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
-                        valores.put("IDCRIT", criterio.getId());
+                        if(criterio.isTemsub()) {
+                            valores.put("IDSUBCRIT", criterio.getId());
+                        } else {
+                            valores.put("IDCRIT", criterio.getId());
+                        }
+
                         valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
                         db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
@@ -218,10 +223,18 @@ public class SomaColunaDao {
         db.close();
     }
 
-    public void somaColunasAlternativas2(int idcriterio, int idobjetivo) {
+    public void somaColunasAlternativas2(CriterioBean criterio, int idobjetivo) {
         try {
-            cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVA " +
-                    "WHERE IDOBJETIVO = " + idobjetivo + " AND IDCRITERIO = " + idcriterio + " GROUP BY IDALTERNATIVA2 ", null);
+            if(criterio.isTemsub()) {
+                cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVA " +
+                        "WHERE IDOBJETIVO = " + idobjetivo + " AND IDSUBCRITERIO = " + criterio.getId() + " GROUP BY IDALTERNATIVA2 ", null);
+            } else {
+                cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVA " +
+                        "WHERE IDOBJETIVO = " + idobjetivo + " AND IDCRITERIO = " + criterio.getId() + " GROUP BY IDALTERNATIVA2 ", null);
+            }
+
+            /*cursor = db.rawQuery("SELECT IDALTERNATIVA2, SUM(IMPORTANCIA) AS SOMA FROM COMPARA_ALTERNATIVA " +
+                    "WHERE IDOBJETIVO = " + idobjetivo + " AND IDCRITERIO = " + criterio.getId() + " GROUP BY IDALTERNATIVA2 ", null);*/
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
@@ -231,7 +244,11 @@ public class SomaColunaDao {
                         db = banco.getWritableDatabase();
                         valores = new ContentValues();
                         valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
-                        valores.put("IDCRIT", idcriterio);
+                        if(criterio.isTemsub()) {
+                            valores.put("IDSUBCRIT", criterio.getId());
+                        } else {
+                            valores.put("IDCRIT", criterio.getId());
+                        }
                         valores.put(SomaColunaBean.SOMA, cursor.getFloat(cursor.getColumnIndex("SOMA")));
 
                         db.insert(SomaColunaBean.SOMA_COLUNA_ALTERNATIVA, null, valores);
@@ -298,7 +315,7 @@ public class SomaColunaDao {
                         " WHERE IDALT = " + compalt.getIdalternativa2() + " AND IDCRIT = " + compalt.getIdcriterio(), null);
             } else {
                 cursor = db.rawQuery("SELECT " + SomaColunaBean.SOMA + " FROM " + SomaColunaBean.SOMA_COLUNA_ALTERNATIVA +
-                        " WHERE IDALT = " + compalt.getIdalternativa2() + " AND IDCRIT = " + compalt.getIdsubcriterio(), null);
+                        " WHERE IDALT = " + compalt.getIdalternativa2() + " AND IDSUBCRIT = " + compalt.getIdsubcriterio(), null);
             }
 
             if (cursor.getCount() > 0) {

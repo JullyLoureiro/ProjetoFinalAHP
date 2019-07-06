@@ -159,10 +159,21 @@ public class ComparaAlternativaDao {
             } else {
                 content.put(ComparaAlternativaBean.IMPORTANCIA, (1 / comparaCriterioBean.getImportancia()));
             }
-                String where = "IDALTERNATIVA1 = ? AND IDALTERNATIVA2 = ? AND IDCRITERIO = ?";
-            String argumentos[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
-                    String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
-            db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos);
+            String where;
+            if(comparaCriterioBean.getIdsubcriterio()==0) {
+                where = "IDALTERNATIVA1 = ? AND IDALTERNATIVA2 = ? AND IDCRITERIO = ?";
+
+                String argumentos[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
+                        String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
+                db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos);
+            } else {
+                where = "IDALTERNATIVA1 = ? AND IDALTERNATIVA2 = ? AND IDCRITERIO = ? AND IDSUBCRITERIO = ?";
+
+                String argumentos[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
+                        String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio()), String.valueOf(comparaCriterioBean.getIdsubcriterio())};
+                db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos);
+            }
+
 
             content = new ContentValues();
             if (altimport == 1) {
@@ -170,10 +181,18 @@ public class ComparaAlternativaDao {
             } else {
                 content.put(ComparaAlternativaBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
             }
-            where = "IDALTERNATIVA2 = ? AND IDALTERNATIVA1 = ? AND IDCRITERIO = ?";
-            String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
-                    String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
-            db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos2);
+            if(comparaCriterioBean.getIdsubcriterio()==0) {
+                where = "IDALTERNATIVA2 = ? AND IDALTERNATIVA1 = ? AND IDCRITERIO = ?";
+                String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
+                        String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio())};
+                db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos2);
+            } else {
+                where = "IDALTERNATIVA2 = ? AND IDALTERNATIVA1 = ? AND IDCRITERIO = ? AND IDSUBCRITERIO = ?";
+                String argumentos2[] = {String.valueOf(comparaCriterioBean.getIdalternativa1()),
+                        String.valueOf(comparaCriterioBean.getIdalternativa2()), String.valueOf(comparaCriterioBean.getIdcriterio()), String.valueOf(comparaCriterioBean.getIdsubcriterio())};
+                db.update(ComparaAlternativaBean.TABELA_temp, content, where, argumentos2);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

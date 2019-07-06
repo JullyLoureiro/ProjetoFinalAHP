@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.TelaFuncaoAHP" />
-        <activity android:name=".Activity.TelaExplicacao" android:theme="@style/AppTheme2"/>
+        <activity android:name=".Activity.TelaExplicacao" android:theme="@style/AppCompat.TelaCheia"/>
         <activity
             android:theme="@style/AppTheme2"
             android:name=".Activity.SobreAHP"></activity>

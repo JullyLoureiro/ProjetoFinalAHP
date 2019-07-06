@@ -177,7 +177,7 @@ public class Resultados extends AppCompatActivity {
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriteriosObjetivo(idobjetivo);
         for (int i = 0; i < listaCriterios.size(); i++) {
-            new SomaColunaDao(this).somaColunasAlternativas2(listaCriterios.get(i).getId(), idobjetivo);
+            new SomaColunaDao(this).somaColunasAlternativas2(listaCriterios.get(i), idobjetivo);
         }
 
         List<ComparaAlternativaBean> listaComparacao = new ComparaAlternativaDao(this).carregaComparacoes3(idobjetivo);
@@ -515,6 +515,7 @@ public class Resultados extends AppCompatActivity {
             int idcriterio = new CriterioDao(this).insereCriterio2(criterios.get(i), id);
             new ComparaCriterioDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
             new ComparaAlternativaDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
+            new SubcriteriosDao(this).atualizaIdCriterio(idcriterio, criterios.get(i).getId());
         }
 
 
