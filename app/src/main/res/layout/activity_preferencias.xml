@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JULGAMENTOS"
+            android:text="JULGAMENTO DAS ALTERNATIVAS"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
             android:layout_marginTop="50dp"

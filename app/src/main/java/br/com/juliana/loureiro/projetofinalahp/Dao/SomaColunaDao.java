@@ -245,7 +245,7 @@ public class SomaColunaDao {
                         valores = new ContentValues();
                         valores.put("IDALT", cursor.getInt(cursor.getColumnIndex("IDALTERNATIVA2")));
                         if(criterio.isTemsub()) {
-                            valores.put("IDSUBCRIT", criterio.getId());
+                            valores.put("IDSUBCRIT", criterio.getIdsubcriterio());
                         } else {
                             valores.put("IDCRIT", criterio.getId());
                         }

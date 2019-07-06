@@ -127,7 +127,7 @@ public class Resultados extends AppCompatActivity {
                         titulo.setText(o.getTitulo().toUpperCase());
                         titulo2.setText(o.getTitulo().toUpperCase());
                         titulo3.setText(o.getTitulo().toUpperCase());
-                    }catch (Exception ignored) {
+                    } catch (Exception ignored) {
                     }
 
 
@@ -139,7 +139,7 @@ public class Resultados extends AppCompatActivity {
                     titulo.setText(o.getTitulo().toUpperCase());
                     titulo2.setText(o.getTitulo().toUpperCase());
                     titulo3.setText(o.getTitulo().toUpperCase());
-                }catch (Exception ignored) {
+                } catch (Exception ignored) {
                 }
 
 
@@ -151,7 +151,7 @@ public class Resultados extends AppCompatActivity {
                 titulo.setText(o.getTitulo().toUpperCase());
                 titulo2.setText(o.getTitulo().toUpperCase());
                 titulo3.setText(o.getTitulo().toUpperCase());
-            }catch (Exception ignored) {
+            } catch (Exception ignored) {
             }
 
 
@@ -604,7 +604,7 @@ public class Resultados extends AppCompatActivity {
         for(int i = 0; i < listaCompAlt.size(); i++) {
             new ComparaAlternativaDao(this).insereComparacoes(listaCompAlt.get(i));
         }*/
-
+        Utils.deletaTemp(this);
         Utils.calculacriterios(this, idobjetivo);
         calculaAlternativas(idobjetivo);
     }
