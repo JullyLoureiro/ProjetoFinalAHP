@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -66,6 +67,7 @@ public class Preferencias extends AppCompatActivity {
     private TextView txvtitulo, txvtitulo2, txvtitulo3, txvinfo, txvinfo2, txvinfo3;
     private int i = 0, critImportancia = 1, altimportancia = 1, subImportancia = 1;
     private int idobjetivo = 0;
+    private LinearLayout lnrcontinuar;
 
 
     @Override
@@ -101,6 +103,8 @@ public class Preferencias extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar);
         seekBar2 = findViewById(R.id.seekBar2);
         seekBar3 = findViewById(R.id.seekBar3);
+
+        lnrcontinuar = findViewById(R.id.lnrcontinuar);
 
         card = findViewById(R.id.card);
         card2 = findViewById(R.id.card2);
@@ -1181,7 +1185,7 @@ public class Preferencias extends AppCompatActivity {
             }
         } else {
             if (new SubcriteriosDao(Preferencias.this).carregaCriterios().isEmpty()) {
-                rltpreferencia2.setVisibility(View.VISIBLE);
+                lnrcontinuar.setVisibility(View.VISIBLE);
             } else {
                 rltpreferencia3.setVisibility(View.VISIBLE);
             }
@@ -1268,8 +1272,7 @@ public class Preferencias extends AppCompatActivity {
             }
         } else {
             if (new SubcriteriosDao(Preferencias.this).carregaCriterios().isEmpty()) {
-                rltpreferencia2.setVisibility(View.VISIBLE);
-                rltpreferencia3.setVisibility(View.GONE);
+                lnrcontinuar.setVisibility(View.VISIBLE);
 
             } else {
                 rltpreferencia3.setVisibility(View.VISIBLE);
@@ -1316,7 +1319,7 @@ public class Preferencias extends AppCompatActivity {
                     dialog.dismiss();
 
                     if (new SubcriteriosDao(Preferencias.this).carregaCriterios().isEmpty()) {
-                        rltpreferencia2.setVisibility(View.VISIBLE);
+                        lnrcontinuar.setVisibility(View.VISIBLE);
                     } else {
                         rltpreferencia3.setVisibility(View.VISIBLE);
                     }
@@ -1398,5 +1401,10 @@ public class Preferencias extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    public void comecar(View v ) {
+        rltpreferencia2.setVisibility(View.VISIBLE);
+        rltpreferencia3.setVisibility(View.GONE);
     }
 }

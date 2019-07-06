@@ -166,7 +166,7 @@ public class TelaFuncaoAHP extends AppCompatActivity {
 
         //VALIDA CAMPOS E VAI PARA OS JULGAMENTOS
         if(validaCampos()){
-            Intent intent = new Intent(this, Preferencias.class);
+            Intent intent = new Intent(this, TelaExplicacao.class);
             startActivity(intent);
             finish();
         }
