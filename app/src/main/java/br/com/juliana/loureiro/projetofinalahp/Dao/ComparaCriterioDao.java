@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.juliana.loureiro.projetofinalahp.Activity.TelaFuncaoAHP;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Database.ConfigDB;
 
 public class ComparaCriterioDao {
@@ -80,6 +81,29 @@ public class ComparaCriterioDao {
                 valores.put("IDOBJETIVO", id);
                 db.insert(ComparaCriterioBean.TABELA, null, valores);
                 return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return false;
+    }
+
+    public boolean insereSubComparacoes2(ComparaSubCriterioBean comparaCriterioBean, int id) {
+        try {
+
+            ContentValues valores;
+
+            db = banco.getWritableDatabase();
+            valores = new ContentValues();
+            valores.put(ComparaSubCriterioBean.IDCRITERIO, comparaCriterioBean.getIdcriterio());
+            valores.put(ComparaSubCriterioBean.IDSUBCRIT1, comparaCriterioBean.getIdsubcrit1());
+            valores.put(ComparaSubCriterioBean.IDSUBCRIT2, comparaCriterioBean.getIdsubcrit2());
+            valores.put(ComparaSubCriterioBean.IMPORTANCIA, comparaCriterioBean.getImportancia());
+            valores.put("IDOBJETIVO", id);
+            db.insert(ComparaSubCriterioBean.TABELA2, null, valores);
+            return true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -292,6 +316,38 @@ public class ComparaCriterioDao {
                     comparaCriterioBean.setIdcrit2(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.IDCRIT2)));
                     comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaCriterioBean.ID)));
                     comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaCriterioBean.IMPORTANCIA)));
+                    lista.add(comparaCriterioBean);
+
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ignored) {
+
+        }
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
+        return lista;
+    }
+
+    public List<ComparaSubCriterioBean> carregaSubComparacoesTemp() {
+        List<ComparaSubCriterioBean> lista = new ArrayList<>();
+        try {
+
+
+            cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA2, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                do {
+
+                    ComparaSubCriterioBean comparaCriterioBean = new ComparaSubCriterioBean();
+                    comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDCRITERIO)));
+                    comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.ID)));
+                    comparaCriterioBean.setIdsubcrit2(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT2)));
+                    comparaCriterioBean.setIdsubcrit1(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
+                    comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaSubCriterioBean.IMPORTANCIA)));
                     lista.add(comparaCriterioBean);
 
                 } while (cursor.moveToNext());

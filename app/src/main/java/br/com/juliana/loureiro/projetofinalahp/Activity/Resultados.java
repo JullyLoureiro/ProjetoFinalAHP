@@ -59,6 +59,7 @@ import java.util.Locale;
 import br.com.juliana.loureiro.projetofinalahp.Bean.AlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaAlternativaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaCriterioBean;
+import br.com.juliana.loureiro.projetofinalahp.Bean.ComparaSubCriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.CriterioBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.MatrizCriterioNormalizadaBean;
 import br.com.juliana.loureiro.projetofinalahp.Bean.ObjetivoBean;
@@ -536,6 +537,11 @@ public class Resultados extends AppCompatActivity {
             new ComparaCriterioDao(this).insereComparacoes2(compcriterios.get(i), id);
         }
 
+        List<ComparaSubCriterioBean> compsubcriterios = new ComparaCriterioDao(this).carregaSubComparacoesTemp();
+        for (int i = 0; i < compsubcriterios.size(); i++) {
+            new ComparaCriterioDao(this).insereSubComparacoes2(compsubcriterios.get(i), id);
+        }
+
         List<ComparaAlternativaBean> compalternativas = new ComparaAlternativaDao(this).carregaComparacoesTemp();
         for (int i = 0; i < compalternativas.size(); i++) {
             new ComparaAlternativaDao(this).insereComparacoes2(compalternativas.get(i), id);
@@ -606,6 +612,7 @@ public class Resultados extends AppCompatActivity {
         }*/
         Utils.deletaTemp(this);
         Utils.calculacriterios(this, idobjetivo);
+        Utils.calculaSubcriterios(this);
         calculaAlternativas(idobjetivo);
     }
 

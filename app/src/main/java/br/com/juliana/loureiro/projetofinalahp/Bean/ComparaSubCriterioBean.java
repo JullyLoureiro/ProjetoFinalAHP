@@ -7,6 +7,7 @@ public class ComparaSubCriterioBean {
     public static String IDCRITERIO = "IDCRITERIO";
     public static String IMPORTANCIA = "IMPORTANCIA";
     public static String TABELA = "COMPARA_SUBCRITERIOSTEMP";
+    public static String TABELA2 = "COMPARA_SUBCRITERIOS";
 
     private int id;
     private int idsubcrit1;

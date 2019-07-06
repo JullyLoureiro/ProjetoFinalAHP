@@ -267,6 +267,53 @@ public class Utils {
 
     }
 
+    public static void calculaSubcriterios(Activity activity) {
+        //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
+        new SomaColunaDao(activity).somaColunas4();
+        List<ComparaSubCriterioBean> listaComparacao = new ComparaSubcriterioDao(activity).carregaComparacoes3();
+
+        for (int i = 0; i < listaComparacao.size(); i++) {
+            float soma = new SomaColunaDao(activity).retornaSomaSubCriterio(listaComparacao.get(i).getIdsubcrit2());
+
+            MatrizSubcriterioNormalizadaBean matrizCriterioNormalizadaBean = new MatrizSubcriterioNormalizadaBean();
+            matrizCriterioNormalizadaBean.setIdsubcrit1(listaComparacao.get(i).getIdsubcrit1());
+            matrizCriterioNormalizadaBean.setIdsubcrit2(listaComparacao.get(i).getIdsubcrit2());
+            matrizCriterioNormalizadaBean.setIdcriterio(listaComparacao.get(i).getIdcriterio());
+
+            float importancia = listaComparacao.get(i).getImportancia() / soma;
+
+            matrizCriterioNormalizadaBean.setImportancia(importancia);
+            new MatrizCriterioNormalizadaDao(activity).insereMatrizNormalizadaSubcriterio(matrizCriterioNormalizadaBean);
+
+        }
+
+        //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
+        int qtd = new SubcriteriosDao(activity).retornaQtd();
+        List<PesoSubcriterioBean> pesos = new PesoCriteriosDao(activity).somaLinhasSubcriterios(qtd);
+
+        for (int i = 0; i < pesos.size(); i++) {
+            List<ComparaSubCriterioBean> listaComp = new ComparaSubcriterioDao(activity).carregaComparacoes(pesos.get(i).getIdsubcrit());
+            for (int j = 0; j < listaComp.size(); j++) {
+                float mult = pesos.get(i).getPeso() * listaComp.get(j).getImportancia();
+                new PesoCriteriosDao(activity).atualizaYMaxSubcriterio(listaComp.get(j).getIdsubcrit1(), mult);
+            }
+        }
+
+        //Com o vetor obtido, deve-se dividi-lo pelos pesos de cada critério
+        try {
+            List<PesoSubcriterioBean> listaYMax = new PesoCriteriosDao(activity).carregaYMaxSub();
+            float pesocrit = new PesoCriteriosDao(activity).carregaPesoCrit(listaYMax.get(0).getIdcrit());
+            for (int i = 0; i < listaYMax.size(); i++) {
+                float div = listaYMax.get(i).getYmax() / listaYMax.get(i).getPeso();
+                float peso = pesocrit * listaYMax.get(i).getPeso();
+                new PesoCriteriosDao(activity).atualizaTotalDivisaoSub(listaYMax.get(i).getIdcrit(), div, peso);
+            }
+        }catch (Exception ignored) {
+
+        }
+
+    }
+
     public static void calculacriterios(Activity activity, int idobjetivo) {
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         new SomaColunaDao(activity).somaColunas2(idobjetivo);
