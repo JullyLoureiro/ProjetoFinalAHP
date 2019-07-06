@@ -218,6 +218,17 @@ public class Resultados extends AppCompatActivity {
 
         resultado = new PesoCriteriosDao(this).retornaResultado(idobjetivo);
 
+       /* handler = new Handler();
+        pd = new TransparentProgressDialog(this, R.drawable.loading, "Gerando arquivo...");
+        pd.show();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();*/
+
         carregaGrafico();
         geraGraphPie();
         geraTabela();
@@ -281,6 +292,12 @@ public class Resultados extends AppCompatActivity {
 
     private void geraTabela() {
         listResultado.setAdapter(new ResultadosList(resultado, this));
+        /*handler.post(new Runnable() {
+            @Override
+            public void run() {
+                pd.cancel();
+            }
+        });*/
     }
 
     private void geraGrafico() {
@@ -510,6 +527,9 @@ public class Resultados extends AppCompatActivity {
         ObjetivoBean objetivoBean = new ObjetivoDao(this).carregaObjetivosTemp();
         int id = new ObjetivoDao(this).insereObjetivo2(objetivoBean);
 
+        titulo.setText(new ObjetivoDao(this).carregaObjetivo(id).getTitulo().toUpperCase());
+        titulo2.setText(new ObjetivoDao(this).carregaObjetivo(id).getTitulo().toUpperCase());
+        titulo3.setText(new ObjetivoDao(this).carregaObjetivo(id).getTitulo().toUpperCase());
 
         List<CriterioBean> criterios = new CriterioDao(this).carregaCriterios();
         for (int i = 0; i < criterios.size(); i++) {

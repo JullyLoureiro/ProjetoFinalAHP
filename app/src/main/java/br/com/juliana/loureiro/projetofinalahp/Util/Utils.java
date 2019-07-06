@@ -288,11 +288,11 @@ public class Utils {
         }
 
         //NORMALIZAÇÃO PARTE 2 - MÉDIA ARITMÉTICA DAS LINHAS (PESO)
-        int qtd = new SubcriteriosDao(activity).retornaQtd();
+        int qtd = new SubcriteriosDao(activity).retornaQtd2();
         List<PesoSubcriterioBean> pesos = new PesoCriteriosDao(activity).somaLinhasSubcriterios(qtd);
 
         for (int i = 0; i < pesos.size(); i++) {
-            List<ComparaSubCriterioBean> listaComp = new ComparaSubcriterioDao(activity).carregaComparacoes(pesos.get(i).getIdsubcrit());
+            List<ComparaSubCriterioBean> listaComp = new ComparaSubcriterioDao(activity).carregaComparacoes2(pesos.get(i).getIdsubcrit());
             for (int j = 0; j < listaComp.size(); j++) {
                 float mult = pesos.get(i).getPeso() * listaComp.get(j).getImportancia();
                 new PesoCriteriosDao(activity).atualizaYMaxSubcriterio(listaComp.get(j).getIdsubcrit1(), mult);

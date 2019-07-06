@@ -224,6 +224,34 @@ public class ComparaSubcriterioDao {
         return lista;
     }
 
+    public List<ComparaSubCriterioBean> carregaComparacoes2(int crit2) {
+        List<ComparaSubCriterioBean> lista = new ArrayList<>();
+
+        cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA2+ " WHERE " + ComparaSubCriterioBean.IDSUBCRIT2 +
+                "= " + crit2, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+
+                ComparaSubCriterioBean comparaCriterioBean = new ComparaSubCriterioBean();
+                comparaCriterioBean.setIdsubcrit1(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT1)));
+                comparaCriterioBean.setIdsubcrit2(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDSUBCRIT2)));
+                comparaCriterioBean.setIdcriterio(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.IDCRITERIO)));
+                comparaCriterioBean.setId(cursor.getInt(cursor.getColumnIndex(ComparaSubCriterioBean.ID)));
+                comparaCriterioBean.setImportancia(cursor.getFloat(cursor.getColumnIndex(ComparaSubCriterioBean.IMPORTANCIA)));
+                lista.add(comparaCriterioBean);
+
+            } while (cursor.moveToNext());
+        }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+        return lista;
+    }
+
     public List<ComparaSubCriterioBean> carregaComparacoes2() {
         List<ComparaSubCriterioBean> lista = new ArrayList<>();
 

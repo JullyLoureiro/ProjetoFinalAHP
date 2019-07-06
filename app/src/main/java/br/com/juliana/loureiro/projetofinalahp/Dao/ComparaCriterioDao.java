@@ -336,7 +336,7 @@ public class ComparaCriterioDao {
         try {
 
 
-            cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA2, null);
+            cursor = db.rawQuery("SELECT * FROM " + ComparaSubCriterioBean.TABELA, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
 

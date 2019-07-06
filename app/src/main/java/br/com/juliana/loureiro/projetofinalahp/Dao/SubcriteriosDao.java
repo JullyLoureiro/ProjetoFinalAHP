@@ -241,6 +241,22 @@ public class SubcriteriosDao {
         return 0;
     }
 
+    public int retornaQtd2(){
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + SubcriterioBean.TABELA, null);
+            return cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(cursor!=null) {
+            cursor.close();
+        }
+        db.close();
+
+        return 0;
+    }
+
     public void atualizaIdCriterio(int novoid, int antigoid) {
         try{
             db.execSQL("UPDATE " + SubcriterioBean.TABELA_temp + " SET " + SubcriterioBean.IDCRITERIO + " = "+ novoid +
