@@ -235,10 +235,6 @@ public class Resultados extends AppCompatActivity {
     }
 
     private void calculaAlternativasTemp() {
-        titulo.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
-        titulo2.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
-        titulo3.setText(new ObjetivoDao(this).carregaObjetivoTemp(idobjetivo).getTitulo());
-
         //NORMALIZAÇÃO PARTE 1 - SOMA DAS COLUNAS
         List<CriterioBean> listaCriterios = new CriterioDao(this).carregaCriteriosComSub();
         for (int i = 0; i < listaCriterios.size(); i++) {
