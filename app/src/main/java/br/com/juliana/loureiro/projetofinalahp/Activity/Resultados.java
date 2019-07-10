@@ -454,7 +454,7 @@ public class Resultados extends AppCompatActivity {
             valueSet1.add(v1e1);
             BarDataSet barDataSet1;
             barDataSet1 = new BarDataSet(valueSet1, "");
-            barDataSet1.setColor(getResources().getColor(R.color.bg_screen3));
+            barDataSet1.setColor(getResources().getColor(R.color.bg_screen5));
             //barDataSet1.setValueFormatter(new FormatterGrah());
             barDataSet1.setValueTextSize(17);
             dataSets.add(barDataSet1);
