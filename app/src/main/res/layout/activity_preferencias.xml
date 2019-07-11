@@ -5,54 +5,6 @@
     android:background="@color/cinza2"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/lnrcontinuar"
-        android:background="@color/colorTerc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/preferencia" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="JULGAMENTO DAS ALTERNATIVAS"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_title"
-            android:layout_marginTop="50dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:text="Vamos comparar par a par cada alternativa em relação aos critérios..."
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="24sp" />
-
-        <Button
-            android:layout_marginTop="30dp"
-            android:text="CONTINUAR"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:textSize="20sp"
-            android:onClick="comecar"
-            android:textColor="@color/branco"
-            android:background="@drawable/shape_button_preto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/rltpreferencia"
         android:layout_margin="10dp"

@@ -78,7 +78,7 @@ public class ObjetivosList extends BaseAdapter {
         }
 
         titulo.setText(objetivos.get(position).getTitulo());
-        //descricao.setText(objetivos.get(position).getDescricao());
+        descricao.setText(objetivos.get(position).getDescricao());
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override

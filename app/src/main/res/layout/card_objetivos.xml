@@ -60,7 +60,7 @@
                 android:textSize="16sp"
                 />
 
-          <!--  <TextView
+            <TextView
                 android:layout_below="@+id/titulo"
                 android:id="@+id/descricao"
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:layout_margin="10dp"
                 android:text="Descrição"
                 android:textColor="@color/pretofosco"
-                android:textSize="16sp" />-->
+                android:textSize="16sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
